@@ -9,4 +9,6 @@ return array(
     $vendorDir . '/danielstjules/stringy/src/Create.php',
     $vendorDir . '/illuminate/support/helpers.php',
     $baseDir . '/app/config/config.php',
+    $baseDir . '/app/config/database.php',
+    $baseDir . '/app/config/routes.php',
 );

@@ -4,7 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "218911b3e0038cf45a72f7e7dfcc8037",
+    "hash": "9b70f87cbf8d854bc83fa4ff77b035a2",
+    "content-hash": "3168b7c8cb053eee02b2225e41527721",
     "packages": [
         {
             "name": "danielstjules/stringy",
@@ -471,6 +472,53 @@
                 "templating"
             ],
             "time": "2014-12-09 23:48:51"
+        },
+        {
+            "name": "slimcontroller/slimcontroller",
+            "version": "0.4.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fortrabbit/slimcontroller.git",
+                "reference": "35d7486e98b968bc994bedffbd88a28dadcfad71"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fortrabbit/slimcontroller/zipball/35d7486e98b968bc994bedffbd88a28dadcfad71",
+                "reference": "35d7486e98b968bc994bedffbd88a28dadcfad71",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "slim/slim": "2.*"
+            },
+            "require-dev": {
+                "mockery/mockery": "0.8.*",
+                "phpunit/phpunit": "4.3.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "SlimController": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ulrich Kautz",
+                    "email": "uk@fortrabbit.de",
+                    "homepage": "http://fortrabbit.com/"
+                }
+            ],
+            "description": "Controller extensions for the Slim Framework",
+            "homepage": "http://github.com/fortrabbit/slimcontroller",
+            "keywords": [
+                "controller",
+                "microframework"
+            ],
+            "time": "2015-04-07 21:15:32"
         },
         {
             "name": "symfony/translation",

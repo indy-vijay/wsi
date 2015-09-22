@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Twig_' => array($vendorDir . '/twig/twig/lib'),
+    'SlimController' => array($vendorDir . '/slimcontroller/slimcontroller/src'),
     'Slim' => array($vendorDir . '/slim/slim'),
     'Doctrine\\Common\\Inflector\\' => array($vendorDir . '/doctrine/inflector/lib'),
     'Carbon' => array($vendorDir . '/nesbot/carbon/src'),
