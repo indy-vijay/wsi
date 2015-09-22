@@ -1,5 +1,4 @@
 <?php
-
 namespace Controller;
 class Register extends \SlimController\SlimController
 {
@@ -7,9 +6,10 @@ class Register extends \SlimController\SlimController
     protected $response;
     public function indexAction()
     {
-       $this->render('home/index', array(
-            'someVar' => date('c')
+       $this->render('customer/register', array(
+          //  'someVar' => date('c')
         ));
     }
+    
     
 }

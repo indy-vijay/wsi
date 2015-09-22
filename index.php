@@ -7,11 +7,16 @@ use SlimController\SlimController;
 use Slim\Views\Twig as Twig;
 // init app
 $app = New \SlimController\Slim(array(
-    'views.path'             =>   'app/views/',
+    'view' => new Twig,
+    'templates.path'             =>   'app/views/',
     'controller.class_prefix'    => '\\Controller',
     'controller.method_suffix'   => 'Action',
     'controller.template_suffix' => 'php',
 ));
+$view = $app->view();
+$view = $app->view()->getEnvironment();
+$view->addGlobal('httpBasePath', BASE_URL);
+$view->addGlobal('includePath', INC_PATH);
 // how to integrate the Slim middleware
 $app->addRoutes(array(
     '/' => array('Home:index', function() {
