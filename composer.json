@@ -9,6 +9,9 @@
     "autoload": {
         "files": [
         			"app/config/config.php"
+        ],
+        "classmap" : [
+                    "app/models"
         ]
     }
 
