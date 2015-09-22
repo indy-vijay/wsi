@@ -1,6 +1,4 @@
 <?php
-
-
 use SlimController\SlimController;
 use Slim\Views\Twig as Twig;
 // $app = new Slim(

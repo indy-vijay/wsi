@@ -1,0 +1,1 @@
+This is the SlimController extension @ <?= $someVar ?>

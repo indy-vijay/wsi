@@ -1,43 +1,34 @@
 <?php 
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 require 'vendor/autoload.php';
-use Slim\Slim;
+
+use SlimController\SlimController;
 use Slim\Views\Twig as Twig;
-use Illuminate\Database\Capsule\Manager as Capsule;
-$app = new Slim(
-				  array(
-				  		'view' => new Twig,
-				  		'mode' => 'development',
-				  		'debug' => true
-				  	)
-				);
-
-$view = $app->view();
-$view->setTemplatesDirectory('app/views/');
-// $view->parserExtensions = array(new \Slim\Views\TwigExtension());
-$view = $app->view()->getEnvironment();
-$view->addGlobal('httpBasePath', BASE_URL);
-$view->addGlobal('includePath', INC_PATH);
-
-
-// Customers::create([
-// 					'first_name' => 'Indy',
-// 					'last_name'  => 'Test',
-// 					'company_name' => '2hats'
-// ]);
-// echo "done";
-// die;
-
-// die;
-// var_dump($capsule);die;
-
-$app->get('/register/', function () use ($app){
-
-    // echo "Hello, " . $name;
-	$app->render('register.html');
+// init app
+$app = New \SlimController\Slim(array(
+    'views.path'             =>   'app/views/',
+    'controller.class_prefix'    => '\\Controller',
+    'controller.method_suffix'   => 'Action',
+    'controller.template_suffix' => 'php',
+));
+// how to integrate the Slim middleware
+$app->addRoutes(array(
+    '/' => array('Home:index', function() {
+            error_log("MIDDLEWARE FOR SINGLE ROUTE");
+        },
+        function() {
+            error_log("ADDITIONAL MIDDLEWARE FOR SINGLE ROUTE");
+        }
+    ),
+    '/hello/:name' => array('post' => array('Home:hello', function() {
+            error_log("THIS ROUTE IS ONLY POST");
+        }
+    ))
+), function() {
+    error_log("APPENDED MIDDLEWARE FOR ALL ROUTES");
 });
-$app->post('/register', function () use ($app) {
-	print_r($app->request->post());
-	die();
-    //Create book
-});
+$app->addRoutes(array(
+    '/register'            => 'Register:index'
+));
 $app->run();

@@ -1,22 +1,28 @@
 <?php
 
 namespace Controller;
-
-class Home extends \SlimController\SlimController
+class Home
 {
-
+    protected $request;
+    protected $response;
     public function indexAction()
     {
-    	echo "yessssssssssss";die();
-        $this->render('home/index', array(
-            'someVar' => date('c')
-        ));
+        echo "This is the home page";
     }
-
     public function helloAction($name)
     {
-        $this->render('home/hello', array(
-            'name' => $name
-        ));
+        echo "Hello, $name";
+    }
+    public function setApp($app)
+    {
+        $this->app = $app;
+    }
+    public function setRequest($request)
+    {
+        $this->request = $request;
+    }
+    public function setResponse($response)
+    {
+        $this->response = $response;
     }
 }
