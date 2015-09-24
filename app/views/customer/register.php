@@ -1,5 +1,7 @@
 {% extends 'layout.html' %}
  {% block content %}
+ <script type='text/javascript' src='{{customIncludePath}}js/common.js'></script>
+
 	<div class="col-md-9">
 
     <div class="page_title">
@@ -8,14 +10,14 @@
 
     </div>
        
-	 <form class="form-horizontal" method="post" action="">
+	 <form class="form-horizontal" id="user-register" method="post" action="/register/submit">
         <h3>Primary Address</h3>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="" class="col-md-4 control-label">First Name</label>
                     <div class="col-md-8">
-                        <input type="text" class="form-control" name="firstname">
+                        <input type="text" class="form-control" name="first_name">
                     </div>
                 </div>
             </div>
@@ -23,7 +25,7 @@
                 <div class="form-group">
                     <label for="" class="col-md-4 control-label">Last Name</label>
                     <div class="col-md-8">
-                        <input type="text" class="form-control" name="lastname">
+                        <input type="text" class="form-control" name="last_name">
                     </div>
                 </div>
             </div>
@@ -218,11 +220,11 @@
             </div>
         </div>
 
-
+        <input type="hidden" name="key" value="9897">
 
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default">Register</button>
+                <button class="btn btn-default" >Register</button>
             </div>
         </div>
     </form>
