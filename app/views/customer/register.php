@@ -10,7 +10,7 @@
 
     </div>
        
-	 <form class="form-horizontal" id="user-register" method="post" action="/register/submit">
+	 <form class="form-horizontal" id="user-register" method="post" action="{{httpBasePath}}register/submit">
         <h3>Primary Address</h3>
         <div class="row">
             <div class="col-md-6">
@@ -36,7 +36,7 @@
                 <div class="form-group">
                     <label for="" class="col-md-4 control-label">Email Address</label>
                     <div class="col-md-8">
-                        <input type="email" class="form-control">
+                        <input type="email" class="form-control" name="email">
                     </div>
                 </div>
             </div>
@@ -56,7 +56,7 @@
                 <div class="form-group">
                     <label for="" class="col-md-4 control-label">Phone Number</label>
                     <div class="col-md-8">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" name="home_phone">
                     </div>
                 </div>
             </div>
@@ -65,7 +65,7 @@
                 <div class="form-group">
                     <label for="" class="col-md-4 control-label">Cell Phone</label>
                     <div class="col-md-8">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" name="mobile">
                     </div>
                 </div>
             </div>
@@ -78,7 +78,7 @@
                 <div class="form-group">
                     <label for="" class="col-md-4 control-label">Fax Number</label>
                     <div class="col-md-8">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" name="fax">
                     </div>
                 </div>
 
@@ -86,7 +86,7 @@
                 <div class="form-group">
                     <label for="" class="col-md-4 control-label">Company</label>
                     <div class="col-md-8">
-                        <input type="text" class="form-control">
+                        <input type="text" name="company_name" class="form-control">
                     </div>
                 </div>
             </div>
@@ -97,7 +97,7 @@
                 <div class="form-group">
                     <label for="" class="col-md-4 control-label">Address</label>
                     <div class="col-md-8">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" name="address_1">
                     </div>
                 </div>
             </div>
@@ -106,7 +106,7 @@
                 <div class="form-group">
                     <label for="" class="col-md-4 control-label">City</label>
                     <div class="col-md-8">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" name="city">
                     </div>
                 </div>
             </div>
@@ -119,8 +119,8 @@
                 <div class="form-group">
                     <label for="" class="col-md-4 control-label">State</label>
                     <div class="col-md-8">
-                        <select class="form-control">
-                            <option value="">Alabama</option>
+                        <select class="form-control" name="state">
+                            <option value="Alabama">Alabama</option>
                         </select>
                     </div>
                 </div>
@@ -130,7 +130,7 @@
                 <div class="form-group">
                     <label for="" class="col-md-4 control-label">Zip</label>
                     <div class="col-md-8">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" name="zip">
                     </div>
                 </div>
             </div>
@@ -220,7 +220,7 @@
             </div>
         </div>
 
-        <input type="hidden" name="key" value="9897">
+        <input type="hidden" name="token" value="{{token}}">
 
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">

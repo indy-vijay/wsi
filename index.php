@@ -1,4 +1,5 @@
 <?php 
+session_start();
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 require 'vendor/autoload.php';
@@ -13,6 +14,8 @@ $app = New \SlimController\Slim(array(
     'controller.method_suffix'   => 'Action',
     'controller.template_suffix' => 'php',
 ));
+
+
 $view = $app->view();
 $view = $app->view()->getEnvironment();
 $view->addGlobal('httpBasePath', BASE_URL);
@@ -34,6 +37,7 @@ $view->addGlobal('customIncludePath', CUSTOM_INC_PATH);
 // ), function() {
 //     error_log("APPENDED MIDDLEWARE FOR ALL ROUTES");
 // });
+
 $app->addRoutes(array(
     '/register'            => 'Register:index',
     '/register/submit'     =>  'Register:submit'

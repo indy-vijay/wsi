@@ -35,6 +35,8 @@ class Pluralizer
         'species',
         'swine',
         'traffic',
+        'address',
+        'communication',
     ];
 
     /**
