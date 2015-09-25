@@ -9,9 +9,9 @@ class Home
     {
         echo "This is the home page";
     }
-    public function helloAction($name)
+    public static function helloAction()
     {
-        echo "Hello, $name";
+        echo "Hello,";
     }
     public function setApp($app)
     {

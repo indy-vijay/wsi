@@ -22,4 +22,13 @@ class Customers extends Eloquent
 
         return $contact_id;
 	}
+
+	public static function getCustomerLogin($req)
+	{
+	 	return Customers::select('contact_id')
+	 						   ->where('username','=',$req->post('username'))
+	 						   ->where('password','=',$req->post('password'))
+	 						   ->get()
+	 						   ->toArray();
+	}
 }

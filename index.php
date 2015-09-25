@@ -39,7 +39,9 @@ $view->addGlobal('customIncludePath', CUSTOM_INC_PATH);
 // });
 
 $app->addRoutes(array(
-    '/register'            => 'Register:index',
-    '/register/submit'     =>  'Register:submit'
+    '/register'            =>  'Register:index',
+    '/register/submit'     =>  'Register:submit',
+    '/login' 			   =>  'Login:index',
+    '/login/submit'        =>  'Login:submit'
 ));
 $app->run();
