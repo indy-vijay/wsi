@@ -1,6 +1,8 @@
 {% extends 'layout.html' %}
  {% block content %}
  <script type='text/javascript' src='{{customIncludePath}}js/common.js'></script>
+ <script type='text/javascript' src='{{includePath}}js/jquery.validate.js'></script>
+ <!---<script type='text/javascript' src='{{includePath}}css/screen.css'></script>-->
 
 	<div class="col-md-9">
 

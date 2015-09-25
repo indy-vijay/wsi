@@ -2,6 +2,7 @@
 session_start();
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
+
 require 'vendor/autoload.php';
 
 use SlimController\SlimController;
@@ -14,7 +15,6 @@ $app = New \SlimController\Slim(array(
     'controller.method_suffix'   => 'Action',
     'controller.template_suffix' => 'php',
 ));
-
 
 $view = $app->view();
 $view = $app->view()->getEnvironment();

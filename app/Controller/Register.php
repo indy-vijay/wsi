@@ -24,39 +24,11 @@ class Register extends \SlimController\SlimController
     	if($req->isPost() && isset($_SESSION['token']) && $req->post('token') == $_SESSION['token'] ){
 
     		unset($_SESSION['token']);//prevent page refresh 
-    		 $contact_id = Customers::insertGetId(
-    							array( 
-    										'first_name'   => $req->post('first_name'),
-    										'last_name'    => $req->post('last_name'),
-    										'company_name' => $req->post('company_name'),
+    
+    		$contact_id = Customers::createCustomer($req); //create new customer    		    	
+            Address::createAddress($req,$contact_id);
+            Communication::createCommunication($req,$contact_id);
 
-    										)
-    	                       );
-    		
-    		Customers::where('contact_id', $contact_id)
-            		->update(array('username' => $contact_id));
-
-            Address::create(
-            					array(
-            								'contact_id' => $contact_id,
-            								'address_1'  => $req->post('address_1'),
-            								'city'       => $req->post('city'),
-            								'zip'        => $req->post('zip'),
-            								'state'      => $req->post('state'),
-            								'type'       => $req->post('B'),
-            						)
-            				);
-
-            Communication::create(
-            					array(
-            								'contact_id' => $contact_id,
-            								'email'      => $req->post('email'),
-            								'home_phone' => $req->post('home_phone'),
-            								'mobile'     => $req->post('mobile'),
-            								'fax'        => $req->post('fax'),
-
-            						)
-            			    );
     		$this->render('customer/register_success', array(
          			 //  'someVar' => date('c')
        		 ));
