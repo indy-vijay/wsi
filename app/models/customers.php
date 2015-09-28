@@ -25,10 +25,12 @@ class Customers extends Eloquent
 
 	public static function getCustomerLogin($req)
 	{
+		//change password to md5 hasing later
 	 	return Customers::select('contact_id')
 	 						   ->where('username','=',$req->post('username'))
 	 						   ->where('password','=',$req->post('password'))
 	 						   ->get()
 	 						   ->toArray();
 	}
+
 }

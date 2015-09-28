@@ -21,4 +21,5 @@ class Address extends Eloquent
 
     	return true;
     }
+
 }

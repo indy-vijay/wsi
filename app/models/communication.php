@@ -20,4 +20,9 @@ class Communication extends Eloquent
             			    );
 		return true;
 	}
+
+     public static function checkEmailExists($email)
+     {
+        return self::where('email','=',$email)->count();
+     }
 }

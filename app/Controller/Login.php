@@ -28,8 +28,8 @@ class Login extends \SlimController\SlimController
     		$contact_id = Customers::getCustomerLogin($req); 
        
             if(!empty($contact_id) && $contact_id[0]['contact_id'] > 0){
-                $message = "Logged in successfully";
                 $this->loginAction($contact_id[0]['contact_id']);
+                $this->app->redirect('/dashboard');
             }
             
             $this->render('customer/login', array(
@@ -43,6 +43,38 @@ class Login extends \SlimController\SlimController
     	}
     }
 
+    public function forgotAction()
+    {
+        $req                  = $this->app->request();
+        $showSuccessMessage   = false;
+        $showErrorMessage     = false;
+        $submitted            = false;
+
+        if($req->isPost()){ //form has been submitted
+
+          if(! Session::validateSubmission($req)){
+            $this->render('invalid');
+            exit();
+          }
+
+          if(Communication::checkEmailExists($req->post('email'))){
+            //send email
+            $showSuccessMessage = true;
+          }
+          else 
+            $showErrorMessage = true;
+
+          $submitted = true;
+        }
+        
+        $this->render('customer/forgot', array(
+                  'showSuccessMessage' => $showSuccessMessage,
+                  'showErrorMessage' => $showErrorMessage,
+                  'token'   => Session::setToken()                 
+         ));
+     
+    }
+
     public static function loginAction($contact_id)
     {
         //this should be extended in the future
@@ -51,12 +83,14 @@ class Login extends \SlimController\SlimController
 
     public static function isLoggedIn()
     {
-       return ($_SESSION['contact_id'] > 0 ) ? true : false;
+       return (isset($_SESSION['contact_id'])) ? $_SESSION['contact_id'] : false;
     }
 
     public static function logoutAction()
     {
         unset( $_SESSION['contact_id']);
     }
+
+
     
 }

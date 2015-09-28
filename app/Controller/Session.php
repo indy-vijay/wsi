@@ -10,7 +10,7 @@ class Session
 
 	public static function getToken()
 	{
-		return $_SESSION['token'];
+		return isset($_SESSION['token']) ? $_SESSION['token'] : false ;
 	}
 
 	public static function unsetToken()

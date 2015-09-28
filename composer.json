@@ -6,7 +6,8 @@
         "illuminate/database": "^5.1",
         "slimcontroller/slimcontroller": "^0.4.3",
         "akrabat/rka-slim-controller": "^2.0",
-        "slim/csrf": "^0.4.0"
+        "slim/csrf": "^0.4.0",
+        "phpmailer/phpmailer": "^5.2"
     },
 
     "autoload": {

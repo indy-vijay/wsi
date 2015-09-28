@@ -10,10 +10,9 @@ class Register extends \SlimController\SlimController
     protected $response;
     public function indexAction()
     {
-    	$_SESSION['token'] = uniqid();
-    	// var_dump(\Customers::where('contact_id',9)->get()->toArray());
+       	// var_dump(\Customers::where('contact_id',9)->get()->toArray());
        $this->render('customer/register', array(
-           'token' => $_SESSION['token']
+           'token' => Session::setToken()
         ));
     }
 
@@ -21,9 +20,7 @@ class Register extends \SlimController\SlimController
     {
     	$req = $this->app->request();
     	
-    	if($req->isPost() && isset($_SESSION['token']) && $req->post('token') == $_SESSION['token'] ){
-
-    		unset($_SESSION['token']);//prevent page refresh 
+    	if(Session::validateSubmission($req)){
     
     		$contact_id = Customers::createCustomer($req); //create new customer    		    	
             Address::createAddress($req,$contact_id);
