@@ -29,7 +29,8 @@ class Login extends \SlimController\SlimController
        
             if(!empty($contact_id) && $contact_id[0]['contact_id'] > 0){
                 $this->loginAction($contact_id[0]['contact_id']);
-                $this->app->redirect('/dashboard');
+                $this->app->redirect(BASE_URL . 'dashboard');
+           
             }
             
             $this->render('customer/login', array(
