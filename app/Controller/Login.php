@@ -11,7 +11,9 @@ class Login extends \SlimController\SlimController
 
     public function indexAction()
     {
-
+       if(Login::isLoggedIn())
+          $this->app->redirect(BASE_URL . 'dashboard');
+        
     	// var_dump(\Customers::where('contact_id',9)->get()->toArray());
        $this->render('customer/login', array(
            'token' => Session::setToken()
@@ -87,9 +89,10 @@ class Login extends \SlimController\SlimController
        return (isset($_SESSION['contact_id'])) ? $_SESSION['contact_id'] : false;
     }
 
-    public static function logoutAction()
+    public function logoutAction()
     {
         unset( $_SESSION['contact_id']);
+        $this->app->redirect(BASE_URL . 'login');
     }
 
 
