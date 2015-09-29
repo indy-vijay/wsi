@@ -35,21 +35,24 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <address>
-                                        <strong>Hiren Patel, Blackstorm, Inc</strong><br/>
-                                        850 Hampshire Road<br/>
-                                        Westlake Vilage, CA 91361
+                                        <strong>{{ customer['first_name'] }} {{ customer['last_name'] }},  {{ customer['company_name'] }}</strong><br/>
+                                        {{ address['address_1'] }}<br/>
+                                        {% if address['address_2']%}
+                                          {{ address['address_2'] }}<br/>
+                                        {% endif %}
+                                         {{ address['city']}}, {{ address['state'] }} {{ address['zip'] }}
                                     </address>
                                 </div>
                                 <div class="col-md-6">
                                     <dl class="dl-horizontal">
                                       <dt>Email:</dt>
-                                      <dd>hiren@blackstorm.net</dd>
+                                      <dd>{{ communication['email'] }}</dd>
                                       <dt>Phone:</dt>
-                                      <dd>(661) 304-2515</dd>
+                                      <dd>{{ communication['home_phone'] }}</dd>
                                       <dt>Cell:</dt>
-                                      <dd>(661) 123-4567</dd>
+                                      <dd>{{ communication['mobile'] }}</dd>
                                       <dt>Fax:</dt>
-                                      <dd>(661) 456-7890</dd>
+                                      <dd>{{ communication['fax'] }}</dd>
                                   </dl>
                               </div>
                           </div>

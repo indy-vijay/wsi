@@ -25,4 +25,11 @@ class Communication extends Eloquent
      {
         return self::where('email','=',$email)->count();
      }
+
+     public static function getCommunicationForContactId($contact_id)
+     {
+        return  self::where('contact_id','=',$contact_id)
+                           ->get()
+                           ->toArray();
+     }
 }

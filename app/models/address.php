@@ -8,7 +8,7 @@ class Address extends Eloquent
 
     public static function createAddress($req, $contact_id)
     {
-    	Address::create(
+    	self::create(
             					array(
             								'contact_id' => $contact_id,
             								'address_1'  => $req->post('address_1'),
@@ -20,6 +20,13 @@ class Address extends Eloquent
             				);
 
     	return true;
+    }
+
+    public static function getAddressForContactId( $contact_id)
+    {
+        return self::where('contact_id','=',$contact_id)
+                           ->get()
+                           ->toArray();
     }
 
 }

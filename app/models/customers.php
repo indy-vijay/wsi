@@ -33,4 +33,11 @@ class Customers extends Eloquent
 	 						   ->toArray();
 	}
 
+	public static function getCustomer($contact_id)
+	{
+		return  self::where('contact_id','=',$contact_id)
+                           ->get()
+                           ->toArray();
+	}
+
 }
