@@ -29,7 +29,7 @@
                 <div class="col-md-6">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">my profile <span><a href="update-information.php">Update Information</a></span></h3>
+                            <h3 class="panel-title">my profile <span><a href="update-info">Update Information</a></span></h3>
                         </div>
                         <div class="panel-body">
                             <div class="row">

@@ -9,7 +9,7 @@
                 </div>
                 <div class="col-md-8">
                     <ul class="list-inline dashboard-nav">
-                        <li><a href="index.php">Dashboard</a></li>
+                        <li><a href="dashboard">Dashboard</a></li>
                         <li><a href="previous-orders.php">Previous Orders</a></li>
                         <li><a href="create-new-order.php">Create New Order</a></li>
                         <li><a href="create-reorder.php">Create Reorder</a></li>
