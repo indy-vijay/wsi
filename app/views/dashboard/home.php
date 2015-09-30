@@ -13,7 +13,7 @@
                         <li><a href="previous-orders.php">Previous Orders</a></li>
                         <li><a href="create-new-order.php">Create New Order</a></li>
                         <li><a href="create-reorder.php">Create Reorder</a></li>
-                        <li><a href="cart.php">Cart</a></li>
+                        <!-- <li><a href="cart.php">Cart</a></li> -->
                     </ul>
                 </div>
             </div>
@@ -73,21 +73,14 @@
                                 </tr>
                             </thead>
                             <tbody>
+                               {% for customerOrder in customerOrders  %}
                                 <tr>
-                                    <td>1234</td>
-                                    <td>In Print</td>
+                                    <td>{{ customerOrder['order_id']}}</td>
+                                    <td>{{ orderStatuses[customerOrder['status']] }}</td>
                                     <td><a href="order-details.php">Details</a></td>
                                 </tr>
-                                <tr>
-                                    <td>5234</td>
-                                    <td>Pending Artwork</td>
-                                    <td><a href="order-details.php">Details</a></td>
-                                </tr>
-                                <tr>
-                                    <td>2135</td>
-                                    <td>Shipped</td>
-                                    <td><a href="order-details.php">Details</a></td>
-                                </tr>
+                             
+                               {% endfor %}
                             </tbody>
                         </table>
                     </div>

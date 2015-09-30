@@ -7,7 +7,8 @@ define('CUSTOM_ROUTES', serialize(array(
     '/login/submit'        =>  'Login:submit',
     '/forgot-password'     =>  'Login:forgot',
     '/logout'              =>  'Login:logout',
-    '/dashboard'           =>   'Dashboard:index'
+    '/dashboard'           =>  'Dashboard:index',
+    '/update-info'  	   =>  'Dashboard:updateInfo'
     
 )));
  

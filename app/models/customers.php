@@ -17,7 +17,7 @@ class Customers extends Eloquent
     										)
     	                       );
 
-		Customers::where('contact_id', $contact_id)
+		self::where('contact_id', $contact_id)
             		->update(array('username' => $contact_id));
 
         return $contact_id;
@@ -26,7 +26,7 @@ class Customers extends Eloquent
 	public static function getCustomerLogin($req)
 	{
 		//change password to md5 hasing later
-	 	return Customers::select('contact_id')
+	 	return self::select('contact_id')
 	 						   ->where('username','=',$req->post('username'))
 	 						   ->where('password','=',$req->post('password'))
 	 						   ->get()
@@ -35,9 +35,24 @@ class Customers extends Eloquent
 
 	public static function getCustomer($contact_id)
 	{
-		return  self::where('contact_id','=',$contact_id)
-                           ->get()
-                           ->toArray();
+		$customer =   self::where('contact_id','=',$contact_id)
+                    							       ->get()
+                           								->toArray();
+
+        if(count($customer) > 0 )
+                $customer = $customer[0];  
+
+        return $customer;
+	}
+
+	public static function updateCustomer($req,$contact_id)
+	{
+		self::where('contact_id','=',$contact_id)
+			   ->update(array(
+			   					'first_name'    => $req->post('first_name'),
+			   					'last_name'     => $req->post('last_name'),
+			   					'company_name'  => $req->post('company_name')
+			   		   ));
 	}
 
 }

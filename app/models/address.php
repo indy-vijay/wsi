@@ -24,9 +24,24 @@ class Address extends Eloquent
 
     public static function getAddressForContactId( $contact_id)
     {
-        return self::where('contact_id','=',$contact_id)
+        $address =  self::where('contact_id','=',$contact_id)
                            ->get()
                            ->toArray();
+
+        if(count($address) > 0 )
+                $address = $address[0];
+
+        return $address;
+    }
+
+    public static function updateAddress($req,$contact_id)
+    {
+        self::where('contact_id','=',$contact_id)
+               ->update(array(
+                                'address_1' => $req->post('address_1'),
+                                'city'  => $req->post('city'),
+                                
+                       ));
     }
 
 }
