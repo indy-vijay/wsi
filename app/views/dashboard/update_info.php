@@ -119,8 +119,10 @@
                         <div class="form-group">
                             <label for="" class="col-md-4 control-label">State</label>
                             <div class="col-md-8">
-                                <select class="form-control">
-                                    <option value="">California</option>
+                                <select class="form-control" name="state">
+                                {% for state in states  %}
+                                    <option value="{{ state['state_abbr'] }}"  {% if address['state'] == state['state_abbr']%} selected="selected"{% endif %}>{{ state['state_name'] }}</option>
+                                {% endfor %}
                                 </select>
                             </div>
                         </div>

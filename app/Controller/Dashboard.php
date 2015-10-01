@@ -4,6 +4,7 @@ use \Customers;
 use \Address;
 use \Communication;
 use \Orders;
+use \States;
 
 class Dashboard extends \SlimController\SlimController
 {
@@ -54,8 +55,9 @@ class Dashboard extends \SlimController\SlimController
             $address = Address::getAddressForContactId($contact_id);
             $communication = Communication::getCommunicationForContactId($contact_id);
             $customer = Customers::getCustomer($contact_id);  
+            $states = States::all()->toArray();
        
-            $this->render('dashboard/update_info',compact('address','communication','customer','token'));
+            $this->render('dashboard/update_info',compact('address','communication','customer','token','states'));
         }
     }
 

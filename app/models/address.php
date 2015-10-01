@@ -39,8 +39,8 @@ class Address extends Eloquent
         self::where('contact_id','=',$contact_id)
                ->update(array(
                                 'address_1' => $req->post('address_1'),
-                                'city'  => $req->post('city'),
-                                
+                                'city'      => $req->post('city'),
+                                'state'     => $req->post('state')
                        ));
     }
 
