@@ -11,8 +11,8 @@
                     <ul class="list-inline dashboard-nav">
                         <li><a href="index.php">Dashboard</a></li>
                         <li><a href="previous-orders.php">Previous Orders</a></li>
-                        <li><a href="create-new-order.php">Create New Order</a></li>
-                        <li><a href="create-reorder.php">Create Reorder</a></li>
+                        <li><a href="create-order">Create New Order</a></li>
+                        <li><a href="create-reorder">Create Reorder</a></li>
                         <!-- <li><a href="cart.php">Cart</a></li> -->
                     </ul>
                 </div>
@@ -21,8 +21,8 @@
 
             <div class="btn-section">
 
-                <a href="create-new-order.php" class="btn btn-default">create new order</a>
-                <a href="create-reorder.php" class="btn btn-default">create reorder</a>
+                <a href="create-order" class="btn btn-default">create new order</a>
+                <a href="create-reorder" class="btn btn-default">create reorder</a>
             </div>
 
             <div class="row">

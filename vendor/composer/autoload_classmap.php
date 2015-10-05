@@ -11,6 +11,7 @@ return array(
     'Controller\\Dashboard' => $baseDir . '/app/controller/Dashboard.php',
     'Controller\\Home' => $baseDir . '/app/controller/Home.php',
     'Controller\\Login' => $baseDir . '/app/controller/Login.php',
+    'Controller\\Order' => $baseDir . '/app/controller/Order.php',
     'Controller\\Parameters' => $baseDir . '/app/controller/Parameters.php',
     'Controller\\Register' => $baseDir . '/app/controller/Register.php',
     'Controller\\Session' => $baseDir . '/app/controller/Session.php',

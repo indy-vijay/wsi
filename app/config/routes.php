@@ -8,7 +8,10 @@ define('CUSTOM_ROUTES', serialize(array(
     '/forgot-password'     =>  'Login:forgot',
     '/logout'              =>  'Login:logout',
     '/dashboard'           =>  'Dashboard:index',
-    '/update-info'  	   =>  'Dashboard:updateInfo'
+    '/update-info'  	   =>  'Dashboard:updateInfo',
+    '/create-order'        =>  'Order:createOrder',
+    // '/create-order/type'   =>  'Order:createOrderStepTwo',
+    '/create-reorder/:id'  =>  'Order:createReOrder'
     
 )));
  

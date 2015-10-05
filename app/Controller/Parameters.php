@@ -14,6 +14,18 @@ class Parameters extends \SlimController\SlimController
 						    'D'  =>   'Delivered',
 						);
 
+	protected static $orderCategory = array(
+						   'SP'  => 'Screen Printing',
+						   'E'   => 'Embroidery',
+						   'PI'  => 'Promotional Items'
+					    );
+
+	protected static $deliveryType = array(
+						   'LD'  => 'Local Delivery',
+						   'WC'  => 'Will Call / Pick Up',
+						   'S'   => 'Shipping'
+						);
+
 	public static function getParameters($property)
 	{	
 			return self::${$property};

@@ -23,5 +23,6 @@ $view->addGlobal('httpBasePath', BASE_URL);
 $view->addGlobal('includePath', INC_PATH);
 $view->addGlobal('customIncludePath', CUSTOM_INC_PATH);
 
+	
 $app->addRoutes(unserialize(CUSTOM_ROUTES));
 $app->run();
