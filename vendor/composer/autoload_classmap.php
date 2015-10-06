@@ -17,6 +17,7 @@ return array(
     'Controller\\Session' => $baseDir . '/app/controller/Session.php',
     'Customers' => $baseDir . '/app/models/customers.php',
     'EasyPeasyICS' => $vendorDir . '/phpmailer/phpmailer/extras/EasyPeasyICS.php',
+    'OrderLine' => $baseDir . '/app/models/orderLine.php',
     'Orders' => $baseDir . '/app/models/orders.php',
     'PHPMailer' => $vendorDir . '/phpmailer/phpmailer/class.phpmailer.php',
     'PHPMailerOAuth' => $vendorDir . '/phpmailer/phpmailer/class.phpmaileroauth.php',
