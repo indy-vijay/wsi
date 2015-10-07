@@ -6,6 +6,7 @@ use \Communication;
 use \Orders;
 use \OrderLine;
 use \States;
+use \Artworks;
 
 class Order extends \SlimController\SlimController
 {
@@ -30,7 +31,9 @@ class Order extends \SlimController\SlimController
 	public function createOrderStepTwo($category_type,$orderCategories)
 	{
 		$req = $this->app->request();
-		$category_type = strtoupper($category_type);
+		$category_type         = strtoupper($category_type);
+		$fileNameWithPath      = '';
+		$artwork_id   		   = 0;
 
 		if(! array_key_exists($category_type, $orderCategories )){
 
@@ -38,11 +41,35 @@ class Order extends \SlimController\SlimController
 
 		}
 		else{
-
+		
 			$contact_id = Login::isLoggedIn();
 			if( NULL !== $req->post('order_placed') &&  $req->post('order_placed') == 1 && Session::validateSubmission($req) && $contact_id > 0){
+				
+				//create order
 				$order_id = Orders::createOrder($req,$contact_id);
 
+				//create artwork
+				$artworkUploaded = $req->post('fileNameWithPath');
+				if( strlen($artworkUploaded) > 0 && file_exists($artworkUploaded) ){
+					//move the file	
+					$design_name   = basename($artworkUploaded);
+					$preview_image = $artworkUploaded; //dummy, remove this with proper info
+					$newFileName   = basename($artworkUploaded);
+					
+					if(copy($artworkUploaded, getcwd() . ARTWORK_UPLOAD_PATH . $newFileName)){
+
+						
+						$artwork_id = Artworks::createArtwork($contact_id, $design_name, $artworkUploaded,$preview_image);
+
+					}
+					else{
+						//Log the file copy error
+					}
+				}
+				else{
+					 //Log the file not found error
+				}
+				//create order lines
 				$rowCount = count($req->post('desc'));
 
 				$insertRows = array();
@@ -70,8 +97,8 @@ class Order extends \SlimController\SlimController
 											'qty_adult_4xl' => $req->post('qty_adult_4xl')[$i],
 											'qty_adult_5xl' => $req->post('qty_adult_5xl')[$i],
 											'qty_adult_6xl' => $req->post('qty_adult_6xl')[$i],
-											'total_pieces' => 20,											
-											'artwork_id' => '20'
+											'total_pieces'  => 20,											
+											'artwork_id'    => $artwork_id 
 
 									);
 				}
@@ -80,10 +107,26 @@ class Order extends \SlimController\SlimController
 					
 			}
 
+			if ( count($_FILES) == 1 && isset( $_FILES['artwork']) ){
+
+				if($_FILES['artwork']['error'] != 0){
+					//log the error
+				}
+				else{
+
+					$fileTmpPath = $_FILES['artwork']['tmp_name'];
+					$fileName    = uniqid() . $_FILES['artwork']['name'] ;
+					$fileNameWithPath = getcwd() . ARTWORK_UPLOAD_PATH . "temp\\".$fileName;
+					move_uploaded_file( $fileTmpPath, $fileNameWithPath);
+
+				}
+			}
+
 			$this->render('order/create-2',array(
 				'token'   => Session::setToken(),
 				'categoryType' => $category_type,
-				'categoryName' => $orderCategories[$category_type]
+				'categoryName' => $orderCategories[$category_type],
+				'fileNameWithPath' => $fileNameWithPath
 			));
 
 		}

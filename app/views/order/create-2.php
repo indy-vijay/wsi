@@ -171,6 +171,7 @@
                     </table>
                 </div>
                 <input type="hidden" name="token" value="{{token}}">
+                <input type="hidden" name="fileNameWithPath" value="{{fileNameWithPath}}">
                 <button class="btn btn-link addnewrow" type="button"><i class="fa fa-plus"></i> Add New</button>
 
                 <p class="text-right">
@@ -189,14 +190,15 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Upload Artwork</h4>
             </div>
+             <form class="form-horizontal" method="post" enctype="multipart/form-data">
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
-                        <form class="form-horizontal">
+                       
                             <div class="form-group">
                                 <label for="" class="col-md-4 control-label">Type:</label>
                                 <div class="col-md-8">
-                                    <input type="file">
+                                    <input type="file" name="artwork" value="">
                                 </div>
                             </div>
 
@@ -213,15 +215,16 @@
                                     </select>
                                 </div>
                             </div>
-                        </form>
+                        
                     </div>
                 </div>
                 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default">Submit</button>
+                <button type="submit" class="btn btn-default" onClick="">Submit</button>
             </div>
         </div>
+        </form>
     </div>
 </div>
 {%endblock%}
