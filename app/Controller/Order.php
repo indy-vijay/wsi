@@ -13,6 +13,7 @@ class Order extends \SlimController\SlimController
 
 	public function createOrderAction()
 	{
+		// echo __DIR__;
 		 $orderCategories =  Parameters::getParameters('orderCategory');
 	
 		if( $category_type = $this->app->request()->get('type')){
@@ -55,8 +56,8 @@ class Order extends \SlimController\SlimController
 					$design_name   = basename($artworkUploaded);
 					$preview_image = $artworkUploaded; //dummy, remove this with proper info
 					$newFileName   = basename($artworkUploaded);
-					
-					if(copy($artworkUploaded, getcwd() . ARTWORK_UPLOAD_PATH . $newFileName)){
+
+					if(copy($artworkUploaded,  ARTWORK_UPLOAD_PATH . $newFileName)){
 
 						
 						$artwork_id = Artworks::createArtwork($contact_id, $design_name, $artworkUploaded,$preview_image);
@@ -116,7 +117,7 @@ class Order extends \SlimController\SlimController
 
 					$fileTmpPath = $_FILES['artwork']['tmp_name'];
 					$fileName    = uniqid() . $_FILES['artwork']['name'] ;
-					$fileNameWithPath = getcwd() . ARTWORK_UPLOAD_PATH . "temp\\".$fileName;
+					$fileNameWithPath = ARTWORK_UPLOAD_PATH_TEMP .$fileName;
 					move_uploaded_file( $fileTmpPath, $fileNameWithPath);
 
 				}
