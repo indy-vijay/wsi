@@ -10,6 +10,7 @@ define('CUSTOM_ROUTES', serialize(array(
     '/dashboard'           =>  'Dashboard:index',
     '/update-info'  	   =>  'Dashboard:updateInfo',
     '/create-order'        =>  'Order:createOrder',
+    '/confirm-order'       =>  'Order:confirmOrder',
     // '/create-order/type'   =>  'Order:createOrderStepTwo',
     '/create-reorder/:id'  =>  'Order:createReOrder'
     

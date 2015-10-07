@@ -34,6 +34,7 @@ class Order extends \SlimController\SlimController
 		$category_type         = strtoupper($category_type);
 		$fileNameWithPath      = '';
 		$artwork_id   		   = 0;
+		$order_id  			   = 0;
 
 		if(! array_key_exists($category_type, $orderCategories )){
 
@@ -76,7 +77,8 @@ class Order extends \SlimController\SlimController
 				OrderLine::insert($insertRows);
 				unset($insertRows);
 
-				$this->app->redirect(BASE_URL . 'dashboard');
+				Session::setPendingOrder($order_id);
+				$this->app->redirect(BASE_URL . 'confirm-order');
 					
 			}
 
@@ -91,6 +93,38 @@ class Order extends \SlimController\SlimController
 
 		}
 		 
+	}
+
+	public function confirmOrderAction()
+	{
+		//ADD SECURITY TO MAKE SURE THE LAST PAGE IS ORDER CREATE STEP 2
+				
+		$req = $this->app->request();
+    	$contact_id = Login::isLoggedIn();
+    	$order_id = Session::getPendingOrder();
+  	
+    	if(!$contact_id || ! $contact_id > 0 || ! $order_id > 0){
+
+    		$this->render('invalid');
+
+    	}
+    	else{
+			
+			$order = Orders::getOrder($order_id,$contact_id);
+			
+			if( count($order) == 1 ){
+				$order = $order[0];
+				$order['category']      =  Parameters::getParameters('orderCategory')[$order['category']]; //Get the text for order category
+				$order['delivery_type'] = Parameters::getParameters('deliveryType')[$order['delivery_type']];
+			}
+
+			$order_lines = OrderLine::getOrderLines($order_id);          
+            $address = Address::getAddressForContactId($contact_id);
+            $communication = Communication::getCommunicationForContactId($contact_id);
+            $customer = Customers::getCustomer($contact_id);  
+        }
+		
+		$this->render('order/confirm', compact('address','communication','customer','order','order_lines'));
 	}
 
 	public function uploadTempArtwork()

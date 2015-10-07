@@ -33,4 +33,16 @@ class Orders extends Eloquent
    	
 	}
 
+    public static function getOrder($order_id, $contact_id = NULL)
+    {
+        $query = self::query();
+        $query = $query->where('order_id',$order_id);
+
+        if($contact_id)
+            $query = $query->where('contact_id',$contact_id);
+
+        return $query->get()
+                        ->toArray();   
+    }
+
 }

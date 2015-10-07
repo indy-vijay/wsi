@@ -216,6 +216,7 @@ class Request
      */
     public function get($key = null, $default = null)
     {
+
         if (!isset($this->env['slim.request.query_hash'])) {
             $output = array();
             if (function_exists('mb_parse_str') && !isset($this->env['slim.tests.ignore_multibyte'])) {

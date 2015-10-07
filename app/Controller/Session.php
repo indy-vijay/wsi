@@ -24,4 +24,19 @@ class Session
 		self::unsetToken();
 		return $valid;
 	}
+
+	public static function setPendingOrder($order_id)
+	{
+	 	$_SESSION['unconfirmed_order_id'] = $order_id;
+	}
+
+	public static function getPendingOrder()
+	{
+	 	return  isset($_SESSION['unconfirmed_order_id']) ? $_SESSION['unconfirmed_order_id'] : false ;
+	}
+
+	public static function unsetPendingOrder()
+	{
+	 	unset($_SESSION['unconfirmed_order_id']);
+	}
 }
