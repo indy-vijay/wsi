@@ -64,10 +64,12 @@ class Order extends \SlimController\SlimController
 					}
 					else{
 						//Log the file copy error
+						// echo "Error copying " . $artworkUploaded . " to " . ARTWORK_UPLOAD_PATH . $newFileName;
 					}
 				}
 				else{
 					 //Log the file not found error
+					 // echo "File not found " .  $artworkUploaded ;die;
 				}
 				//create order lines
 				$insertRows = $this->getOrderLines($req, $order_id,$artwork_id);				
@@ -78,7 +80,7 @@ class Order extends \SlimController\SlimController
 					
 			}
 
-			$this->uploadTempArtwork(); //move artwork file to temp directory
+			$fileNameWithPath = $this->uploadTempArtwork(); //move artwork file to temp directory
 
 			$this->render('order/create-2',array(
 				'token'   => Session::setToken(),
@@ -104,7 +106,7 @@ class Order extends \SlimController\SlimController
 					$fileName    = uniqid() . $_FILES['artwork']['name'] ;
 					$fileNameWithPath = ARTWORK_UPLOAD_PATH_TEMP .$fileName;
 					move_uploaded_file( $fileTmpPath, $fileNameWithPath);
-
+					return $fileNameWithPath;
 				}
 			}
 	}
@@ -123,7 +125,6 @@ class Order extends \SlimController\SlimController
 									'brand'			=> $req->post('brand')[$i],
 									'style' 	    => $req->post('style')[$i],
 									'color'         => $req->post('color')[$i],
-									// 'color'         => 'Black',
 									'order_id'      => $order_id,
 									'qty_youth_xs'  => $req->post('qty_youth_xs')[$i],
 									'qty_youth_s'   => $req->post('qty_youth_s')[$i],
