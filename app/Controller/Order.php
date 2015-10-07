@@ -13,7 +13,6 @@ class Order extends \SlimController\SlimController
 
 	public function createOrderAction()
 	{
-		// echo __DIR__;
 		 $orderCategories =  Parameters::getParameters('orderCategory');
 	
 		if( $category_type = $this->app->request()->get('type')){
@@ -71,44 +70,30 @@ class Order extends \SlimController\SlimController
 					 //Log the file not found error
 				}
 				//create order lines
-				$rowCount = count($req->post('desc'));
-
-				$insertRows = array();
-				for($i=0; $i < $rowCount; $i++){
-			
-					$insertRows[] = array(
-											'desc'  	    => $req->post('desc')[$i],
-											'brand'			=> $req->post('brand')[$i],
-											'style' 	    => $req->post('style')[$i],
-											// 'color'         => $req->post('color')[$i],
-											'color'         => 'Black',
-											'order_id'      => $order_id,
-											'qty_youth_xs'  => $req->post('qty_youth_xs')[$i],
-											'qty_youth_s'   => $req->post('qty_youth_s')[$i],
-											'qty_youth_m'   => $req->post('qty_youth_m')[$i],
-											'qty_youth_l'   => $req->post('qty_youth_l')[$i],
-											'qty_youth_xl'  => $req->post('qty_youth_xl')[$i],
-											'qty_adult_xs'  => $req->post('qty_adult_xs')[$i],
-											'qty_adult_s'   => $req->post('qty_adult_s')[$i],
-											'qty_adult_m'   => $req->post('qty_adult_m')[$i],
-											'qty_adult_l'   => $req->post('qty_adult_l')[$i],
-											'qty_adult_xl'  => $req->post('qty_adult_xl')[$i],
-											'qty_adult_2xl' => $req->post('qty_adult_2xl')[$i],
-											'qty_adult_3xl' => $req->post('qty_adult_3xl')[$i],
-											'qty_adult_4xl' => $req->post('qty_adult_4xl')[$i],
-											'qty_adult_5xl' => $req->post('qty_adult_5xl')[$i],
-											'qty_adult_6xl' => $req->post('qty_adult_6xl')[$i],
-											'total_pieces'  => 20,											
-											'artwork_id'    => $artwork_id 
-
-									);
-				}
-			
+				$insertRows = $this->getOrderLines($req, $order_id,$artwork_id);				
 				OrderLine::insert($insertRows);
+				unset($insertRows);
+
+				$this->app->redirect(BASE_URL . 'dashboard');
 					
 			}
 
-			if ( count($_FILES) == 1 && isset( $_FILES['artwork']) ){
+			$this->uploadTempArtwork(); //move artwork file to temp directory
+
+			$this->render('order/create-2',array(
+				'token'   => Session::setToken(),
+				'categoryType' => $category_type,
+				'categoryName' => $orderCategories[$category_type],
+				'fileNameWithPath' => $fileNameWithPath
+			));
+
+		}
+		 
+	}
+
+	public function uploadTempArtwork()
+	{
+		if ( count($_FILES) == 1 && isset( $_FILES['artwork']) ){
 
 				if($_FILES['artwork']['error'] != 0){
 					//log the error
@@ -122,16 +107,46 @@ class Order extends \SlimController\SlimController
 
 				}
 			}
+	}
 
-			$this->render('order/create-2',array(
-				'token'   => Session::setToken(),
-				'categoryType' => $category_type,
-				'categoryName' => $orderCategories[$category_type],
-				'fileNameWithPath' => $fileNameWithPath
-			));
+	public function getOrderLines($req, $order_id,$artwork_id)
+	{
+		$rowCount = count($req->post('desc'));
 
+		$insertRows = array();
+		for($i=0; $i < $rowCount; $i++){
+
+			$total_pieces = $req->post('qty_youth_xs')[$i] + $req->post('qty_youth_s')[$i] + $req->post('qty_youth_m')[$i] + $req->post('qty_youth_l')[$i] + $req->post('qty_youth_xl')[$i] + $req->post('qty_adult_xs')[$i] + $req->post('qty_adult_s')[$i] + $req->post('qty_adult_m')[$i] + $req->post('qty_adult_l')[$i] + $req->post('qty_adult_xl')[$i] + $req->post('qty_adult_2xl')[$i] + $req->post('qty_adult_3xl')[$i] + $req->post('qty_adult_4xl')[$i] + $req->post('qty_adult_5xl')[$i] + $req->post('qty_adult_6xl')[$i];
+	
+			$insertRows[] = array(
+									'desc'  	    => $req->post('desc')[$i],
+									'brand'			=> $req->post('brand')[$i],
+									'style' 	    => $req->post('style')[$i],
+									'color'         => $req->post('color')[$i],
+									// 'color'         => 'Black',
+									'order_id'      => $order_id,
+									'qty_youth_xs'  => $req->post('qty_youth_xs')[$i],
+									'qty_youth_s'   => $req->post('qty_youth_s')[$i],
+									'qty_youth_m'   => $req->post('qty_youth_m')[$i],
+									'qty_youth_l'   => $req->post('qty_youth_l')[$i],
+									'qty_youth_xl'  => $req->post('qty_youth_xl')[$i],
+									'qty_adult_xs'  => $req->post('qty_adult_xs')[$i],
+									'qty_adult_s'   => $req->post('qty_adult_s')[$i],
+									'qty_adult_m'   => $req->post('qty_adult_m')[$i],
+									'qty_adult_l'   => $req->post('qty_adult_l')[$i],
+									'qty_adult_xl'  => $req->post('qty_adult_xl')[$i],
+									'qty_adult_2xl' => $req->post('qty_adult_2xl')[$i],
+									'qty_adult_3xl' => $req->post('qty_adult_3xl')[$i],
+									'qty_adult_4xl' => $req->post('qty_adult_4xl')[$i],
+									'qty_adult_5xl' => $req->post('qty_adult_5xl')[$i],
+									'qty_adult_6xl' => $req->post('qty_adult_6xl')[$i],
+									'total_pieces'  => $total_pieces,											
+									'artwork_id'    => $artwork_id 
+
+							);
 		}
-		 
+
+		return $insertRows;
 	}
 
 	public function createReOrderAction()

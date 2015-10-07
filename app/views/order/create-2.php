@@ -145,7 +145,7 @@
                                 </td>
                                 <td>
                                     <select class="form-control" name="color[]">
-                                        <option value="">Black</option>
+                                        <option value="Black">Black</option>
                                     </select>
                                 </td>
                     
