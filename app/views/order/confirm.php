@@ -104,7 +104,7 @@
             <h4>Shipping Information</h4>
 
 
-            <form class="form-horizontal" method="post" action="/order-final">
+            <form class="form-horizontal" method="post" action="{{httpBasePath}}/order-final">
                 <div class="row">
                     <div class="col-md-4 col-md-offset-2">
                         <div class="form-group">
