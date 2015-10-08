@@ -138,7 +138,7 @@
             </div>
         </div>
 
-        <h3>Shipping Address</h3>
+      <!--   <h3>Shipping Address</h3>
 
         <div class="row">
             <div class="col-md-6">
@@ -221,7 +221,7 @@
                 </div>
             </div>
         </div>
-
+ -->
         <input type="hidden" name="token" value="{{token}}">
 
         <div class="form-group">

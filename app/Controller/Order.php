@@ -122,9 +122,56 @@ class Order extends \SlimController\SlimController
             $address = Address::getAddressForContactId($contact_id);
             $communication = Communication::getCommunicationForContactId($contact_id);
             $customer = Customers::getCustomer($contact_id);  
+            $states = States::all()->toArray();
         }
+
+        $token = Session::setToken();
 		
-		$this->render('order/confirm', compact('address','communication','customer','order','order_lines'));
+		$this->render('order/confirm', compact('address','communication','customer','order','order_lines','states','token'));
+	}
+
+	public function orderDetailAction($order_id)
+	{
+		$contact_id = Login::isLoggedIn();
+		$req = $this->app->request();
+		$isValidReq = false;
+		
+		if( $contact_id > 0 && isset($order_id) && $order_id > 0 ){
+			
+			$order = Orders::getOrder($order_id,$contact_id);
+			
+			if( count($order) == 1){
+			
+				$order = $order[0];
+
+				$order['category']      =  Parameters::getParameters('orderCategory')[$order['category']]; //Get the text for order category
+				$order['delivery_type'] = Parameters::getParameters('deliveryType')[$order['delivery_type']];
+				$order_lines 			= OrderLine::getOrderLines($order_id);    
+				$isValidReq 			= true;
+
+				$this->render('order/detail',compact('order','order_lines'));
+			}
+    	}
+
+    	if(! $isValidReq )
+    		$this->render('invalid');
+    	
+	}
+
+	public function confirmFinalAction()
+	{
+		$contact_id = Login::isLoggedIn();
+		$req = $this->app->request();
+		if(!$contact_id || ! $contact_id > 0 || !Session::validateSubmission($req) || !Session::getPendingOrder() ){
+
+    		$this->render('invalid');
+
+    	}
+    	else{
+
+    		Session::unsetPendingOrder();
+			$this->render('order/confirm-final');
+		}
 	}
 
 	public function uploadTempArtwork()
@@ -159,7 +206,7 @@ class Order extends \SlimController\SlimController
 									'brand'			=> $req->post('brand')[$i],
 									'style' 	    => $req->post('style')[$i],
 									'color'         => $req->post('color')[$i],
-									'order_id'      => $order_id,
+									'order_id'      => $order_id,							
 									'qty_youth_xs'  => $req->post('qty_youth_xs')[$i],
 									'qty_youth_s'   => $req->post('qty_youth_s')[$i],
 									'qty_youth_m'   => $req->post('qty_youth_m')[$i],

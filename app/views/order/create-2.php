@@ -13,7 +13,6 @@
                         <li><a href="previous-orders.php">Previous Orders</a></li>
                         <li><a href="create-order">Create New Order</a></li>
                         <li><a href="create-reorder.php">Create Reorder</a></li>
-                        <li><a href="cart.php">Cart</a></li>
                     </ul>
                 </div>
             </div>

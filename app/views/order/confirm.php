@@ -9,9 +9,9 @@
                 </div>
                 <div class="col-md-8">
                     <ul class="list-inline dashboard-nav">
-                        <li><a href="dashboard">Dashboard</a></li>
+                        <li><a href="{{httpBasePath}}dashboard">Dashboard</a></li>
                         <li><a href="previous-orders.php">Previous Orders</a></li>
-                        <li><a href="create-order">Create New Order</a></li>
+                        <li><a href="{{httpBasePath}}create-order">Create New Order</a></li>
                         <li><a href="create-reorder.php">Create Reorder</a></li>                      
                     </ul>
                 </div>
@@ -104,25 +104,25 @@
             <h4>Shipping Information</h4>
 
 
-            <form class="form-horizontal">
+            <form class="form-horizontal" method="post" action="/order-final">
                 <div class="row">
                     <div class="col-md-4 col-md-offset-2">
                         <div class="form-group">
                             <label for="" class="col-sm-4 control-label">First Name</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" value="{{ customer['first_name'] }}" placeholder="">
+                                <input type="text" class="form-control" value="{{ customer['first_name'] }}" name="first_name" placeholder="">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="" class="col-sm-4 control-label">Email Address</label>
                             <div class="col-sm-8">
-                                <input type="email" class="form-control" placeholder="">
+                                <input type="email" class="form-control" value="{{ communication['email'] }}" name="email" placeholder="">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="" class="col-sm-4 control-label">Phone Number</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" placeholder=""  name="home_phone" value="{{ communication['home_phone'] }}">
                             </div>
                         </div>
                         
@@ -131,19 +131,19 @@
                         <div class="form-group">
                             <label for="" class="col-sm-4 control-label">Last Name</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" value="{{ customer['last_name'] }}" name="last_name" placeholder="">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="" class="col-sm-4 control-label">Alternate Email</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" placeholder=""  name="email_alternate" value="{{ communication['email_alternate'] }}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="" class="col-sm-4 control-label">Cell Phone</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" placeholder="" name="mobile" value="{{ communication['mobile'] }}">
                             </div>
                         </div>
                     </div>
@@ -154,13 +154,13 @@
                         <div class="form-group">
                             <label for="" class="col-sm-4 control-label">Fax Number</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" placeholder="" name="fax" value="{{ communication['fax'] }}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="" class="col-sm-4 control-label">Company</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" name="company_name" value="{{ customer['company_name'] }}" placeholder="">
                             </div>
                         </div>
                     </div>
@@ -171,16 +171,18 @@
                         <div class="form-group">
                             <label for="" class="col-sm-4 control-label">Address</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" name="address_1" value="{{ address['address_1'] }}" placeholder="">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="" class="col-sm-4 control-label">State</label>
                             <div class="col-sm-8">
-                                <select class="form-control">
-                                    <option value="">California</option>
-                                </select>
+                                <select class="form-control" name="state">
+                                {% for state in states  %}
+                                    <option value="{{ state['state_abbr'] }}"  {% if address['state'] == state['state_abbr']%} selected="selected"{% endif %}>{{ state['state_name'] }}</option>
+                                {% endfor %}
+                                </select>                               
                             </div>
                         </div>
                     </div>
@@ -188,19 +190,20 @@
                         <div class="form-group">
                             <label for="" class="col-sm-4 control-label">City</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" name="city" value="{{ address['city'] }}" placeholder="">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="" class="col-sm-4 control-label">Zip</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" name="zip" value="{{ address['zip'] }}" placeholder="">
                             </div>
                         </div>
                         <p class="text-right"><button type="submit" class="btn btn-default">place order</button></p>
 
                     </div>
                 </div>
+                <input type="hidden" name="token" value="{{ token }}">
             </form>
 
 

@@ -4,7 +4,7 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 define( 'BASE_DIR', __DIR__ ) ;
-
+		
 require 'vendor/autoload.php';
 
 use SlimController\SlimController;
@@ -25,6 +25,5 @@ $view->addGlobal('httpBasePath', BASE_URL);
 $view->addGlobal('includePath', INC_PATH);
 $view->addGlobal('customIncludePath', CUSTOM_INC_PATH);
 
-	
 $app->addRoutes(unserialize(CUSTOM_ROUTES));
 $app->run();

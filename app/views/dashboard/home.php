@@ -9,9 +9,9 @@
                 </div>
                 <div class="col-md-8">
                     <ul class="list-inline dashboard-nav">
-                        <li><a href="index.php">Dashboard</a></li>
+                        <li><a href="{{httpBasePath}}dashboard">Dashboard</a></li>
                         <li><a href="previous-orders.php">Previous Orders</a></li>
-                        <li><a href="create-order">Create New Order</a></li>
+                        <li><a href="{{httpBasePath}}create-order">Create New Order</a></li>
                         <li><a href="create-reorder">Create Reorder</a></li>
                         <!-- <li><a href="cart.php">Cart</a></li> -->
                     </ul>
@@ -77,7 +77,7 @@
                                 <tr>
                                     <td>{{ customerOrder['order_id']}}</td>
                                     <td>{{ orderStatuses[customerOrder['status']] }}</td>
-                                    <td><a href="order-details.php">Details</a></td>
+                                    <td><a href="{{httpBasePath}}order-detail/{{customerOrder['order_id']}}">Details</a></td>
                                 </tr>
                              
                                {% endfor %}

@@ -12,7 +12,9 @@ define('CUSTOM_ROUTES', serialize(array(
     '/create-order'        =>  'Order:createOrder',
     '/confirm-order'       =>  'Order:confirmOrder',
     // '/create-order/type'   =>  'Order:createOrderStepTwo',
-    '/create-reorder/:id'  =>  'Order:createReOrder'
+    '/create-reorder/:id'  =>  'Order:createReOrder',
+    '/order-final'         =>  'Order:confirmFinal',
+    '/order-detail/:id'    =>  'Order:orderDetail',
     
 )));
  

@@ -27,7 +27,7 @@ class Orders extends Eloquent
             								'type'             => $req->post('type'),
             								'for_event'        => $req->post('for_event'),
             								'in_hands_date'    => $req->post('in_hands_date'),
-            								// 'type'       => $req->post('B'),
+            								'status'           => 'SR',
             						)
             				);
    	
