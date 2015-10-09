@@ -866,5 +866,48 @@
             }
         ],
         "description": "PHPMailer is a full-featured email creation and transfer class for PHP"
+    },
+    {
+        "name": "rfd/imagemagick",
+        "version": "1.1.0",
+        "version_normalized": "1.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/rfdy/imagemagick.git",
+            "reference": "681d23e4ea4153f5842ff27803001160bda94670"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/rfdy/imagemagick/zipball/681d23e4ea4153f5842ff27803001160bda94670",
+            "reference": "681d23e4ea4153f5842ff27803001160bda94670",
+            "shasum": ""
+        },
+        "require-dev": {
+            "phpunit/phpunit": "~4.0"
+        },
+        "time": "2015-01-20 19:06:30",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Rfd\\ImageMagick\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Tyler Lawson",
+                "email": "tyler.lawson@yp.ca"
+            }
+        ],
+        "description": "RFD ImageMagick Library"
     }
 ]

@@ -10,6 +10,7 @@ return array(
     'Stringy\\' => array($vendorDir . '/danielstjules/stringy/src'),
     'Slim\\Views\\' => array($vendorDir . '/slim/views'),
     'Slim\\Csrf\\' => array($vendorDir . '/slim/csrf/src'),
+    'Rfd\\ImageMagick\\' => array($vendorDir . '/rfd/imagemagick'),
     'RKA\\' => array($vendorDir . '/akrabat/rka-slim-controller/RKA'),
     'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src'),
     'Illuminate\\Support\\' => array($vendorDir . '/illuminate/support'),

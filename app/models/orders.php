@@ -1,12 +1,13 @@
 <?php
 use Illuminate\Database\Eloquent\Model as Eloquent;
+use Carbon\Carbon;
 
 class Orders extends Eloquent 
 {
 
 	protected $fillable    = array('contact_id','date_completed','date_due','event_name','event_date','category','type','delivery_type','for_event','in_hands_date','status');
 
-    public    $timestamps   = false;
+    // public    $timestamps   = false;
 
 	public static function getOrdersForCustomer($contact_id)
 	{
@@ -28,6 +29,7 @@ class Orders extends Eloquent
             								'for_event'        => $req->post('for_event'),
             								'in_hands_date'    => $req->post('in_hands_date'),
             								'status'           => 'SR',
+                                            'created_at'       => Carbon::now()
             						)
             				);
    	

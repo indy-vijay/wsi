@@ -30,7 +30,7 @@ class Order extends \SlimController\SlimController
 
 	public function createOrderStepTwo($category_type,$orderCategories)
 	{
-		$req = $this->app->request();
+		$req 				   = $this->app->request();
 		$category_type         = strtoupper($category_type);
 		$fileNameWithPath      = '';
 		$artwork_id   		   = 0;
@@ -143,8 +143,7 @@ class Order extends \SlimController\SlimController
 			if( count($order) == 1){
 			
 				$order = $order[0];
-
-				$order['category']      =  Parameters::getParameters('orderCategory')[$order['category']]; //Get the text for order category
+				$order['category']      = Parameters::getParameters('orderCategory')[$order['category']]; //Get the text for order category
 				$order['delivery_type'] = Parameters::getParameters('deliveryType')[$order['delivery_type']];
 				$order_lines 			= OrderLine::getOrderLines($order_id);    
 				$isValidReq 			= true;
@@ -162,7 +161,7 @@ class Order extends \SlimController\SlimController
 	{
 		$contact_id = Login::isLoggedIn();
 		$req = $this->app->request();
-		if(!$contact_id || ! $contact_id > 0 || !Session::validateSubmission($req) || !Session::getPendingOrder() ){
+		if(!$contact_id || ! $contact_id > 0  || !Session::getPendingOrder() ){
 
     		$this->render('invalid');
 
@@ -172,6 +171,127 @@ class Order extends \SlimController\SlimController
     		Session::unsetPendingOrder();
 			$this->render('order/confirm-final');
 		}
+	}
+
+	public function createReOrderAction()
+	{
+		$contact_id = Login::isLoggedIn();
+		$req = $this->app->request();
+		
+		if(!$contact_id || ! ($contact_id > 0) ){
+
+			$this->render('invalid');
+			return false;
+		}
+
+
+		
+		$customerOrders   = Orders::getOrdersForCustomer($contact_id);
+   		 // $orderStatuses = Parameters::getParameters('orderStatus');
+		$token = Session::setToken();
+
+   		$this->render('order/reorder-create',compact('customerOrders','token'));
+		
+		
+	}
+
+	public function createReOrderStepTwoAction($order_id)
+	{
+		$contact_id = Login::isLoggedIn();
+		$req = $this->app->request();
+		$isValidReq = false;
+		
+		if( $contact_id > 0 && isset($order_id) && $order_id > 0 ){
+			
+			$order = Orders::getOrder($order_id,$contact_id);
+			
+			if( count($order) == 1){
+				
+				$fileNameWithPath = $this->uploadTempArtwork(); //move artwork file to temp directory
+				$order = $order[0];
+
+				$order['category_name'] = Parameters::getParameters('orderCategory')[$order['category']]; //Get the text for order category
+				$order['delivery_type_name'] = Parameters::getParameters('deliveryType')[$order['delivery_type']];
+				$order_lines 			= OrderLine::getOrderLines($order_id);    
+				$isValidReq 			= true;
+				$token 					= Session::setToken();
+				$this->render('order/reorder-create2',compact('order','order_lines','fileNameWithPath','token'));
+			}
+
+
+    	}
+
+    	if(! $isValidReq )
+    		$this->render('invalid');
+	}
+
+	public function submitReorderAction()
+	{
+		$contact_id = Login::isLoggedIn();
+		$req = $this->app->request();
+		$artwork_id = 0;
+
+		if( NULL !== $req->post('order_placed') &&  $req->post('order_placed') == 1 && Session::validateSubmission($req) && $contact_id > 0){
+			
+			//create order
+			$order_id = Orders::createOrder($req,$contact_id);
+
+			//create artwork
+			$artworkUploaded = $req->post('fileNameWithPath');
+			if( strlen($artworkUploaded) > 0 && file_exists($artworkUploaded) ){
+				//move the file	
+				$design_name   = basename($artworkUploaded);
+				$preview_image = $artworkUploaded; //dummy, remove this with proper info
+				$newFileName   = basename($artworkUploaded);
+
+				if(copy($artworkUploaded,  ARTWORK_UPLOAD_PATH . $newFileName)){
+
+					
+					$artwork_id = Artworks::createArtwork($contact_id, $design_name, $artworkUploaded,$preview_image);
+
+				}
+				else{
+					//Log the file copy error
+					// echo "Error copying " . $artworkUploaded . " to " . ARTWORK_UPLOAD_PATH . $newFileName;
+				}
+			}
+			else{
+				 //Log the file not found error
+				 // echo "File not found " .  $artworkUploaded ;die;
+			}
+			//create order lines
+			$insertRows = $this->getOrderLines($req, $order_id,$artwork_id);				
+			OrderLine::insert($insertRows);
+			unset($insertRows);
+
+			Session::setPendingOrder($order_id);
+			$this->app->redirect(BASE_URL . 'order-final');
+				
+		}
+		else{
+			$this->render('invalid');
+		}
+
+			
+	}
+
+	public function previousOrdersAction()
+	{
+		$req = $this->app->request();
+    	$contact_id = Login::isLoggedIn();
+
+    	if(!$contact_id || ! $contact_id > 0){
+
+    		$this->render('invalid');
+
+    	}
+    	else{
+
+    		$customerOrders = Orders::getOrdersForCustomer($contact_id);
+            // $orderStatuses  = Parameters::getParameters('orderStatus');
+   			
+    		$this->render('order/previous',compact('customerOrders'));
+    	}
 	}
 
 	public function uploadTempArtwork()
@@ -229,11 +349,6 @@ class Order extends \SlimController\SlimController
 		}
 
 		return $insertRows;
-	}
-
-	public function createReOrderAction()
-	{
-		echo "create";
 	}
 
 }

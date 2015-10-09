@@ -9,10 +9,10 @@
                 </div>
                 <div class="col-md-8">
                     <ul class="list-inline dashboard-nav">
-                        <li><a href="dashboard">Dashboard</a></li>
-                        <li><a href="previous-orders.php">Previous Orders</a></li>
-                        <li><a href="create-order">Create New Order</a></li>
-                        <li><a href="create-reorder.php">Create Reorder</a></li>
+                        <li><a href="{{httpBasePath}}dashboard">Dashboard</a></li>
+                        <li><a href="{{httpBasePath}}previous-orders">Previous Orders</a></li>
+                        <li><a href="{{httpBasePath}}create-order">Create New Order</a></li>
+                        <li><a href="{{httpBasePath}}create-reorder">Create Reorder</a></li>
                     </ul>
                 </div>
             </div>
