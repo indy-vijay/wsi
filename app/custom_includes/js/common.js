@@ -18,5 +18,17 @@ jQuery(function(){
 				"zip"     : "Please enter your zip",
 				"email"   : "Please enter your email"
 			}
-		})	
+		});	
+
+		jQuery("#login-form").validate({
+			rules: {
+				username: "required",
+				password: "required"
+			},
+
+			messages: {
+				username : "Username is required",
+				password : "Password is required"
+			}
+		});
 })

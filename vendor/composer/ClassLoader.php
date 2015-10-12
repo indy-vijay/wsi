@@ -217,6 +217,7 @@ class ClassLoader
      */
     public function setPsr4($prefix, $paths)
     {
+             
         if (!$prefix) {
             $this->fallbackDirsPsr4 = (array) $paths;
         } else {
