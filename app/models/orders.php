@@ -19,8 +19,15 @@ class Orders extends Eloquent
 
 	public static function createOrder($req,$contact_id)
 	{
-        $in_hands_date = Carbon::createFromFormat('m-d-Y',$req->post('in_hands_date'));
-        $in_hands_date = $in_hands_date->format('Y-m-d') ;
+        $in_hands_date = null;
+
+        if( null != $req->post('in_hands_date')){
+
+            $in_hands_date = Carbon::createFromFormat('m-d-Y',$req->post('in_hands_date'));
+            $in_hands_date = $in_hands_date->format('Y-m-d') ;
+
+        }
+
 		return self::insertGetId(
             					array(
             								'contact_id'      => $contact_id,

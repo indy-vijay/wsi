@@ -150,11 +150,13 @@ class Order extends \SlimController\SlimController
 			if( count($order) == 1){
 			
 				$order = $order[0];
+				$category_code          = $order['category'];
 				$order['category']      = Parameters::getParameters('orderCategory')[$order['category']]; //Get the text for order category
 				$order['delivery_type'] = Parameters::getParameters('deliveryType')[$order['delivery_type']];
 				$order_lines 			= OrderLine::getOrderLines($order_id);    
 				$isValidReq 			= true;
-				$this->render('order/detail',compact('order','order_lines'));
+
+				$this->render('order/detail',compact('order','order_lines','category_code'));
 			}
     	}
 

@@ -25,7 +25,12 @@
                         <dt>Date Ordered:</dt>
                         <dd>{{ "now"|date("m/d/Y") }}</dd>
                         <dt>In Hands Date:</dt> 
-                        <dd>{{ order['in_hands_date']|date("m/d/Y")}}</dd>
+
+                        <dd>
+                        {% if order['in_hands_date'] %}
+                          {{ order['in_hands_date']|date("m/d/Y")}}
+                        {% endif %}
+                        </dd>
                     </dl>
                 </div>
                 <div class="col-md-4">

@@ -37,7 +37,7 @@
                         <div class="form-group">
                             <label for="" class="col-md-4 control-label">Date Ordered:</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" value="{{ order['created_at'] }}" disabled>
+                                <input type="text" class="form-control" value="{{ order['created_at'] | date('m-d-Y') }}" disabled>
                             </div>
                         </div>
                     </div>
@@ -83,12 +83,14 @@
                 </div>
 
                 <div class="row hidden-sm hidden-xs voffset5">
+                 {% if(category_code != 'PI')%}
                     <div class="col-md-3 col-md-offset-3">
                         <p class="text-center">Youth Size</p>
                     </div>
                     <div class="col-md-6">
                         <p class="text-center">Adult Size</p>
                     </div>
+                  {% endif %}
                 </div>
                 <div class="table-responsive">
                     <table class="table order-table">
@@ -98,21 +100,11 @@
                                 <th>Brand</th>
                                 <th>Style #</th>
                                 <th>Color</th>
-                                <th>XS</th>
-                                <th>S</th>
-                                <th>M</th>
-                                <th>L</th>
-                                <th>XL</th>
-                                <th>XS</th>
-                                <th>S</th>
-                                <th>M</th>
-                                <th>L</th>
-                                <th>XL</th>
-                                <th>2XL</th>
-                                <th>3XL</th>
-                                <th>4XL</th>
-                                <th>5XL</th>
-                                <th>6XL</th>
+                            {% if(category_code == 'PI')%}}
+                                <th>Quantity</th>
+                            {% else %}
+                               {% include 'partials/create-order-size-headings.php' %}
+                            {% endif %}
                             </tr>
                         </thead>
 
@@ -123,21 +115,11 @@
                                 <td>{{ order_line['brand'] }}</td>
                                 <td>{{ order_line['style'] }}</td>
                                 <td>{{ order_line['color'] }}</td>
-                                <td>{{ order_line['qty_youth_xs'] }}</td>
-                                <td>{{ order_line['qty_youth_s'] }}</td>
-                                <td>{{ order_line['qty_youth_m'] }}</td>
-                                <td>{{ order_line['qty_youth_l'] }}</td>
-                                <td>{{ order_line['qty_youth_xl'] }}</td>
-                                <td>{{ order_line['qty_adult_xs'] }}</td>
-                                <td>{{ order_line['qty_adult_s'] }}</td>
-                                <td>{{ order_line['qty_adult_m'] }}</td>
-                                <td>{{ order_line['qty_adult_l'] }}</td>
-                                <td>{{ order_line['qty_adult_xl'] }}</td>
-                                <td>{{ order_line['qty_adult_2xl'] }}</td>
-                                <td>{{ order_line['qty_adult_3xl'] }}</td>
-                                <td>{{ order_line['qty_adult_4xl'] }}</td>
-                                <td>{{ order_line['qty_adult_5xl'] }}</td>
-                                <td>{{ order_line['qty_adult_6xl'] }}</td>
+                                {% if(category_code == 'PI')%}}
+                                 <td>{{ order_line['total_pieces'] }}</td>
+                                {% else %}
+                                 {% include 'partials/create-order-sizes.php'%}
+                                {% endif %}                          
                             </tr> 
                         {% endfor %}  
                         </tbody>

@@ -71,10 +71,10 @@
 
 				<button  class="btn btn-default">Submit</button>
 
-				<a href="/forgot-password" class="btn btn-link">Forgot Password</a>
+				<a href="{{httpBasePath}}forgot-password" class="btn btn-link">Forgot Password</a>
 
 	<div class="signUp">
-		Not registerd? <a href="/register">Create account</a>
+		Not registerd? <a href="{{httpBasePath}}register">Create account</a>
 	</div>
 			</div>
 
