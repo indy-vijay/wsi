@@ -1,0 +1,15 @@
+ <td>{{ order_line['qty_youth_xs'] }}</td>
+<td>{{ order_line['qty_youth_s'] }}</td>
+<td>{{ order_line['qty_youth_m'] }}</td>
+<td>{{ order_line['qty_youth_l'] }}</td>
+<td>{{ order_line['qty_youth_xl'] }}</td>
+<td>{{ order_line['qty_adult_xs'] }}</td>
+<td>{{ order_line['qty_adult_s'] }}</td>
+<td>{{ order_line['qty_adult_m'] }}</td>
+<td>{{ order_line['qty_adult_l'] }}</td>
+<td>{{ order_line['qty_adult_xl'] }}</td>
+<td>{{ order_line['qty_adult_2xl'] }}</td>
+<td>{{ order_line['qty_adult_3xl'] }}</td>
+<td>{{ order_line['qty_adult_4xl'] }}</td>
+<td>{{ order_line['qty_adult_5xl'] }}</td>
+<td>{{ order_line['qty_adult_6xl'] }}</td>

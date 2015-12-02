@@ -1,0 +1,15 @@
+<th>XS</th>
+<th>S</th>
+<th>M</th>
+<th>L</th>
+<th>XL</th>
+<th>XS</th>
+<th>S</th>
+<th>M</th>
+<th>L</th>
+<th>XL</th>
+<th>2XL</th>
+<th>3XL</th>
+<th>4XL</th>
+<th>5XL</th>
+<th>6XL</th>

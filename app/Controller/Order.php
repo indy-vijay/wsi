@@ -7,6 +7,7 @@ use \Orders;
 use \OrderLine;
 use \States;
 use \Artworks;
+use Carbon\Carbon;
 
 class Order extends \SlimController\SlimController
 {
@@ -30,7 +31,10 @@ class Order extends \SlimController\SlimController
 
 	public function createOrderStepTwo($category_type,$orderCategories)
 	{
+				
+		
 		$req 				   = $this->app->request();
+
 		$category_type         = strtoupper($category_type);
 		$fileNameWithPath      = '';
 		$artwork_id   		   = 0;
@@ -114,8 +118,11 @@ class Order extends \SlimController\SlimController
 			
 			if( count($order) == 1 ){
 				$order = $order[0];
+				$category_code = $order['category'];
 				$order['category']      =  Parameters::getParameters('orderCategory')[$order['category']]; //Get the text for order category
 				$order['delivery_type'] = Parameters::getParameters('deliveryType')[$order['delivery_type']];
+				
+
 			}
 
 			$order_lines = OrderLine::getOrderLines($order_id);          
@@ -127,7 +134,7 @@ class Order extends \SlimController\SlimController
 
         $token = Session::setToken();
 		
-		$this->render('order/confirm', compact('address','communication','customer','order','order_lines','states','token'));
+		$this->render('order/confirm', compact('address','communication','customer','order','order_lines','states','token','category_code'));
 	}
 
 	public function orderDetailAction($order_id)
@@ -147,7 +154,6 @@ class Order extends \SlimController\SlimController
 				$order['delivery_type'] = Parameters::getParameters('deliveryType')[$order['delivery_type']];
 				$order_lines 			= OrderLine::getOrderLines($order_id);    
 				$isValidReq 			= true;
-
 				$this->render('order/detail',compact('order','order_lines'));
 			}
     	}
@@ -209,12 +215,13 @@ class Order extends \SlimController\SlimController
 				
 				$fileNameWithPath = $this->uploadTempArtwork(); //move artwork file to temp directory
 				$order = $order[0];
-
+						
 				$order['category_name'] = Parameters::getParameters('orderCategory')[$order['category']]; //Get the text for order category
-				$order['delivery_type_name'] = Parameters::getParameters('deliveryType')[$order['delivery_type']];
-				$order_lines 			= OrderLine::getOrderLines($order_id);    
+				$order['delivery_type_name'] = Parameters::getParameters('deliveryType')[$order['delivery_type']];		
+				$order_lines 			= OrderLine::getOrderLines($order_id);  			
 				$isValidReq 			= true;
 				$token 					= Session::setToken();
+			
 				$this->render('order/reorder-create2',compact('order','order_lines','fileNameWithPath','token'));
 			}
 
@@ -319,14 +326,15 @@ class Order extends \SlimController\SlimController
 		$insertRows = array();
 		for($i=0; $i < $rowCount; $i++){
 
-			$total_pieces = $req->post('qty_youth_xs')[$i] + $req->post('qty_youth_s')[$i] + $req->post('qty_youth_m')[$i] + $req->post('qty_youth_l')[$i] + $req->post('qty_youth_xl')[$i] + $req->post('qty_adult_xs')[$i] + $req->post('qty_adult_s')[$i] + $req->post('qty_adult_m')[$i] + $req->post('qty_adult_l')[$i] + $req->post('qty_adult_xl')[$i] + $req->post('qty_adult_2xl')[$i] + $req->post('qty_adult_3xl')[$i] + $req->post('qty_adult_4xl')[$i] + $req->post('qty_adult_5xl')[$i] + $req->post('qty_adult_6xl')[$i];
-	
+			$total_pieces = $this->getTotalPieces($i);
+
 			$insertRows[] = array(
 									'desc'  	    => $req->post('desc')[$i],
 									'brand'			=> $req->post('brand')[$i],
 									'style' 	    => $req->post('style')[$i],
 									'color'         => $req->post('color')[$i],
 									'order_id'      => $order_id,							
+									'color'         => $req->post('color')[$i],
 									'qty_youth_xs'  => $req->post('qty_youth_xs')[$i],
 									'qty_youth_s'   => $req->post('qty_youth_s')[$i],
 									'qty_youth_m'   => $req->post('qty_youth_m')[$i],
@@ -349,6 +357,16 @@ class Order extends \SlimController\SlimController
 		}
 
 		return $insertRows;
+	}
+
+	public function getTotalPieces($i)
+	{
+		$req = $this->app->request();
+		if(isset($req->post('total_pieces')[$i] ))
+			return $req->post('total_pieces')[$i] ;
+	
+		return $req->post('qty_youth_xs')[$i] + $req->post('qty_youth_s')[$i] + $req->post('qty_youth_m')[$i] + $req->post('qty_youth_l')[$i] + $req->post('qty_youth_xl')[$i] + $req->post('qty_adult_xs')[$i] + $req->post('qty_adult_s')[$i] + $req->post('qty_adult_m')[$i] + $req->post('qty_adult_l')[$i] + $req->post('qty_adult_xl')[$i] + $req->post('qty_adult_2xl')[$i] + $req->post('qty_adult_3xl')[$i] + $req->post('qty_adult_4xl')[$i] + $req->post('qty_adult_5xl')[$i] + $req->post('qty_adult_6xl')[$i];
+		
 	}
 
 }

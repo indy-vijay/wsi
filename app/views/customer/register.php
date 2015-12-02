@@ -122,7 +122,9 @@
                     <label for="" class="col-md-4 control-label">State</label>
                     <div class="col-md-8">
                         <select class="form-control" name="state">
-                            <option value="Alabama">Alabama</option>
+                            {% for state in states  %}
+                                <option value="{{ state['state_abbr'] }}" >{{ state['state_name'] }}</option>
+                            {% endfor %}
                         </select>
                     </div>
                 </div>

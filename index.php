@@ -10,6 +10,12 @@ require 'vendor/autoload.php';
 use SlimController\SlimController;
 use Slim\Views\Twig as Twig;
 
+// use Rfd\ImageMagick\ImageMagick;
+// use Rfd\ImageMagick\CLI\OperationFactory;
+// use Rfd\ImageMagick\Image\File;
+// use Rfd\ImageMagick\Options\CommonOptions;
+// $im = new ImageMagick(new Rfd\ImageMagick\CLI\OperationFactory\OperationFactory());
+// die;
 // init app
 $app = New \SlimController\Slim(array(
     'view' => new Twig,

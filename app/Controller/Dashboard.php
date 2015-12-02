@@ -38,7 +38,7 @@ class Dashboard extends \SlimController\SlimController
     {
         $req = $this->app->request();
         $contact_id = Login::isLoggedIn();
-
+        $updated = false;
         if(!$contact_id || ! $contact_id > 0){
 
             $this->render('invalid');
@@ -49,6 +49,7 @@ class Dashboard extends \SlimController\SlimController
 
             if($req->isPost() && Session::validateSubmission($req)){
                 $this->updateUser($req);
+                $updated = true;
             }
             
             $token = Session::setToken();
@@ -57,7 +58,7 @@ class Dashboard extends \SlimController\SlimController
             $customer = Customers::getCustomer($contact_id);  
             $states = States::all()->toArray();
        
-            $this->render('dashboard/update_info',compact('address','communication','customer','token','states'));
+            $this->render('dashboard/update_info',compact('address','communication','customer','token','states','updated'));
         }
     }
 

@@ -277,3 +277,22 @@ label {
 .voffset7 { margin-top: 80px; }
 .voffset8 { margin-top: 100px; }
 .voffset9 { margin-top: 150px; }
+
+.loginform{
+        margin-top: 50px;
+}
+.
+loginform h1 {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 30px;
+        text-transform: uppercase;
+        text-align: center;
+}
+.signUp {
+font-size: 15px;
+margin-top: 20px;
+}
+.signUp a{
+    color: #e2383f;
+}

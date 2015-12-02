@@ -1,0 +1,15 @@
+<th width="5%">XS</th>
+<th width="5%">S</th>
+<th width="5%">M</th>
+<th width="5%">L</th>
+<th width="5%">XL</th>
+<th width="5%">XS</th>
+<th width="5%">S</th>
+<th width="5%">M</th>
+<th width="5%">L</th>
+<th width="5%">XL</th>
+<th width="5%">2XL</th>
+<th width="5%">3XL</th>
+<th width="5%">4XL</th>
+<th width="5%">5XL</th>
+<th width="5%">6XL</th>

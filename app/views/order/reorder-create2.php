@@ -10,7 +10,7 @@
                 <div class="col-md-8">
                     <ul class="list-inline dashboard-nav">
                         <li><a href="{{httpBasePath}}dashboard">Dashboard</a></li>
-                        <li><a href="{{httpBasePath}}previous-orders.php">Previous Orders</a></li>
+                        <li><a href="{{httpBasePath}}previous-orders">Previous Orders</a></li>
                         <li><a href="{{httpBasePath}}create-order">Create New Order</a></li>
                         <li><a href="{{httpBasePath}}create-reorder">Create Reorder</a></li>
                     </ul>
@@ -89,12 +89,14 @@
                 </div>
 
                 <div class="row hidden-sm hidden-xs voffset5">
+                     {% if order['category'] != 'PI' %}
                     <div class="col-md-3 col-md-offset-3">
                         <p class="text-center">Youth Size</p>
                     </div>
                     <div class="col-md-6">
-                        <p class="text-center">Adult Size</p>
+                        <p class="text-center">Adult Size </p>
                     </div>
+                    {% endif %}
                 </div>
                 <div class="table-responsive">
 
@@ -105,21 +107,11 @@
                                 <th width="6%">Brand</th>
                                 <th width="6%">Style #</th>
                                 <th width="6%">Color</th>
-                                <th width="5%">XS</th>
-                                <th width="5%">S</th>
-                                <th width="5%">M</th>
-                                <th width="5%">L</th>
-                                <th width="5%">XL</th>
-                                <th width="5%">XS</th>
-                                <th width="5%">S</th>
-                                <th width="5%">M</th>
-                                <th width="5%">L</th>
-                                <th width="5%">XL</th>
-                                <th width="5%">2XL</th>
-                                <th width="5%">3XL</th>
-                                <th width="5%">4XL</th>
-                                <th width="5%">5XL</th>
-                                <th width="5%">6XL</th>
+                                {% if order['category'] == 'PI' %}
+                                <th width="5%">Quantity</th>      
+                                {% else %}                                
+                                    {% include 'partials/create-order-size-headings.php' %}
+                                {% endif %}
                                 <th width="5%"></th>
                             </tr>
                         </thead>
@@ -145,22 +137,11 @@
                                         <option value="Black">Black</option>
                                     </select>
                                 </td>
-                    
-                                <td><input type="text" class="form-control" name="qty_youth_xs[]" value="{{ order_line['qty_youth_xs'] }}"></td>
-                                <td><input type="text" class="form-control" name="qty_youth_s[]" value="{{ order_line['qty_youth_s'] }}"></td>
-                                <td><input type="text" class="form-control" name="qty_youth_m[]" value="{{ order_line['qty_youth_m'] }}"></td>
-                                <td><input type="text" class="form-control" name="qty_youth_l[]" value="{{ order_line['qty_youth_l'] }}"></td>
-                                <td><input type="text" class="form-control" name="qty_youth_xl[]" value="{{ order_line['qty_youth_xl'] }}"></td>
-                                <td><input type="text" class="form-control" name="qty_adult_xs[]" value="{{ order_line['qty_adult_xs'] }}"></td>
-                                <td><input type="text" class="form-control" name="qty_adult_s[]" value="{{ order_line['qty_adult_s'] }}"></td>
-                                <td><input type="text" class="form-control" name="qty_adult_m[]" value="{{ order_line['qty_adult_m'] }}"></td>
-                                <td><input type="text" class="form-control" name="qty_adult_l[]" value="{{ order_line['qty_adult_l'] }}"></td>
-                                <td><input type="text" class="form-control" name="qty_adult_xl[]" value="{{ order_line['qty_adult_xl'] }}"></td>
-                                <td><input type="text" class="form-control" name="qty_adult_2xl[]" value="{{ order_line['qty_adult_2xl'] }}"></td>
-                                <td><input type="text" class="form-control" name="qty_adult_3xl[]" value="{{ order_line['qty_adult_3xl'] }}"></td>
-                                <td><input type="text" class="form-control" name="qty_adult_4xl[]" value="{{ order_line['qty_adult_4xl'] }}"></td>
-                                <td><input type="text" class="form-control" name="qty_adult_5xl[]" value="{{ order_line['qty_adult_5xl'] }}"></td>
-                                <td><input type="text" class="form-control" name="qty_adult_6xl[]" value="{{ order_line['qty_adult_6xl'] }}"></td>
+                                {% if order['category'] == 'PI' %}
+                                 <td><input type="text" class="form-control" name="total_pieces[]"></td>
+                                {% else %}                                
+                                    {% include 'partials/create-order-sizes.php' %}
+                                {% endif %}
                                 <td class="deleterow"><i class="fa fa-remove"></i></td>
                             </tr>
 							{% endfor %}  

@@ -3,6 +3,7 @@ namespace Controller;
 use \Customers;
 use \Address;
 use \Communication;
+use States;
 
 class Register extends \SlimController\SlimController
 {
@@ -11,8 +12,12 @@ class Register extends \SlimController\SlimController
     public function indexAction()
     {
        	// var_dump(\Customers::where('contact_id',9)->get()->toArray());
+       $states = States::all()->toArray();
+
        $this->render('customer/register', array(
-           'token' => Session::setToken()
+           'token' => Session::setToken(),
+           'REMOTE_URL' => REMOTE_URL ,
+           'states' => $states
         ));
     }
 
@@ -28,6 +33,7 @@ class Register extends \SlimController\SlimController
 
     		$this->render('customer/register_success', array(
          			 //  'someVar' => date('c')
+                 
        		 ));
     	}
     	else{

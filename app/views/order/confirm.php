@@ -9,7 +9,7 @@
                 </div>
                 <div class="col-md-8">
                     <ul class="list-inline dashboard-nav">
-                        <li><a href="{{httpBasePath}}dashboard">Dashboard</a></li>
+                        <li><a href="{{httpBasePath}}dashboard">Dashboard </a></li>
                         <li><a href="{{httpBasePath}}previous-orders">Previous Orders</a></li>
                         <li><a href="{{httpBasePath}}create-order">Create New Order</a></li>
                         <li><a href="{{httpBasePath}}create-reorder">Create Reorder</a></li>                      
@@ -25,7 +25,7 @@
                         <dt>Date Ordered:</dt>
                         <dd>{{ "now"|date("m/d/Y") }}</dd>
                         <dt>In Hands Date:</dt> 
-                        <dd>{{ order['in_hands_date']}}</dd>
+                        <dd>{{ order['in_hands_date']|date("m/d/Y")}}</dd>
                     </dl>
                 </div>
                 <div class="col-md-4">
@@ -39,12 +39,14 @@
             </div>
 
             <div class="row hidden-sm hidden-xs">
+            {% if(category_code != 'PI')%}
                 <div class="col-md-3 col-md-offset-4">
                     <p class="text-center">Youth Size</p>
                 </div>
                 <div class="col-md-5">
                     <p class="text-center">Adult Size</p>
                 </div>
+            {% endif%}
             </div>
             <div class="table-responsive">
 
@@ -55,21 +57,11 @@
                             <th>Brand</th>
                             <th>Style #</th>
                             <th>Color</th>
-                            <th>XS</th>
-                            <th>S</th>
-                            <th>M</th>
-                            <th>L</th>
-                            <th>XL</th>
-                            <th>XS</th>
-                            <th>S</th>
-                            <th>M</th>
-                            <th>L</th>
-                            <th>XL</th>
-                            <th>2XL</th>
-                            <th>3XL</th>
-                            <th>4XL</th>
-                            <th>5XL</th>
-                            <th>6XL</th>
+                            {% if(category_code == 'PI')%}
+                                <th>Quantity</th> 
+                            {% else %}
+                                {% include 'partials/confirm-order-sizes-heading.php' %}
+                            {% endif%}
                         </tr>
                     </thead>
 
@@ -80,33 +72,23 @@
 	                            <td>{{ order_line['brand'] }}</td>
 	                            <td>{{ order_line['style'] }}</td>
 	                            <td>{{ order_line['color'] }}</td>
-	                            <td>{{ order_line['qty_youth_xs'] }}</td>
-	                            <td>{{ order_line['qty_youth_s'] }}</td>
-	                            <td>{{ order_line['qty_youth_m'] }}</td>
-	                            <td>{{ order_line['qty_youth_l'] }}</td>
-	                            <td>{{ order_line['qty_youth_xl'] }}</td>
-	                            <td>{{ order_line['qty_adult_xs'] }}</td>
-	                            <td>{{ order_line['qty_adult_s'] }}</td>
-	                            <td>{{ order_line['qty_adult_m'] }}</td>
-	                            <td>{{ order_line['qty_adult_l'] }}</td>
-	                            <td>{{ order_line['qty_adult_xl'] }}</td>
-	                            <td>{{ order_line['qty_adult_2xl'] }}</td>
-	                            <td>{{ order_line['qty_adult_3xl'] }}</td>
-	                            <td>{{ order_line['qty_adult_4xl'] }}</td>
-	                            <td>{{ order_line['qty_adult_5xl'] }}</td>
-	                            <td>{{ order_line['qty_adult_6xl'] }}</td>
+                             {% if(category_code == 'PI')%}
+                                <td>{{ order_line['total_pieces'] }}</td>	                            
+                             {% else %}
+                                {% include 'partials/confirm-order-sizes.php' %}
+                             {% endif%}  
                             </tr> 
                         {% endfor %}                                            
                     </tbody>
                 </table>
             </div>
 
-            <h4>Shipping Information</h4>
+            <!-- <h4>Shipping Information</h4> -->
 
 
             <form class="form-horizontal" method="post" action="{{httpBasePath}}/order-final">
                 <div class="row">
-                    <div class="col-md-4 col-md-offset-2">
+                    <!-- <div class="col-md-4 col-md-offset-2">
                         <div class="form-group">
                             <label for="" class="col-sm-4 control-label">First Name</label>
                             <div class="col-sm-8">
@@ -198,14 +180,14 @@
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" name="zip" value="{{ address['zip'] }}" placeholder="">
                             </div>
-                        </div>
+                        </div> -->
                         <p class="text-right"><button type="submit" class="btn btn-default">place order</button></p>
 
-                    </div>
+                    <!-- </div> -->
                 </div>
                 <input type="hidden" name="token" value="{{ token }}">
             </form>
-
+        
 
         </div>
     </div>

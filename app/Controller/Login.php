@@ -16,7 +16,8 @@ class Login extends \SlimController\SlimController
         
     	// var_dump(\Customers::where('contact_id',9)->get()->toArray());
        $this->render('customer/login', array(
-           'token' => Session::setToken()
+           'token' => Session::setToken(),
+           'REMOTE_URL' => REMOTE_URL
         ));
     }
 

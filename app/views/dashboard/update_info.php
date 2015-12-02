@@ -10,15 +10,19 @@
                 <div class="col-md-8">
                     <ul class="list-inline dashboard-nav">
                         <li><a href="dashboard">Dashboard</a></li>
-                        <li><a href="previous-orders.php">Previous Orders</a></li>
-                        <li><a href="create-new-order.php">Create New Order</a></li>
-                        <li><a href="create-reorder.php">Create Reorder</a></li>
-                        <li><a href="cart.php">Cart</a></li>
+                        <li><a href="previous-orders">Previous Orders</a></li>
+                        <li><a href="create-order">Create New Order</a></li>
+                        <li><a href="create-reorder">Create Reorder</a></li>
+                        <li><a href="logout">Logout</a></li>
                     </ul>
                 </div>
             </div>
             <hr>
-
+            {% if updated %}
+                <div class="alert alert-success">
+                  <strong>Success!</strong> Your information has been updated.
+                </div>
+            {% endif %}
             <form class="form-horizontal" method="post">
                 <div class="row">
                     <div class="col-md-6">
