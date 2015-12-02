@@ -64,7 +64,7 @@
                             <label for="" class="col-md-4 control-label">In Hands Date:</label>
                             <div class="col-md-8">
                                <!--  <div class="input-group date" id="datetimepicker1"> -->
-                                    <input type="text" class="form-control"  value="{{ order['in_hands_date']|date('m-d-Y')}}" disabled/>
+                                    <input type="text" class="form-control" {% if order['in_hands_date'] %}  value="{{ order['in_hands_date']|date('m-d-Y')}}" {% endif %} disabled/>
                                <!--      <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span> -->
