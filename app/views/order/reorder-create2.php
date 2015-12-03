@@ -13,6 +13,7 @@
                         <li><a href="{{httpBasePath}}previous-orders">Previous Orders</a></li>
                         <li><a href="{{httpBasePath}}create-order">Create New Order</a></li>
                         <li><a href="{{httpBasePath}}create-reorder">Create Reorder</a></li>
+                        <li><a href="{{httpBasePath}}logout">Logout</a></li>
                     </ul>
                 </div>
             </div>
@@ -53,10 +54,13 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="" class="col-md-4 control-label">Delivery Type:</label>
+                                    <label for="" class="col-md-4 control-label">Delivery Type: {{ order['delivery_type'] }}</label>
                                     <div class="col-md-8">
                                         <select class="form-control" name="delivery_type">
-                                              <option value="{{ order['delivery_type'] }}">{{ order['delivery_type_name'] }}</option>
+                                            <option value="LD" {% if  order['delivery_type'] == 'LD' %} selected {% endif %}>Local delivery</option>
+                                            <option value="WC" {% if  order['delivery_type'] == 'WC' %} selected {% endif %}>Will Call/Pick Up</option>
+                                            <option value="S"  {% if  order['delivery_type'] == 'S' %} selected {% endif %}>Shipping</option>
+                                            <!-- <option value="{{ order['delivery_type'] }}">{{ order['delivery_type_name'] }}</option> -->
                                         </select>
                                     </div>
                                 </div>

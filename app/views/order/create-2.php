@@ -13,6 +13,7 @@
                         <li><a href="{{httpBasePath}}previous-orders">Previous Orders</a></li>
                         <li><a href="{{httpBasePath}}create-order">Create New Order</a></li>
                         <li><a href="{{httpBasePath}}create-reorder">Create Reorder</a></li>
+                        <li><a href="{{httpBasePath}}logout">Logout</a></li>
                     </ul>
                 </div>
             </div>
