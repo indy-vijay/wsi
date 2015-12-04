@@ -215,8 +215,10 @@ class Order extends \SlimController\SlimController
 				$order_lines 			     = OrderLine::getOrderLines($order_id);  			
 				$isValidReq 			     = true;
 				$token 					     = Session::setToken();
-			
-				$this->render('order/reorder-create2',compact('order','order_lines','fileNameWithPath','token'));
+				$order_artworks              = Orders::artworks($order_id);
+				$thumb_path  				 = ARTWORK_THUMB_PATH;
+
+				$this->render('order/reorder-create2',compact('order','order_lines','fileNameWithPath','token','order_artworks','thumb_path'));
 			}
 
 

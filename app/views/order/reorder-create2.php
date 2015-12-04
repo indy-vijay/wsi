@@ -32,7 +32,9 @@
 
                             </div>
                             <div class="col-md-1 col-md-offset-6">
-                                <img src="{{ customIncludePath }}img/client-a.jpg" width="50" height="50" />
+                                {% for artwork in order_artworks %}
+                                <img src="{{thumb_path}}{{ artwork['design_name']}}" width="75" height="75">
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
