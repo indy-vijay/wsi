@@ -6,97 +6,85 @@ use \Communication;
 use \Orders;
 use \OrderLine;
 use \States;
-use \Artworks;
+use \Artworks as ArtworksModel;
+use \OrderArtworks;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class Order extends \SlimController\SlimController
 {
 
 	public function createOrderAction()
 	{
-		 $orderCategories =  Parameters::getParameters('orderCategory');
-	
-		if( $category_type = $this->app->request()->get('type')){
+		$orderCategories =  Parameters::getParameters('orderCategory');
 
-			$this->createOrderStepTwo($category_type,$orderCategories);
-
-		}
-		else{
-
-			 $this->render('order/create', array(
+		$this->render('order/create', array(
 	           'orderCategories' => $orderCategories
-	        ));
-		}
+	    ));
+	
 	}
 
-	public function createOrderStepTwo($category_type,$orderCategories)
+	public function createOrderStepTwoAction($category_type = "SP" )
 	{
-				
-		
+
 		$req 				   = $this->app->request();
 
 		$category_type         = strtoupper($category_type);
 		$fileNameWithPath      = '';
+
+		$orderCategories =  Parameters::getParameters('orderCategory');
+
+		$contact_id = Login::isLoggedIn();
+		if(! array_key_exists($category_type, $orderCategories) || !($contact_id > 0))
+			return $this->render('invalid');
+
+		$fileNameWithPath = Artwork::uploadTempArtwork(); //move artwork file to temp directory
+
+		$this->render('order/create-2',array(
+			'token'  		   => Session::setToken(),
+			'categoryType'     => $category_type,
+			'categoryName'     => $orderCategories[$category_type],
+			'fileNameWithPath' => $fileNameWithPath,
+			'thumbImagePath'   => Artwork::getThumbPathForFile($fileNameWithPath),
+		));
+
+		
+		 
+	}
+
+	public function createOrderStepTwoSubmitAction()
+	{
+		$req 				   = $this->app->request();
+		$contact_id 		   = Login::isLoggedIn();
 		$artwork_id   		   = 0;
 		$order_id  			   = 0;
 
-		if(! array_key_exists($category_type, $orderCategories )){
+		if(!$this->step2Validation($req)) return false;
+			
+		$order_id = Orders::createOrder($req,$contact_id);
 
-			$this->render('invalid');
+		$artwork_id = Artwork::createArtwork($req);
+		//create relationship between artworks and order
+		OrderArtworks::create([
+								'order_id' => $order_id,
+								'artwork_id' => $artwork_id
+							]);
+		//create order lines
+		$insertRows = $this->getOrderLines($req, $order_id);				
+		OrderLine::insert($insertRows);
+		unset($insertRows);
 
-		}
-		else{
-		
-			$contact_id = Login::isLoggedIn();
-			if( NULL !== $req->post('order_placed') &&  $req->post('order_placed') == 1 && Session::validateSubmission($req) && $contact_id > 0){
+		Session::setPendingOrder($order_id);
+		$this->app->redirect(BASE_URL . 'confirm-order');
 				
-				//create order
-				$order_id = Orders::createOrder($req,$contact_id);
+	}
 
-				//create artwork
-				$artworkUploaded = $req->post('fileNameWithPath');
-				if( strlen($artworkUploaded) > 0 && file_exists($artworkUploaded) ){
-					//move the file	
-					$design_name   = basename($artworkUploaded);
-					$preview_image = $artworkUploaded; //dummy, remove this with proper info
-					$newFileName   = basename($artworkUploaded);
+	public function step2Validation($req)
+	{
+		if( NULL !== $req->post('order_placed') &&  $req->post('order_placed') == 1 && Session::validateSubmission($req) &&  Login::isLoggedIn() > 0)
+			return true;
 
-					if(copy($artworkUploaded,  ARTWORK_UPLOAD_PATH . $newFileName)){
-
-						
-						$artwork_id = Artworks::createArtwork($contact_id, $design_name, $artworkUploaded,$preview_image);
-
-					}
-					else{
-						//Log the file copy error
-						// echo "Error copying " . $artworkUploaded . " to " . ARTWORK_UPLOAD_PATH . $newFileName;
-					}
-				}
-				else{
-					 //Log the file not found error
-					 // echo "File not found " .  $artworkUploaded ;die;
-				}
-				//create order lines
-				$insertRows = $this->getOrderLines($req, $order_id,$artwork_id);				
-				OrderLine::insert($insertRows);
-				unset($insertRows);
-
-				Session::setPendingOrder($order_id);
-				$this->app->redirect(BASE_URL . 'confirm-order');
-					
-			}
-
-			$fileNameWithPath = $this->uploadTempArtwork(); //move artwork file to temp directory
-
-			$this->render('order/create-2',array(
-				'token'   => Session::setToken(),
-				'categoryType' => $category_type,
-				'categoryName' => $orderCategories[$category_type],
-				'fileNameWithPath' => $fileNameWithPath
-			));
-
-		}
-		 
+		return false;
 	}
 
 	public function confirmOrderAction()
@@ -140,13 +128,16 @@ class Order extends \SlimController\SlimController
 	public function orderDetailAction($order_id)
 	{
 		$contact_id = Login::isLoggedIn();
-		$req = $this->app->request();
+		$req 	    = $this->app->request();
 		$isValidReq = false;
+		$artworks   = false;
 		
 		if( $contact_id > 0 && isset($order_id) && $order_id > 0 ){
-			
+		
 			$order = Orders::getOrder($order_id,$contact_id);
-			
+			//SELECT * FROM `order_artworks` join artworks on artworks.artwork_id = order_artworks.artwork_id WHERE order_artworks.order_id = 143
+			$order_artworks = Orders::artworks($order_id);
+	
 			if( count($order) == 1){
 			
 				$order = $order[0];
@@ -155,8 +146,9 @@ class Order extends \SlimController\SlimController
 				$order['delivery_type'] = Parameters::getParameters('deliveryType')[$order['delivery_type']];
 				$order_lines 			= OrderLine::getOrderLines($order_id);    
 				$isValidReq 			= true;
+				$thumb_path 	        = ARTWORK_THUMB_PATH;
 
-				$this->render('order/detail',compact('order','order_lines','category_code'));
+				$this->render('order/detail',compact('order','order_lines','category_code','order_artworks','thumb_path'));
 			}
     	}
 
@@ -215,14 +207,14 @@ class Order extends \SlimController\SlimController
 			
 			if( count($order) == 1){
 				
-				$fileNameWithPath = $this->uploadTempArtwork(); //move artwork file to temp directory
+				$fileNameWithPath = Artwork::uploadTempArtwork(); //move artwork file to temp directory
 				$order = $order[0];
 						
-				$order['category_name'] = Parameters::getParameters('orderCategory')[$order['category']]; //Get the text for order category
+				$order['category_name']      = Parameters::getParameters('orderCategory')[$order['category']]; //Get the text for order category
 				$order['delivery_type_name'] = Parameters::getParameters('deliveryType')[$order['delivery_type']];		
-				$order_lines 			= OrderLine::getOrderLines($order_id);  			
-				$isValidReq 			= true;
-				$token 					= Session::setToken();
+				$order_lines 			     = OrderLine::getOrderLines($order_id);  			
+				$isValidReq 			     = true;
+				$token 					     = Session::setToken();
 			
 				$this->render('order/reorder-create2',compact('order','order_lines','fileNameWithPath','token'));
 			}
@@ -256,7 +248,7 @@ class Order extends \SlimController\SlimController
 				if(copy($artworkUploaded,  ARTWORK_UPLOAD_PATH . $newFileName)){
 
 					
-					$artwork_id = Artworks::createArtwork($contact_id, $design_name, $artworkUploaded,$preview_image);
+					$artwork_id = ArtworksModel::createArtwork($contact_id, $design_name, $artworkUploaded,$preview_image);
 
 				}
 				else{
@@ -269,7 +261,7 @@ class Order extends \SlimController\SlimController
 				 // echo "File not found " .  $artworkUploaded ;die;
 			}
 			//create order lines
-			$insertRows = $this->getOrderLines($req, $order_id,$artwork_id);				
+			$insertRows = $this->getOrderLines($req, $order_id);				
 			OrderLine::insert($insertRows);
 			unset($insertRows);
 
@@ -303,25 +295,9 @@ class Order extends \SlimController\SlimController
     	}
 	}
 
-	public function uploadTempArtwork()
-	{
-		if ( count($_FILES) == 1 && isset( $_FILES['artwork']) ){
+	
 
-				if($_FILES['artwork']['error'] != 0){
-					//log the error
-				}
-				else{
-
-					$fileTmpPath = $_FILES['artwork']['tmp_name'];
-					$fileName    = uniqid() . $_FILES['artwork']['name'] ;
-					$fileNameWithPath = ARTWORK_UPLOAD_PATH_TEMP .$fileName;
-					move_uploaded_file( $fileTmpPath, $fileNameWithPath);
-					return $fileNameWithPath;
-				}
-			}
-	}
-
-	public function getOrderLines($req, $order_id,$artwork_id)
+	public function getOrderLines($req, $order_id)
 	{
 		$rowCount = count($req->post('desc'));
 
@@ -352,8 +328,7 @@ class Order extends \SlimController\SlimController
 									'qty_adult_4xl' => $req->post('qty_adult_4xl')[$i],
 									'qty_adult_5xl' => $req->post('qty_adult_5xl')[$i],
 									'qty_adult_6xl' => $req->post('qty_adult_6xl')[$i],
-									'total_pieces'  => $total_pieces,											
-									'artwork_id'    => $artwork_id 
+									'total_pieces'  => $total_pieces 
 
 							);
 		}
@@ -370,5 +345,7 @@ class Order extends \SlimController\SlimController
 		return $req->post('qty_youth_xs')[$i] + $req->post('qty_youth_s')[$i] + $req->post('qty_youth_m')[$i] + $req->post('qty_youth_l')[$i] + $req->post('qty_youth_xl')[$i] + $req->post('qty_adult_xs')[$i] + $req->post('qty_adult_s')[$i] + $req->post('qty_adult_m')[$i] + $req->post('qty_adult_l')[$i] + $req->post('qty_adult_xl')[$i] + $req->post('qty_adult_2xl')[$i] + $req->post('qty_adult_3xl')[$i] + $req->post('qty_adult_4xl')[$i] + $req->post('qty_adult_5xl')[$i] + $req->post('qty_adult_6xl')[$i];
 		
 	}
+
+	
 
 }

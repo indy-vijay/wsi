@@ -6,6 +6,7 @@ error_reporting(E_ALL);
 define( 'BASE_DIR', __DIR__ ) ;
 		
 require 'vendor/autoload.php';
+require 'helpers.php';
 
 use SlimController\SlimController;
 use Slim\Views\Twig as Twig;

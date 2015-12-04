@@ -30,8 +30,8 @@ class Orders extends Eloquent
 
 		return self::insertGetId(
             					array(
-            								'contact_id'      => $contact_id,
-            								'date_completed'  => $req->post('date_completed'),
+            								'contact_id'       => $contact_id,
+            								'date_completed'   => $req->post('date_completed'),
             								'delivery_type'    => $req->post('delivery_type'),
             								'category'         => $req->post('category'),
             								'type'             => $req->post('type'),
@@ -54,6 +54,16 @@ class Orders extends Eloquent
 
         return $query->get()
                         ->toArray();   
+    }
+
+    public static function artworks($order_id)
+    {
+
+        return self::join('order_artworks','orders.order_id','=','order_artworks.order_id')
+                ->join('artworks','order_artworks.artwork_id','=','artworks.artwork_id')
+                ->where('order_artworks.order_id','=',$order_id)
+                ->select('artworks.design_name', 'artworks.file_path','artworks.artwork_id')
+                ->get();
     }
 
 }

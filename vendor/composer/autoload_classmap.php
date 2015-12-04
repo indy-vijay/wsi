@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'Address' => $baseDir . '/app/models/address.php',
     'Artworks' => $baseDir . '/app/models/artworks.php',
+    'OrderArtworks' => $baseDir . '/app/models/OrderArtworks.php',
     'Communication' => $baseDir . '/app/models/communication.php',
     'Controller\\Dashboard' => $baseDir . '/app/controller/Dashboard.php',
     'Controller\\Home' => $baseDir . '/app/controller/Home.php',
@@ -16,6 +17,8 @@ return array(
     'Controller\\Parameters' => $baseDir . '/app/controller/Parameters.php',
     'Controller\\Register' => $baseDir . '/app/controller/Register.php',
     'Controller\\Session' => $baseDir . '/app/controller/Session.php',
+    'Controller\\Image' => $baseDir . '/app/controller/Image.php',
+    'Controller\\Artwork' => $baseDir . '/app/controller/Artwork.php',
     'Customers' => $baseDir . '/app/models/customers.php',
     'EasyPeasyICS' => $vendorDir . '/phpmailer/phpmailer/extras/EasyPeasyICS.php',
     'OrderLine' => $baseDir . '/app/models/orderLine.php',

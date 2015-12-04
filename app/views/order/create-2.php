@@ -19,7 +19,7 @@
             </div>
             <hr>
 
-            <form class="form-horizontal" method="post" action="">
+            <form class="form-horizontal" method="post" action="{{httpBasePath}}create-order-step-2-submit">
 
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -32,7 +32,9 @@
 
                             </div>
                             <div class="col-md-1 col-md-offset-6">
-                                <img src="{{ customIncludePath }}img/client-a.jpg" width="50" height="50" />
+                            {% if thumbImagePath %}
+                                 <img src="{{ thumbImagePath }}" width="50" height="50" />
+                            {% endif %}
                             </div>
                         </div>
                     </div>

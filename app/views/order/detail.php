@@ -25,9 +25,9 @@
                     <div class="panel-body">
                         <ul class="list-inline no-margin">
                             <li><strong>Artwork</strong></li>
-                            <li><img src="img/client-a.jpg" width="75" height="75"></li>
-                            <li><img src="img/client-e.jpg" width="75" height="75"></li>
-                            <li><img src="img/client-d.jpg" width="75" height="75"></li>
+                            {% for artwork in order_artworks %}
+                            <li><img src="{{thumb_path}}{{ artwork['design_name']}}" width="75" height="75"></li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>                    

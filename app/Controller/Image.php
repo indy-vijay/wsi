@@ -1,12 +1,12 @@
 <?php 
 namespace Controller;
 
-class Image
+class Image extends \SlimController\SlimController
 {
 
-	public function executeCommandThumbnailCreate($input, $output)
+	public static function executeCommandThumbnailCreate($input, $output)
 	{
-		exec("convert -resize 100x140 $input -layers flatten $output ");
+		exec("convert -resize 200x240 $input -layers flatten $output ");
 	}
 }
 

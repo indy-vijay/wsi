@@ -26,7 +26,7 @@
             <div class="row voffset5">
                 <div class="col-md-2 col-md-offset-3">
                     <div class="create-order-cta">
-                        <a href="create-order?type=sp">
+                        <a href="create-order-step-2/sp">
                             <img src="{{ customIncludePath }}img/screen-printing.jpg" alt="screen printing" class="img-responsive" />
                             <span>{{ orderCategories['SP'] }}</span>
                         </a>
@@ -35,7 +35,7 @@
                 </div>
                 <div class="col-md-2">
                     <div class="create-order-cta">
-                        <a href="create-order?type=e">
+                        <a href="create-order-step-2/e">
                             <img src="{{ customIncludePath }}img/embroidery.jpg" alt="embroidery" class="img-responsive" />
                             <span>{{ orderCategories['E'] }}</span>
                         </a>
@@ -44,7 +44,7 @@
                 </div>
                 <div class="col-md-2">
                     <div class="create-order-cta">
-                        <a href="create-order?type=pi">
+                        <a href="create-order-step-2/pi">
                             <img src="{{ customIncludePath }}img/promotional.jpg" alt="promotional" class="img-responsive" />
                             <span>{{ orderCategories['PI'] }}</span>
                         </a>
