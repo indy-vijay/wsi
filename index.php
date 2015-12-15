@@ -3,6 +3,8 @@ session_start();
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
+//exec("convert -resize 100x140 price.png -layers flatten anil.jpg ");die;
+
 define( 'BASE_DIR', __DIR__ ) ;
 		
 require 'vendor/autoload.php';

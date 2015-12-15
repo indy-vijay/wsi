@@ -27,14 +27,48 @@
                     </div>
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-md-5 voffset3">
-                                <a href="#" class="btn btn-default" data-toggle="modal" data-target="#myModal">Upload Artwork</a>
+                            <div class="col-md-3 voffset3">
+                                <a onclick="moveUploadedArtworks()" href="#" class="btn btn-default" data-toggle="modal" data-target="#myModal">Upload Artwork</a>
 
                             </div>
-                            <div class="col-md-1 col-md-offset-6">
+                         
+                            <div class="col-md-8 ">
+                                <div class="row">
                             {% if thumbImagePath %}
                                  <img src="{{ thumbImagePath }}" width="50" height="50" />
                             {% endif %}
+    
+                           <!-- remove screen-printing.jpg when thumbimagepath load-->
+                             {% for placementKey,placement in placement %}
+                             <div class="col-md-2 artwork-preview pull-right">
+                                <button rel="{{ placementKey }}" type="button" class="pull-left artwork-remove close artwork-preview-{{ placementKey }}" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                {% for file in orderCategoryPlacement %}
+                                    {% for key,value in file %}
+                                        {% if placement == key|e %}
+                                        <span class="artwork-preview-{{ placementKey }}">{{ value|e }}</span>
+                                        <br>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endfor %}
+                               <img class="artwork-preview-{{ placementKey }}" src="{{ customIncludePath }}img/screen-printing.jpg" alt=""  width="50" height="50"/>
+                                     
+                             </div>
+
+                            {% endfor %}
+                            
+                            <div id="artwork-uploaded">
+                             {% for key,file in fileNameWithPath %}
+                                <input class="artwork-preview-{{key}}" type="hidden" name="fileNameWithPath[]" value="{{ file|e }}">
+                            {% endfor %}
+                            {% for key,file in placement %}
+                                <input class="artwork-preview-{{key}}" type="hidden" name="placementUploaded[]" value="{{ file|e }}">
+                            {% endfor %}
+                            </div>
+                             </div>
+                            <input type="hidden" name="token" value="{{token}}">  
+                            <input type="hidden" id="categoryType" value="{{categoryType}}">
+                            </div>
+                            <div class="col-md-1">
                             </div>
                         </div>
                     </div>
@@ -154,9 +188,6 @@
                         </tbody>
                     </table>
                 </div>
-                <input type="hidden" name="token" value="{{token}}">
-                <input type="hidden" name="fileNameWithPath" value="{{fileNameWithPath}}">
-                <input type="hidden" id="categoryType" value="{{categoryType}}">
                 <button class="btn btn-link addnewrow" type="button"><i class="fa fa-plus"></i> Add New</button>
 
                 <p class="text-right">
@@ -169,47 +200,71 @@
 </main>
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Upload Artwork</h4>
             </div>
-             <form class="form-horizontal" method="post" enctype="multipart/form-data">
+             <form  class="form-horizontal" method="post" enctype="multipart/form-data">
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-8 col-md-offset-2">
+                    <div class="col-md-12 upload-artwork">
                        
-                            <div class="form-group">
-                                <label for="" class="col-md-4 control-label">Type:</label>
-                                <div class="col-md-8">
-                                    <input type="file" name="artwork" value="">
+                            <div class="form-group upload-artwork-row" id="upload-artwork-row">
+                                <label for="" class="col-md-2 control-label">Image:</label>
+                               
+                                
+                                
+                                <div class="col-md-2">
+                                    <div class="fileUpload btn btn-primary" style="position: relative;overflow: hidden;margin: 10px;">
+                                        <span>Upload</span>
+                                      
+                                        <input name="artwork_image[]" type="file" class="upload" style=" position: absolute;top: 0;right: 0;margin: 0;padding: 0;font-size: 20px;cursor: pointer;opacity: 0;filter: alpha(opacity=0);" />
+                                    </div>
+                                   
                                 </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="" class="col-md-4 control-label">Placement:</label>
-                                <div class="col-md-8">
-                                    <select class="form-control">
-                                        <option value="">Front</option>
-                                        <option value="">Back</option>
-                                        <option value="">Left Chest</option>
-                                        <option value="">Right Chest</option>
-                                        <option value="">Left Sleeve</option>
-                                        <option value="">Right Sleeve</option>
+                          
+                                <label for="" class="col-md-2 control-label">Placement:</label>
+                                <div class="col-md-3" style=" vertical-align: middle;">
+                                    
+                  
+                                    <select name="placement[]" class="form-control">
+                                         {% for file in orderCategoryPlacement %}
+                                             {% for key,value in file %}
+                                             <option value="{{ key|e }}">{{ value|e }}</option>
+                                             {% endfor %}
+                                         {% endfor %}
+                                       
                                     </select>
                                 </div>
+
+                                <div class=" col-md-2">
+                                     <img class="image_preview" style="width:50%;height:auto;" src="" alt="" />
+                                </div>
+                                <div class="col-md-1">
+                                    <button type="button" class="upload-artwork-row-close close" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                </div>
+                                  
+                            </div>
+                             <button class="btn btn-link addnewimage" type="button"><i class="fa fa-plus"></i> Add New</button>
+                            <div class="form-group">
+                                <div class="col-md-offset-10 col-md-2">
+                                <button type="submit" class="btn btn-default" >Upload</button>
+                                </div>   
                             </div>
                         
                     </div>
                 </div>
                 
             </div>
+            
             <div class="modal-footer">
-                <button type="submit" class="btn btn-default" onClick="">Submit</button>
+               
             </div>
         </div>
         </form>
     </div>
 </div>
+
 {%endblock%}

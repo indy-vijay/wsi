@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'Address' => $baseDir . '/app/models/address.php',
     'Artworks' => $baseDir . '/app/models/artworks.php',
+    'Artworksplacements' => $baseDir . '/app/models/artworksplacements.php',
     'OrderArtworks' => $baseDir . '/app/models/orderArtworks.php',
     'Communication' => $baseDir . '/app/models/communication.php',
     'Controller\\Dashboard' => $baseDir . '/app/controller/Dashboard.php',

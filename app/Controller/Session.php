@@ -5,11 +5,13 @@ class Session
 {
 	public static function setToken()
 	{
-		return $_SESSION['token'] = uniqid();
+		$_SESSION['token'] = uniqid();
+		return $_SESSION['token'];
 	}
 
 	public static function getToken()
 	{
+
 		return isset($_SESSION['token']) ? $_SESSION['token'] : false ;
 	}
 

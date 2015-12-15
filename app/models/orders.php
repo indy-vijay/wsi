@@ -19,6 +19,7 @@ class Orders extends Eloquent
 
 	public static function createOrder($req,$contact_id)
 	{
+        
         $in_hands_date = null;
 
         if( null != $req->post('in_hands_date')){
@@ -59,11 +60,30 @@ class Orders extends Eloquent
     public static function artworks($order_id)
     {
 
-        return self::join('order_artworks','orders.order_id','=','order_artworks.order_id')
+    return self::join('order_artworks','orders.order_id','=','order_artworks.order_id')
                 ->join('artworks','order_artworks.artwork_id','=','artworks.artwork_id')
+                //->join('artwork_placement','orders.order_id','=','artwork_placement.order_id')
                 ->where('order_artworks.order_id','=',$order_id)
                 ->select('artworks.design_name', 'artworks.file_path','artworks.artwork_id')
+                //->select('artworks.design_name', 'artworks.file_path','artworks.artwork_id','artwork_placement.artwork_placement')
                 ->get();
+        // return self::join('order_artworks','orders.order_id','=','order_artworks.order_id')
+        //         ->join('artworks','order_artworks.artwork_id','=','artworks.artwork_id')
+        //         ->where('order_artworks.order_id','=',$order_id)
+        //         ->select('artworks.design_name', 'artworks.file_path','artworks.artwork_id')
+        //         ->get();
     }
+
+     public static function artwork_placement($order_id)
+    {
+
+    return self::join('artwork_placement','orders.order_id','=','artwork_placement.order_id')
+                
+                ->where('artwork_placement.order_id','=',$order_id)
+                ->select('artwork_placement.artwork_placement')
+                ->get();
+     }
+
+    
 
 }

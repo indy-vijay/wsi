@@ -14,6 +14,40 @@ jQuery(".addnewrow").on("click", function(){
 
 });
 
+
+
+jQuery(".addnewimage").on("click", function(){
+
+	jQuery('.addnewimage').before(getHtmlForUploadArtworkRow());
+
+});
+
+
+jQuery('body').on('click','.upload-artwork-row-close',function()
+    {
+    $(this).closest('.upload-artwork-row').remove();
+    });
+
+
+jQuery('body').on('click','.artwork-remove',function()
+    {
+     var el=$(this);
+     var artwork_preview_id = el.attr('rel');
+     $('.artwork-preview-'+artwork_preview_id).remove(); 
+    
+    });
+
+function moveUploadedArtworks()
+{
+
+   $(".addnewimage").before($('#artwork-uploaded').clone());
+}
+
+function getHtmlForUploadArtworkRow(){
+
+    return $('#upload-artwork-row').clone() .find(".image_preview").removeAttr("src").end(); ;
+}
+
 function getHtmlForCategory(categoryType){
 	if(categoryType == 'PI')
 		return "<tr> <td> <select class='form-control' name='desc[]'> <option value='Polo'>Polo</option> </select> </td> <td> <select class='form-control' name='brand[]'> <option value='Gilden'>Gilden</option> </select> </td> <td> <select  name='style[]' class='form-control'> <option value='A1234'>A1234</option> </select> </td> <td> <select name='color[]' class='form-control'> <option value='Black'>Black</option> </select> </td><td><input type='text' name='total_pieces[]' class='form-control'></td> <td class='deleterow'><i class='fa fa-remove'></i></td> </tr>";
@@ -26,8 +60,22 @@ jQuery('#datetimepicker1').datetimepicker({
 });
 
 
-// jQuery(function(){
-// 	jQuery(".addnewrow").on("click", function(){
-// 		console.log()
-// 	})
-// })
+
+function readURL(input) {
+   
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+           
+            $(input).parents(".upload-artwork-row").find( ".image_preview" ).attr('src', e.target.result); 
+            }
+        reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+
+jQuery('body').on('change','.upload',function(){
+    readURL(this);
+});
+
+

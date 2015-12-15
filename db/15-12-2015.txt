@@ -1,0 +1,7 @@
+CREATE TABLE `artwork_placement` (
+ `artwork_placement_id` int(11) NOT NULL AUTO_INCREMENT,
+ `order_id` int(11) NOT NULL,
+ `artwork_id` int(11) NOT NULL,
+ `artwork_placement` enum('F','B','L','LB','PF','PB') NOT NULL,
+ PRIMARY KEY (`artwork_placement_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=latin1
