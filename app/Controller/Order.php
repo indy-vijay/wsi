@@ -9,6 +9,7 @@ use \States;
 use \Artworks as ArtworksModel;
 use \Artworksplacements as ArtworksplacementsModel;
 use \OrderArtworks;
+use \Brands;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -34,6 +35,7 @@ class Order extends \SlimController\SlimController
 		$req 				   = $this->app->request();
 		$category_type         = strtoupper($category_type);
 		$fileNameWithPath      = '';
+		$id      = 1;
 		$orderCategories =  Parameters::getParameters('orderCategory');
 		$orderCategoryPlacement =  Parameters::getOrderCategoryPlacement($category_type);
 		$contact_id = Login::isLoggedIn();
@@ -49,7 +51,8 @@ class Order extends \SlimController\SlimController
 			'fileNameWithPath' 			=> $files['artworks']['url'],
 			'thumbImagePath'   			=> Artwork::getThumbPathForFile($fileNameWithPath),
 			'placement' 	   			=> $files['artworks']['placement'],
-			'orderCategoryPlacement' 	=> $orderCategoryPlacement,	
+			'orderCategoryPlacement' 	=> $orderCategoryPlacement,
+			'brand'                     => Brands::getBrands($category_type),	
 		));
 	}
 

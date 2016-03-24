@@ -6,9 +6,9 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    $vendorDir . '/danielstjules/stringy/src/Create.php',
-    $vendorDir . '/illuminate/support/helpers.php',
-    $baseDir . '/app/config/config.php',
-    $baseDir . '/app/config/database.php',
-    $baseDir . '/app/config/routes.php',
+    '65fec9ebcfbb3cbb4fd0d519687aea01' => $vendorDir . '/danielstjules/stringy/src/Create.php',
+    '72579e7bd17821bb1321b87411366eae' => $vendorDir . '/illuminate/support/helpers.php',
+    'd165b7e858aa071d9edb17b454d7044b' => $baseDir . '/app/config/config.php',
+    '289386b7d2bf7f304728ddd298532b31' => $baseDir . '/app/config/database.php',
+    'e7c18947235525cf59f21bc9f57fdb06' => $baseDir . '/app/config/routes.php',
 );

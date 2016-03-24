@@ -164,7 +164,13 @@
                                 </td>
                                 <td>
                                     <select class="form-control" name="brand[]">
-                                        <option value="Gilden">Gilden</option>
+                                    {% for file in brand %}
+                                        {% for key,value in file %}
+                                            {% if key == 'brand' %}
+                                                <option value="{{ value|e }}">{{ value|e }}</option>
+                                            {% endif %}      
+                                        {% endfor %}
+                                    {% endfor %}
                                     </select>
                                 </td>
                                 <td>
