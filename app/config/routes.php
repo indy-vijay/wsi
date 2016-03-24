@@ -21,6 +21,8 @@ define('CUSTOM_ROUTES', serialize(array(
     '/order-final(/)'                           =>  'Order:confirmFinal',
     '/order-detail/:id'                         =>  'Order:orderDetail',
     '/previous-orders(/)'                       =>  'Order:previousOrders',
+    '/ajax-brand-styles/:id?(/)'                =>  'Products:getStylesForBrand',
+    '/ajax-style-colors/:id?(/)'                =>  'Products:getColorsForStyle',
     
 )));
  

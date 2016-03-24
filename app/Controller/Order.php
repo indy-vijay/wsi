@@ -10,6 +10,7 @@ use \Artworks as ArtworksModel;
 use \Artworksplacements as ArtworksplacementsModel;
 use \OrderArtworks;
 use \Brands;
+use \Styles;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -32,6 +33,7 @@ class Order extends \SlimController\SlimController
 	public function createOrderStepTwoAction($category_type = "SP" )
 	{
 		Session::setToken();
+
 		$req 				   = $this->app->request();
 		$category_type         = strtoupper($category_type);
 		$fileNameWithPath      = '';
@@ -42,7 +44,9 @@ class Order extends \SlimController\SlimController
 		if(! array_key_exists($category_type, $orderCategories) || !($contact_id > 0))
 			return $this->render('invalid');
 		$files['artworks'] = Artwork::uploadTempArtwork($req); //move artwork file to temp directory
-		
+
+		$styles 		   = Brands::categoryBrands($category_type)->first()->styles; //get styles for the first brand
+		$colors            = Styles::find($styles->first()->id)->colors;
 
 		$this->render('order/create-2',array(
 			'token'  		   			=> Session::getToken(),
@@ -52,7 +56,9 @@ class Order extends \SlimController\SlimController
 			'thumbImagePath'   			=> Artwork::getThumbPathForFile($fileNameWithPath),
 			'placement' 	   			=> $files['artworks']['placement'],
 			'orderCategoryPlacement' 	=> $orderCategoryPlacement,
-			'brand'                     => Brands::getBrands($category_type),	
+			'brands'                    => Brands::categoryBrands($category_type)->get()->toArray(),	
+			'styles'					=> $styles->toArray(),
+			'colors'					=> $colors->toArray()
 		));
 	}
 

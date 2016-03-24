@@ -78,4 +78,40 @@ jQuery('body').on('change','.upload',function(){
     readURL(this);
 });
 
+function changeBrand(){
+    jQuery.ajax({
+        'url' : '/ajax-brand-styles/' +jQuery('#order-brand').val(),
+        'type' : 'POST',
+        'success' : function(styles){
+                    var order_style = jQuery('#order-style');
+                    var style_id    = 0;
+                    order_style.empty();
+                    jQuery.each(jQuery.parseJSON(styles), function(key,styles){    
+                        if(key == 0)
+                            changeStyle(styles.id); //also change the colors dropdown
+                        order_style.append('<option value="'+styles.id+'">'+styles.styles+'</option>')
+                    });
+        }
+    });
+
+  
+}
+
+function changeStyle(style_id=0){
+    if( style_id == 0 )
+        style_id = jQuery('#order-style').val();
+
+    jQuery.ajax({
+        'url' : '/ajax-style-colors/' + style_id,
+        'type' : 'POST',
+        'success' : function(colors){
+                    var order_color = jQuery('#order-color');
+                    order_color.empty();
+                    jQuery.each(jQuery.parseJSON(colors), function(key,color){                       
+                        order_color.append('<option value="'+color.id+'">'+color.color+'</option>')
+                    });
+        }
+    });
+}
+
 

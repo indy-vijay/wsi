@@ -63,6 +63,9 @@ class Artwork extends \SlimController\SlimController
 		$artwork_id      = 0;
 		$files['artworkUploaded'] = $req->post('fileNameWithPath');
 		$files['placement'] = $req->post('placementUploaded');
+		if(count($files['artworkUploaded']) == 0)
+			return [];
+		
 		foreach ($files['artworkUploaded'] as $num => $artworkUploaded) {
 			if( strlen($artworkUploaded) > 0 && file_exists($artworkUploaded) ){
 			//move the file	

@@ -4,17 +4,11 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 class Styles extends Eloquent 
 {
     // public $table = 'brands';
-	protected $fillable    = array('id','brand','styles');
+	protected $fillable    = array('id','brands_id','styles');
     public    $timestamps   = false;
 
-    public static function getStyles($category_type)
+    public function colors()
     {
-
-        return self::join('brands','styles.brand','=','brands.brand')
-       
-                ->where('brand.brand','=','styles.brand')
-                ->select('styles.styles')
-                ->get();
+        return $this->hasMany('\Colors');
     }
-
 }

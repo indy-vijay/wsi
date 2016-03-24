@@ -5,7 +5,7 @@ use Carbon\Carbon;
 class Orders extends Eloquent 
 {
 
-	protected $fillable    = array('contact_id','date_completed','date_due','event_name','event_date','category','type','delivery_type','for_event','in_hands_date','status');
+	protected $fillable    = array('contact_id','date_completed','date_due','event_name','event_date','category','type','delivery_type','for_event','in_hands_date','status','old','downloaded');
 
     // public    $timestamps   = false;
 
@@ -39,7 +39,9 @@ class Orders extends Eloquent
             								'for_event'        => $req->post('for_event'),
             								'in_hands_date'    => $in_hands_date,
             								'status'           => 'QR',
-                                            'created_at'       => Carbon::now()
+                                            'created_at'       => Carbon::now(),
+                                            'old'              => 0,
+                                            'downloaded'       => 1
             						)
             				);
    	

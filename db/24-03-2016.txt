@@ -1,0 +1,5 @@
+ALTER TABLE `orders` ADD `old` BOOLEAN NOT NULL DEFAULT FALSE AFTER `created_at`, ADD `downloaded` BOOLEAN NOT NULL DEFAULT FALSE AFTER `old`;
+
+ALTER TABLE `brands` CHANGE `product_type` `product_type` ENUM('SP','E','PI','') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
+
+ALTER TABLE `styles` CHANGE `brand` `brand_id` INT(255) NOT NULL;
