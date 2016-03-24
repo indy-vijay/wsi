@@ -1,0 +1,6 @@
+CREATE TABLE `styles` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `brand` varchar(255) NOT NULL,
+ `styles` varchar(255) NOT NULL,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1
