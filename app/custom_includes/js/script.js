@@ -80,7 +80,7 @@ jQuery('body').on('change','.upload',function(){
 
 function changeBrand(){
     jQuery.ajax({
-        'url' : '/ajax-brand-styles/' +jQuery('#order-brand').val(),
+        'url' : ajaxUrl + 'ajax-brand-styles/' +jQuery('#order-brand').val(),
         'type' : 'POST',
         'success' : function(styles){
                     var order_style = jQuery('#order-style');
@@ -102,7 +102,7 @@ function changeStyle(style_id=0){
         style_id = jQuery('#order-style').val();
 
     jQuery.ajax({
-        'url' : '/ajax-style-colors/' + style_id,
+        'url' : ajaxUrl + 'ajax-style-colors/' + style_id,
         'type' : 'POST',
         'success' : function(colors){
                     var order_color = jQuery('#order-color');
