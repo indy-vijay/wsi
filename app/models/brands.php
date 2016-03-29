@@ -1,21 +1,29 @@
 <?php
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
-class Brands extends Eloquent 
+class Brands extends Eloquent
 {
     // public $table = 'brands';
-	protected $fillable    = array('id','brands_id','product_type');
-    public    $timestamps   = false;
+    protected $fillable = array('id', 'brands_id', 'product_type');
+    public $timestamps = false;
 
     public function scopeCategoryBrands($query, $category_type)
     {
-        return $query->where('product_type', '=' ,$category_type);
-                    
+        return $query->where('product_type', '=', $category_type);
+
+    }
+
+    public function scopeName($query, $id)
+    {
+        return $query->where('id',$id)
+                        ->select('brand')
+                        ->first()
+                        ->toArray()['brand'];
     }
 
     public function styles()
     {
-    	return $this->hasMany('\Styles');
+        return $this->hasMany('\Styles');
     }
 
 }

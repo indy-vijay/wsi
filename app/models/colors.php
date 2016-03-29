@@ -7,5 +7,11 @@ class Colors extends Eloquent
 	protected $fillable    = array('id','styles_id','color');
     public    $timestamps   = false;
 
-
+    public function scopeName($query, $id)
+    {
+        return $query->where('id',$id)
+                        ->select('color')
+                        ->first()
+                        ->toArray()['color'];
+    }
 }

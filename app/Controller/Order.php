@@ -11,6 +11,7 @@ use \Artworksplacements as ArtworksplacementsModel;
 use \OrderArtworks;
 use \Brands;
 use \Styles;
+use \Colors;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -215,7 +216,6 @@ public function createOrderStepTwoSubmitAction()
 		$contact_id = Login::isLoggedIn();
 		$req = $this->app->request();
 		$isValidReq = false;
-		
 		if( $contact_id > 0 && isset($order_id) && $order_id > 0 ){
 			$order = Orders::getOrder($order_id,$contact_id);
 			if( count($order) == 1){
@@ -358,11 +358,11 @@ public function createOrderStepTwoSubmitAction()
 
 			$insertRows[] = array(
 									'desc'  	    => $req->post('desc')[$i],
-									'brand'			=> $req->post('brand')[$i],
-									'style' 	    => $req->post('style')[$i],
-									'color'         => $req->post('color')[$i],
+									'brand'			=> Brands::name($req->post('brand')[$i]),
+									'style' 	    => Styles::name($req->post('style')[$i]),
+									'color'         => Colors::name($req->post('color')[$i]),
 									'order_id'      => $order_id,							
-									'color'         => $req->post('color')[$i],
+									// 'color'         => $req->post('color')[$i],
 									'qty_youth_xs'  => $req->post('qty_youth_xs')[$i],
 									'qty_youth_s'   => $req->post('qty_youth_s')[$i],
 									'qty_youth_m'   => $req->post('qty_youth_m')[$i],

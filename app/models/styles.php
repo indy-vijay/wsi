@@ -11,4 +11,12 @@ class Styles extends Eloquent
     {
         return $this->hasMany('\Colors');
     }
+
+    public function scopeName($query, $id)
+    {
+        return $query->where('id',$id)
+                        ->select('styles')
+                        ->first()
+                        ->toArray()['styles'];
+    }
 }
