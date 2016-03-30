@@ -168,22 +168,34 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <select class="form-control" name="brand[]">
-                                        <option value="Gilden">Gilden</option>
+                                     <select class="form-control" name="brand[]" id="order-brand" onchange="changeBrand()">                  
+                                        {% for brand in brands %}                         
+                                                <option value="{{ brand['id'] }}" {% if brand['brand'] == order_line['brand'] %} selected  {% endif %} >{{ brand['brand'] }}</option>
+                                        {% endfor %}
                                     </select>
                                 </td>
                                 <td>
-                                    <select class="form-control" name="style[]">
-                                        <option value="A1234">A1234</option>
+                                    <select class="form-control" name="style[]" id="order-style" onchange="changeStyle()">
+                                        
+                                        {% for style in styles %}  
+                                                         
+                                                <option value="{{ style['id'] }}" {% if style['styles'] == order_line['style'] %} selected 
+                                                 {% endif %}>{{ style['styles'] }}</option>
+                                               
+                                        {% endfor %}                                 
                                     </select>
                                 </td>
                                 <td>
-                                    <select class="form-control" name="color[]">
-                                        <option value="Black">Black</option>
+                                     <select class="form-control" name="color[]" id="order-color">
+                                     
+                                        {% for color in colors %}                         
+                                                <option value="{{ color['id'] }}" {% if color['color'] == order_line['color'] %} selected
+                                                 {% endif %}>{{ color['color'] }}</option>
+                                        {% endfor %}   
                                     </select>
                                 </td>
                                 {% if categoryType == 'PI' %}
-                                 <td><input type="text" class="form-control" name="total_pieces[]"></td>
+                                 <td><input type="text" class="form-control" name="total_pieces[]" value="{{order_line['total_pieces']}}"></td>
                                 {% else %}                                
                                     {% include 'partials/create-order-sizes.php' %}
                                 {% endif %}

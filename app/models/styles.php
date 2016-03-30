@@ -19,4 +19,11 @@ class Styles extends Eloquent
                         ->first()
                         ->toArray()['styles'];
     }
+
+    public function scopeGetIdByName($query, $style)
+    {
+        return $query->where('styles', $style)
+                        ->select('id')
+                        ->get();
+    }
 }

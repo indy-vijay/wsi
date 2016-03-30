@@ -14,4 +14,10 @@ class Colors extends Eloquent
                         ->first()
                         ->toArray()['color'];
     }
+
+    public function scopeSelectedColor($query, $style)
+    {
+        return $query->where('style',$style);
+
+    }
 }

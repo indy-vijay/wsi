@@ -10,6 +10,7 @@ class Brands extends Eloquent
     public function scopeCategoryBrands($query, $category_type)
     {
         return $query->where('product_type', '=', $category_type);
+                        
 
     }
 
@@ -24,6 +25,12 @@ class Brands extends Eloquent
     public function styles()
     {
         return $this->hasMany('\Styles');
+    }
+
+    public function scopeCategoryBrandsSelected($query, $category_type,$brand)
+    {
+       return $query->where('product_type', '=', $category_type)
+                    ->where('brand', $brand);
     }
 
 }

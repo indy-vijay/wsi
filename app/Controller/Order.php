@@ -235,7 +235,13 @@ public function createOrderStepTwoSubmitAction()
 
 				}
 				$order = $order[0];
-				//$category_type = $order['category'];
+				$category_type = $order['category'];
+				$order_line_brand = OrderLine::getOrderLines($order_id);
+				$styles 		   = Brands::categoryBrandsSelected($category_type, $order_line_brand[0]['brand'])->first()->styles;
+				$style_id = Styles::getIdByName($order_line_brand[0]['style']);
+				// $styles 		   = Brands::categoryBrands($category_type)->first()->styles;
+				$colors            = Styles::find($style_id[0]['id'])->colors;
+				
 				//$delivery_type_name = Parameters::getParameters('deliveryType')[$order['delivery_type']];
 				//$orderCategoryPlacement = Parameters::getOrderCategoryPlacement($category_type);
 				
@@ -247,6 +253,9 @@ public function createOrderStepTwoSubmitAction()
 				'deliveryType'				=> $order['delivery_type'],	
 				'inHandsDate'				=> $order['in_hands_date'],
 				'fileNameWithPath' 			=> $files['artworks']['url'],
+				'brands' 					=> Brands::categoryBrands($category_type)->get()->toArray(),
+				'styles'					=> $styles->toArray(),
+				'colors'					=> $colors->toArray(),
 				//'thumbImagePath'   			=> Artwork::getThumbPathForFile($fileNameWithPath),
 				'placement' 	   			=> $files['artworks']['placement'],
 				'orderCategoryPlacement' 	=> Parameters::getOrderCategoryPlacement($order['category']),	
@@ -256,8 +265,8 @@ public function createOrderStepTwoSubmitAction()
 
     	}
 
-    	if(! $isValidReq )
-    		$this->render('invalid');
+    	// if(! $isValidReq )
+    	// 	$this->render('invalid');
 	}
 
 	public function submitReorderAction()

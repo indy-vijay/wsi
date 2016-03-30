@@ -1,13 +1,14 @@
 <?php
 
 namespace Controller;
-class Home
+class Home extends \SlimController\SlimController
 {
     protected $request;
     protected $response;
     public function indexAction()
     {
-        echo "This is the home page";
+        // echo "This is the home page";
+        $this->render('home/index');
     }
     public static function helloAction()
     {

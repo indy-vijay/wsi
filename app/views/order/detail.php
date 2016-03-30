@@ -101,7 +101,7 @@
                                 <th>Brand</th>
                                 <th>Style #</th>
                                 <th>Color</th>
-                            {% if(category_code == 'PI')%}}
+                            {% if(category_code == 'PI')%}
                                 <th>Quantity</th>
                             {% else %}
                                {% include 'partials/create-order-size-headings.php' %}
@@ -116,7 +116,7 @@
                                 <td>{{ order_line['brand'] }}</td>
                                 <td>{{ order_line['style'] }}</td>
                                 <td>{{ order_line['color'] }}</td>
-                                {% if(category_code == 'PI')%}}
+                                {% if(category_code == 'PI')%}
                                  <td>{{ order_line['total_pieces'] }}</td>
                                 {% else %}
                                  {% include 'partials/create-order-sizes.php'%}

@@ -1,7 +1,7 @@
 <?php 
 
 define('BASE_URL', "http://wsi.dev/");
-define('REMOTE_URL',"http://wsi.blackstormtest.com");
+define('REMOTE_URL',"http://www.wsimp.com");
 define('APP_PATH',BASE_URL . 'app/');
 define('INC_PATH',APP_PATH . 'includes/');
 define('CUSTOM_INC_PATH',APP_PATH . 'custom_includes/');
