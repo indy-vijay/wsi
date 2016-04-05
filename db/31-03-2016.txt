@@ -1,0 +1,1 @@
+ALTER TABLE `orders` CHANGE `status` `status` ENUM('OA','SO','AA','SR','OP','P','D','QR','A') CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;

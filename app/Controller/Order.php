@@ -71,7 +71,7 @@ class Order extends \SlimController\SlimController
             return false;
         }
 
-        $order_id = Orders::createOrder($req, $contact_id);
+        $order_id = Orders::createOrder($req, $contact_id,'A');
         $artwork_id_array = Artwork::createArtwork($req, $order_id);
         foreach ($artwork_id_array as $artwork_id) {
             //create relationship between artworks and order
@@ -114,7 +114,7 @@ class Order extends \SlimController\SlimController
             $this->render('invalid');
 
         } else {
-
+            
             $order = Orders::getOrder($order_id, $contact_id);
 
             if (count($order) == 1) {
@@ -179,7 +179,7 @@ class Order extends \SlimController\SlimController
             $this->render('invalid');
 
         } else {
-
+            Orders::setStatus(Session::getPendingOrder(),'QR');
             Session::unsetPendingOrder();
             $this->render('order/confirm-final');
         }

@@ -12,7 +12,8 @@ class Parameters extends \SlimController\SlimController
 						    'OP' =>   'On Press',
 						    'P'  =>   'Printed',
 						    'D'  =>   'Delivered',
-						    'QR' =>   'Quote Requested'
+						    'QR' =>   'Quote Requested',
+						    'A'  =>   'Abandoned'	
 						);
 
 	protected static $orderCategory = array(

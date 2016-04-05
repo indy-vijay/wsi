@@ -21,10 +21,10 @@ use Slim\Views\Twig as Twig;
 // die;
 // init app
 $app = new \SlimController\Slim(array(
-    'view'                       => new Twig,
-    'templates.path'             => 'app/views/',
-    'controller.class_prefix'    => '\\Controller',
-    'controller.method_suffix'   => 'Action',
+    'view' => new Twig,
+    'templates.path' => 'app/views/',
+    'controller.class_prefix' => '\\Controller',
+    'controller.method_suffix' => 'Action',
     'controller.template_suffix' => 'php',
 ));
 
