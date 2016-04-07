@@ -39,29 +39,23 @@
                                  <img src="{{ thumbImagePath }}" width="50" height="50" />
                             {% endif %}
     
-                           <!-- remove screen-printing.jpg when thumbimagepath load-->
-                             {% for placementKey,placement in placement %}
+                            {% for placementKey,placement in placements %}
+                            
                              <div class="col-md-2 artwork-preview pull-right">
                                 <button rel="{{ placementKey }}" type="button" class="pull-left artwork-remove close artwork-preview-{{ placementKey }}" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                {% for file in orderCategoryPlacement %}
-                                    {% for key,value in file %}
-                                        {% if placement == key|e %}
-                                        <span class="artwork-preview-{{ placementKey }}">{{ value|e }}</span>
-                                        <br>
-                                        {% endif %}
-                                    {% endfor %}
-                                {% endfor %}
-                               <img class="artwork-preview-{{ placementKey }}" src="{{ customIncludePath }}img/screen-printing.jpg" alt=""  width="50" height="50"/>
-                                     
+                                <span class="artwork-preview-{{ placementKey }}">{{ placementPosition[placement] }}</span>
+                                <br>
+                       
+                                <img class="artwork-preview-{{ placementKey }}" src="{{httpBasePath}}{{ artworkThumbPath }}{{fileNames[placementKey]}}" alt=""  width="50" height="50"/>
                              </div>
 
                             {% endfor %}
                             
                             <div id="artwork-uploaded">
-                             {% for key,file in fileNameWithPath %}
+                             {% for key,file in fileNames %}
                                 <input class="artwork-preview-{{key}}" type="hidden" name="fileNameWithPath[]" value="{{ file|e }}">
                             {% endfor %}
-                            {% for key,file in placement %}
+                            {% for key,file in placements %}
                                 <input class="artwork-preview-{{key}}" type="hidden" name="placementUploaded[]" value="{{ file|e }}">
                             {% endfor %}
                             </div>

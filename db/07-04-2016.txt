@@ -1,0 +1,2 @@
+ALTER TABLE order_lines DROP COLUMN order_notes;
+ALTER TABLE `orders` ADD `order_notes` VARCHAR(255) NULL AFTER `downloaded`;

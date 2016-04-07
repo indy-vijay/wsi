@@ -5,13 +5,14 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 class Orders extends Eloquent
 {
 
-    protected $fillable = array('contact_id', 'date_completed', 'date_due', 'event_name', 'event_date', 'category', 'type', 'delivery_type', 'for_event', 'in_hands_date', 'status', 'old', 'downloaded');
+    protected $fillable = array('contact_id', 'date_completed', 'date_due', 'event_name', 'event_date', 'category', 'type', 'delivery_type', 'for_event', 'in_hands_date', 'status', 'old', 'downloaded','order_notes');
 
     // public    $timestamps   = false;
 
-    public static function getOrdersForCustomer($contact_id)
+    public function scopeGetOrdersForCustomer($query,$contact_id)
     {
-        return self::where('contact_id', '=', $contact_id)
+        return $query->where('contact_id', '=', $contact_id)
+            ->where('status','!=','A')
             ->get()
             ->toArray();
 
@@ -87,7 +88,7 @@ class Orders extends Eloquent
         return self::join('artwork_placement', 'orders.order_id', '=', 'artwork_placement.order_id')
 
             ->where('artwork_placement.order_id', '=', $order_id)
-            ->select('artwork_placement.artwork_placement')
+            ->select('artwork_placement.artwork_placement','artwork_placement.artwork_id')
             ->get();
     }
 

@@ -14,11 +14,12 @@ class Artwork extends \SlimController\SlimController
 	public static function uploadTempArtwork($req)
 	{
 		
-		 $files['url'] = '';
+		 $files['design_name'] = '';
 		 $files['placement'] ='';
 		 if($req->isPost() && !empty( $_FILES ) )
 		//if( strtolower( $_SERVER[ 'REQUEST_METHOD' ] ) == 'post' && !empty( $_FILES ) )
 		{
+
 			foreach( $_FILES[ 'artwork_image' ][ 'tmp_name' ] as $index => $tmpName )
 			{
 				if( !empty( $_FILES[ 'artwork_image' ][ 'error' ][ $index ] ) )
@@ -31,7 +32,7 @@ class Artwork extends \SlimController\SlimController
             	$fileName    = uniqid() . str_replace(" ","",$_FILES['artwork_image']['name'][ $index ]);
             	$fileNameWithPath = ARTWORK_UPLOAD_PATH_TEMP .$fileName;
              	move_uploaded_file( $tmpName, $fileNameWithPath ); // move to new location perhaps?
-            	$files['url'][] = $fileNameWithPath;
+            	$files['design_name'][] = $fileName;
             	$files['placement'][] = $_POST['placement'][$index];
             	$thumb = getFileNameWithoutExtension($fileName) . '.jpg';
             	Image::executeCommandThumbnailCreate(ARTWORK_FETCH_REL_PATH . $fileName.'[0]',ARTWORK_THUMB_REL_PATH . $thumb);
@@ -44,7 +45,7 @@ class Artwork extends \SlimController\SlimController
 	if(isset($_POST['fileNameWithPath']))
 		{
 		foreach ($_POST['fileNameWithPath'] as $fileName) {
-   				 $files['url'][] = $fileName;
+   				 $files['design_name'][] = $fileName;
    				}
    		}
    	if(isset($_POST['placementUploaded']))
@@ -63,10 +64,12 @@ class Artwork extends \SlimController\SlimController
 		$artwork_id      = 0;
 		$files['artworkUploaded'] = $req->post('fileNameWithPath');
 		$files['placement'] = $req->post('placementUploaded');
+		
 		if(count($files['artworkUploaded']) == 0)
 			return [];
-		
+				
 		foreach ($files['artworkUploaded'] as $num => $artworkUploaded) {
+			$artworkUploaded = ARTWORK_THUMB_BASE_PATH . $artworkUploaded;
 			if( strlen($artworkUploaded) > 0 && file_exists($artworkUploaded) ){
 			//move the file	
 				$design_name   = basename($artworkUploaded);

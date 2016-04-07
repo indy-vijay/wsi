@@ -43,6 +43,9 @@ class Order extends \SlimController\SlimController
         }
 
         $files['artworks'] = Artwork::uploadTempArtwork($req); //move artwork file to temp directory
+                // echo "<pre>";
+                // print_r($files);
+                // die;
 
         $styles = Brands::categoryBrands($category_type)->first()->styles; //get styles for the first brand
         $colors = Styles::find($styles->first()->id)->colors;
@@ -51,9 +54,9 @@ class Order extends \SlimController\SlimController
             'token' => Session::getToken(),
             'categoryType' => $category_type,
             'categoryName' => $orderCategories[$category_type],
-            'fileNameWithPath' => $files['artworks']['url'],
+            'fileNames' => $files['artworks']['design_name'],
             'thumbImagePath' => Artwork::getThumbPathForFile($fileNameWithPath),
-            'placement' => $files['artworks']['placement'],
+            'placements' => $files['artworks']['placement'],
             'orderCategoryPlacement' => $orderCategoryPlacement,
             'brands' => Brands::categoryBrands($category_type)->get()->toArray(),
             'styles' => $styles->toArray(),
@@ -213,19 +216,21 @@ class Order extends \SlimController\SlimController
             $order = Orders::getOrder($order_id, $contact_id);
             if (count($order) == 1) {
                 $files['artworks'] = Artwork::uploadTempArtwork($req); //move artwork file to temp directory
-                if (!$req->isPost()) {
+               
+                 if (!$req->isPost()) {
                     $order_artworks = Orders::artworks($order_id);
                     $order_artworks_placements = Orders::artwork_placement($order_id);
-
+            
                     foreach ($order_artworks as $file) {
-                        $files['artworks']['url'][] = $file->file_path;
+                        $files['artworks']['design_name'][$file->artwork_id] = $file->design_name;
                     }
 
                     foreach ($order_artworks_placements as $file) {
-                        $files['artworks']['placement'][] = $file->artwork_placement;
+                        $files['artworks']['placement'][$file->artwork_id] = $file->artwork_placement;
                     }
 
                 }
+           
                 $order = $order[0];
                 $category_type = $order['category'];
                 $order_line_brand = OrderLine::getOrderLines($order_id);
@@ -233,10 +238,10 @@ class Order extends \SlimController\SlimController
                 $style_id = Styles::getIdByName($order_line_brand[0]['style']);
                 // $styles            = Brands::categoryBrands($category_type)->first()->styles;
                 $colors = Styles::find($style_id[0]['id'])->colors;
-
+       
                 //$delivery_type_name = Parameters::getParameters('deliveryType')[$order['delivery_type']];
-                //$orderCategoryPlacement = Parameters::getOrderCategoryPlacement($category_type);
-
+                $orderCategoryPlacement = Parameters::getOrderCategoryPlacement($category_type);
+                       
                 $this->render('order/reorder-create2', array(
                     'token' => Session::setToken(),
                     'categoryType' => $order['category'],
@@ -244,13 +249,14 @@ class Order extends \SlimController\SlimController
                     'order_lines' => OrderLine::getOrderLines($order_id),
                     'deliveryType' => $order['delivery_type'],
                     'inHandsDate' => $order['in_hands_date'],
-                    'fileNameWithPath' => $files['artworks']['url'],
+                    'fileNames' => $files['artworks']['design_name'],
                     'brands' => Brands::categoryBrands($category_type)->get()->toArray(),
                     'styles' => $styles->toArray(),
                     'colors' => $colors->toArray(),
                     //'thumbImagePath'               => Artwork::getThumbPathForFile($fileNameWithPath),
-                    'placement' => $files['artworks']['placement'],
-                    'orderCategoryPlacement' => Parameters::getOrderCategoryPlacement($order['category']),
+                    'placements' => $files['artworks']['placement'],
+                    'orderCategoryPlacement' => Parameters::getParameters('orderCategoryPlacement')[$order['category']],
+                    'placementPosition' => Parameters::getParameters('placementPosition'),
                 ));
 
             }
@@ -275,11 +281,13 @@ class Order extends \SlimController\SlimController
             //create artwork
             $files['artworkUploaded'] = $req->post('fileNameWithPath');
             $files['placement'] = $req->post('placementUploaded');
+         
             if (isset($files['artworkUploaded']) && count($files['artworkUploaded'] > 0)) {
-
+                          
                 foreach ($files['artworkUploaded'] as $num => $artworkUploaded) {
-
-                    if (strlen($artworkUploaded) > 0 && file_exists($artworkUploaded)) {
+                    $artworkUploaded = ARTWORK_THUMB_BASE_PATH . $artworkUploaded;
+                    if (strlen($artworkUploaded) > 0 && file_exists( $artworkUploaded)) {
+                     
                         //move the file
                         $design_name = basename($artworkUploaded);
                         $preview_image = $artworkUploaded; //dummy, remove this with proper info
@@ -299,7 +307,7 @@ class Order extends \SlimController\SlimController
                         // echo "File not found " .  $artworkUploaded ;die;
                     }
                 }
-
+                       
                 foreach ($artwork_id_array as $artwork_id) {
                     //create relationship between artworks and order
                     OrderArtworks::create([
@@ -308,7 +316,7 @@ class Order extends \SlimController\SlimController
                     ]);
                 }
             }
-
+          
             //create order lines
             $insertRows = $this->getOrderLines($req, $order_id);
             OrderLine::insert($insertRows);

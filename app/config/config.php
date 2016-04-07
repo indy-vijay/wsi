@@ -1,5 +1,7 @@
 <?php 
-
+/*
+  Do not replace this file on live. In linux the directory separator is \ and windows its /
+*/
 define('BASE_URL', "http://wsi.dev/");
 define('REMOTE_URL',"http://www.wsimp.com");
 define('APP_PATH',BASE_URL . 'app/');
@@ -12,4 +14,6 @@ define('ARTWORK_UPLOAD_PATH_TEMP',ARTWORK_UPLOAD_PATH. "temp/");
 define('ARTWORK_FETCH_REL_PATH', 'app/custom_includes/img/artworks/temp/');
 define('ARTWORK_THUMB_REL_PATH', ARTWORK_FETCH_REL_PATH . 'thumb/');
 define('ARTWORK_THUMB_PATH',BASE_URL . ARTWORK_THUMB_REL_PATH );
+
+define('ARTWORK_THUMB_BASE_PATH',ARTWORK_UPLOAD_PATH . 'temp/thumb/');
 ?>
