@@ -43,9 +43,6 @@ class Order extends \SlimController\SlimController
         }
 
         $files['artworks'] = Artwork::uploadTempArtwork($req); //move artwork file to temp directory
-                // echo "<pre>";
-                // print_r($files);
-                // die;
 
         $styles = Brands::categoryBrands($category_type)->first()->styles; //get styles for the first brand
         $colors = Styles::find($styles->first()->id)->colors;
@@ -57,6 +54,7 @@ class Order extends \SlimController\SlimController
             'fileNames' => $files['artworks']['design_name'],
             'thumbImagePath' => Artwork::getThumbPathForFile($fileNameWithPath),
             'placements' => $files['artworks']['placement'],
+            'placementPosition' => Parameters::getParameters('placementPosition'),
             'orderCategoryPlacement' => $orderCategoryPlacement,
             'brands' => Brands::categoryBrands($category_type)->get()->toArray(),
             'styles' => $styles->toArray(),
@@ -150,26 +148,27 @@ class Order extends \SlimController\SlimController
         if ($contact_id > 0 && isset($order_id) && $order_id > 0) {
 
             $order = Orders::getOrder($order_id, $contact_id);
-            //SELECT * FROM `order_artworks` join artworks on artworks.artwork_id = order_artworks.artwork_id WHERE order_artworks.order_id = 143
             $order_artworks = Orders::artworks($order_id);
 
-            if (count($order) == 1) {
+            if (count($order) != 1) 
+                return $this->render('invalid');
 
-                $order = $order[0];
-                $category_code = $order['category'];
-                $order['category'] = Parameters::getParameters('orderCategory')[$order['category']]; //Get the text for order category
-                $order['delivery_type'] = Parameters::getParameters('deliveryType')[$order['delivery_type']];
-                $order_lines = OrderLine::getOrderLines($order_id);
-                $isValidReq = true;
-                $thumb_path = ARTWORK_THUMB_PATH;
+            $files = $this->getOrderArtworks($order_id);
 
-                $this->render('order/detail', compact('order', 'order_lines', 'category_code', 'order_artworks', 'thumb_path'));
-            }
+            $order = $order[0];
+            $category_code = $order['category'];
+            $order['category'] = Parameters::getParameters('orderCategory')[$order['category']]; //Get the text for order category
+
+            $order['delivery_type'] = Parameters::getParameters('deliveryType')[$order['delivery_type']];
+            $order_lines = OrderLine::getOrderLines($order_id);
+            $thumb_path = ARTWORK_THUMB_PATH;
+            $placementPosition = Parameters::getParameters('placementPosition');
+            $fileNames  = $files['artworks']['design_name'];
+            $placements = $files['artworks']['placement'];
+            $this->render('order/detail', compact('order', 'order_lines', 'category_code', 'order_artworks','placements' , 'thumb_path','placementPosition','fileNames'));
+            
         }
 
-        if (!$isValidReq) {
-            $this->render('invalid');
-        }
 
     }
 
@@ -397,6 +396,22 @@ class Order extends \SlimController\SlimController
 
         return $req->post('qty_youth_xs')[$i] + $req->post('qty_youth_s')[$i] + $req->post('qty_youth_m')[$i] + $req->post('qty_youth_l')[$i] + $req->post('qty_youth_xl')[$i] + $req->post('qty_adult_xs')[$i] + $req->post('qty_adult_s')[$i] + $req->post('qty_adult_m')[$i] + $req->post('qty_adult_l')[$i] + $req->post('qty_adult_xl')[$i] + $req->post('qty_adult_2xl')[$i] + $req->post('qty_adult_3xl')[$i] + $req->post('qty_adult_4xl')[$i] + $req->post('qty_adult_5xl')[$i] + $req->post('qty_adult_6xl')[$i];
 
+    }
+
+    public function getOrderArtworks($order_id)
+    {
+        $order_artworks = Orders::artworks($order_id);
+        $order_artworks_placements = Orders::artwork_placement($order_id);
+
+        foreach ($order_artworks as $file) {
+            $files['artworks']['design_name'][$file->artwork_id] = $file->design_name;
+        }
+
+        foreach ($order_artworks_placements as $file) {
+            $files['artworks']['placement'][$file->artwork_id] = $file->artwork_placement;
+        }
+
+        return $files;
     }
 
 }

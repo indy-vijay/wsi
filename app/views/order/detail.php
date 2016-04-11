@@ -23,12 +23,16 @@
                 <div class="panel panel-default">
                 
                     <div class="panel-body">
-                        <ul class="list-inline no-margin">
-                            <li><strong>Artwork</strong></li>
-                            {% for artwork in order_artworks %}
-                            <li><img src="{{thumb_path}}{{ artwork['design_name']}}" width="75" height="75"></li>
-                            {% endfor %}
-                        </ul>
+                            <strong>Artwork</strong>
+                          {% for placementKey,placement in placements %}
+                            
+                             <div class="col-md-2 artwork-preview pull-right">
+                                <span class="artwork-preview-{{ placementKey }}">{{ placementPosition[placement] }}</span>
+                                <br>
+                       
+                                <img class="artwork-preview-{{ placementKey }}" src="{{httpBasePath}}{{ artworkThumbPath }}{{fileNames[placementKey]}}" alt=""  width="50" height="50"/>
+                             </div>
+                          {% endfor %}
                     </div>
                 </div>                    
 
