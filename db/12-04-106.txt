@@ -1,0 +1,1 @@
+ALTER TABLE `orders` CHANGE `delivery_type` `delivery_type` ENUM('D','PU','UPS','FE') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;

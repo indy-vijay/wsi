@@ -23,9 +23,10 @@ class Parameters extends \SlimController\SlimController
 					    );
 
 	protected static $deliveryType = array(
-						   'LD'  => 'Local Delivery',
-						   'WC'  => 'Will Call / Pick Up',
-						   'S'   => 'Shipping'
+						   'D'    => 'Deliver',
+						   'PU'   => 'Pick Up',
+						   'UPS'  => 'U.P.S',
+						   'FE'   => 'FedEx'	
 						);
 
 	protected static $placementPosition = array(
