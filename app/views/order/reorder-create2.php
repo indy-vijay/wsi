@@ -96,10 +96,13 @@
                                     <label for="" class="col-md-4 control-label">Delivery Type: </label>
                                     <div class="col-md-8">
                                         <select class="form-control" name="delivery_type">
-                                            <option value="LD" {% if  deliveryType == 'LD' %} selected {% endif %}>Local delivery</option>
+                                         <!--    <option value="LD" {% if  deliveryType == 'LD' %} selected {% endif %}>Local delivery</option>
                                             <option value="WC" {% if  deliveryType == 'WC' %} selected {% endif %}>Will Call/Pick Up</option>
-                                            <option value="S"  {% if  deliveryType == 'S' %} selected {% endif %}>Shipping</option>
+                                            <option value="S"  {% if  deliveryType == 'S' %} selected {% endif %}>Shipping</option> -->
                                             <!-- <option value="{{ order['delivery_type'] }}">{{ order['delivery_type_name'] }}</option> -->
+                                             {% for key,val in deliveryType %}
+                                                <option value="{{key}}" {% if  orderDeliveryType == key %} selected {% endif %}>{{val}}</option>
+                                            {% endfor %} 
                                         </select>
                                     </div>
                                 </div>

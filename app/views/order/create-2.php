@@ -88,9 +88,9 @@
                                     <label for="" class="col-md-4 control-label">Delivery Type:</label>
                                     <div class="col-md-8">
                                         <select class="form-control" name="delivery_type">
-                                            <option value="LD">Local delivery</option>
-                                            <option value="WC">Will Call/Pick Up</option>
-                                            <option value="S">Shipping</option>
+                                            {% for key,val in deliveryType %}
+                                                <option value="{{key}}">{{val}}</option>
+                                            {% endfor %}                                
                                         </select>
                                     </div>
                                 </div>

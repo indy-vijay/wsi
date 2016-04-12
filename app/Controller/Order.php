@@ -56,6 +56,7 @@ class Order extends \SlimController\SlimController
             'placements' => $files['artworks']['placement'],
             'placementPosition' => Parameters::getParameters('placementPosition'),
             'orderCategoryPlacement' => $orderCategoryPlacement,
+            'deliveryType' => Parameters::getParameters('deliveryType'),
             'brands' => Brands::categoryBrands($category_type)->get()->toArray(),
             'styles' => $styles->toArray(),
             'colors' => $colors->toArray(),
@@ -240,13 +241,13 @@ class Order extends \SlimController\SlimController
        
                 //$delivery_type_name = Parameters::getParameters('deliveryType')[$order['delivery_type']];
                 $orderCategoryPlacement = Parameters::getOrderCategoryPlacement($category_type);
-                       
                 $this->render('order/reorder-create2', array(
                     'token' => Session::setToken(),
                     'categoryType' => $order['category'],
                     'categoryName' => Parameters::getParameters('orderCategory')[$order['category']],
                     'order_lines' => OrderLine::getOrderLines($order_id),
-                    'deliveryType' => $order['delivery_type'],
+                    'orderDeliveryType' => $order['delivery_type'],
+                    'deliveryType' => Parameters::getParameters('deliveryType'),
                     'inHandsDate' => $order['in_hands_date'],
                     'fileNames' => $files['artworks']['design_name'],
                     'brands' => Brands::categoryBrands($category_type)->get()->toArray(),
@@ -402,13 +403,18 @@ class Order extends \SlimController\SlimController
     {
         $order_artworks = Orders::artworks($order_id);
         $order_artworks_placements = Orders::artwork_placement($order_id);
-
+        $files = [];
         foreach ($order_artworks as $file) {
             $files['artworks']['design_name'][$file->artwork_id] = $file->design_name;
         }
 
         foreach ($order_artworks_placements as $file) {
             $files['artworks']['placement'][$file->artwork_id] = $file->artwork_placement;
+        }
+
+        if(count($files) == 0){
+            $files['artworks']['design_name'] = [];
+            $files['artworks']['placement']   = [];
         }
 
         return $files;
