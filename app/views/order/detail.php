@@ -79,9 +79,33 @@
                             <label for="" class="col-md-4 control-label">Is this for an event?</label>
                             <div class="col-md-8">
                                 <select class="form-control" disabled>
-                                    <option value="">Yes</option>
-                                    <option value="">No</option>
+                                    <option value="" {% if order['for_event'] == 1 %} selected="selected" {% endif %}>Yes</option>
+                                    <option value="" {% if order['for_event'] == 0 %} selected="selected" {% endif %} >No</option>
                                 </select>
+                            </div>
+                        </div>
+                        
+                        {% if order['for_event'] == 1 %}
+                        <div class="form-group">
+                            <label for="" class="col-md-4 control-label">Event Name</label>
+                            <div class="col-md-8">
+                                <input type="text" value="{{ order['event_name'] }}">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="" class="col-md-4 control-label">Event Date</label>
+                            <div class="col-md-8">
+                                <input type="text" value="{{ order['event_date'] }}">                            
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                     <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="" class="col-md-4 control-label">Order Notes:</label>
+                            <div class="col-md-8">
+                                <textarea class="form-control" disabled>{{ order['order_notes'] }}</textarea>
                             </div>
                         </div>
                     </div>
@@ -115,7 +139,7 @@
 
                         <tbody>
                             {% for order_line in order_lines %}
-                            <tr>
+                            <tr class="order-detail-qty">
                                 <td>{{ order_line['desc'] }}</td>
                                 <td>{{ order_line['brand'] }}</td>
                                 <td>{{ order_line['style'] }}</td>
@@ -135,4 +159,10 @@
         </div>
     </div>
 </main>
+<script>
+    inputs = document.getElementsByTagName('input');
+    for (index = 0; index < inputs.length; ++index) {
+       inputs[index].disabled = true;
+    }
+</script>
 {%endblock%}

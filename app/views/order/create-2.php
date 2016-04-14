@@ -20,7 +20,7 @@
             </div>
             <hr>
 
-            <form class="form-horizontal" method="post" action="{{httpBasePath}}create-order-step-2-submit">
+            <form class="form-horizontal" method="post" id="order-form" action="{{httpBasePath}}create-order-step-2-submit">
 
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -111,13 +111,38 @@
                                 <div class="form-group">
                                     <label for="" class="col-md-4 control-label">Is this for an event?</label>
                                     <div class="col-md-8">
-                                        <select class="form-control" name="for_event">
+                                        <select class="form-control" name="for_event" id="for_event">
                                             <option value="1">Yes</option>
                                             <option value="0">No</option>
                                         </select>
                                     </div>
                                 </div>
+                                <div class="form-group event-detail">
+                                    <label for="" class="col-md-4 control-label">Event Name</label>
+                                    <div class="col-md-8">
+                                        <input type="text" name="event_name">
+                                    </div>                                 
+                                </div>
+                                <div class="form-group event-detail">
+                                    <label for="" class="col-md-4 control-label">Event Date</label>
+                                        <div class="col-md-8">
+                                            <div class="input-group date" id="datetimepicker2">
+                                                <input type="text"class="form-control" name="event_date" />
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                </div>
                             </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group">  
+                                 <label for="" class="col-md-4 control-label">Order Notes</label>                             
+                                    <textarea name="order_notes"></textarea>
+                                </div>
+                             </div>
                         </div>
                     </div>
                 </div>
@@ -150,29 +175,29 @@
                                 <th width="5%"></th>
                             </tr>
                         </thead>
-
-                            <tr>
+                        {% for i in 0..25 %}
+                            <tr id="line_no_{{i}}" {%if i != 0 %} class="hidden" {%endif%}>
                                 <td>
                                     <select class="form-control" name="desc[]">
                                         <option value="Polo">Polo</option>
                                     </select>
                                 </td>
                                 <td>
-                                    <select class="form-control" name="brand[]" id="order-brand" onchange="changeBrand()">                  
+                                    <select class="form-control" name="brand[]" id="order-brand-{{i}}" onchange="changeBrand({{i}})">                  
                                         {% for brand in brands %}                         
                                                 <option value="{{ brand['id'] }}">{{ brand['brand'] }}</option>
                                         {% endfor %}
                                     </select>
                                 </td>
                                 <td>
-                                    <select class="form-control" name="style[]" id="order-style" onchange="changeStyle()">
+                                    <select class="form-control" name="style[]" id="order-style-{{i}}" onchange="changeStyle({{i}})">
                                         {% for style in styles %}                         
                                                 <option value="{{ style['id'] }}">{{ style['styles'] }}</option>
                                         {% endfor %}                                 
                                     </select>
                                 </td>
                                 <td>
-                                    <select class="form-control" name="color[]" id="order-color">
+                                    <select class="form-control" name="color[]" id="order-color-{{i}}">
                                         {% for color in colors %}                         
                                                 <option value="{{ color['id'] }}">{{ color['color'] }}</option>
                                         {% endfor %}   
@@ -185,14 +210,15 @@
                                  {% endif %}
                                 <td class="deleterow"><i class="fa fa-remove"></i></td>
                             </tr>
-
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
+                <input type="hidden" id="current_order_line" value="1">
                 <button class="btn btn-link addnewrow" type="button"><i class="fa fa-plus"></i> Add New</button>
 
                 <p class="text-right">
-                    <button type="submit" class="btn btn-default" name="order_placed" value="1">place order</button>
+                    <button type="submit" class="btn btn-default" id="order_place_btn" name="order_placed" value="1">place order</button>
                 </p>
 
             </form>

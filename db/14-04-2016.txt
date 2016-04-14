@@ -1,0 +1,5 @@
+ALTER TABLE `orders` CHANGE `event_date` `event_date` DATE NULL DEFAULT NULL;
+ALTER TABLE `customers` ADD `fmp_contact_id` VARCHAR(50) NULL AFTER `contact_id`;
+ALTER TABLE `communication` ADD `fmp_communication_id` VARCHAR(50) NULL AFTER `communication_id`;
+ALTER TABLE `address` ADD `fmp_address_id` VARCHAR(50) NULL AFTER `address_id`;
+ALTER TABLE `artworks` ADD `fmp_artwork_id` VARCHAR(50) NULL AFTER `artwork_id`;

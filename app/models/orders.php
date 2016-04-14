@@ -29,6 +29,14 @@ class Orders extends Eloquent
 
         }
 
+        $event_date = null;
+        if (null != $req->post('event_date')) {
+
+            $event_date = Carbon::createFromFormat('m-d-Y', $req->post('event_date'));
+            $event_date = $event_date->format('Y-m-d');
+
+        }
+  
         return $query->insertGetId(
             array(
                 'contact_id' => $contact_id,
@@ -37,11 +45,14 @@ class Orders extends Eloquent
                 'category' => $req->post('category'),
                 'type' => $req->post('type'),
                 'for_event' => $req->post('for_event'),
+                'event_name' => $req->post('event_name'),
+                'event_date' => $event_date,
                 'in_hands_date' => $in_hands_date,
                 'status' => $status,
                 'created_at' => Carbon::now(),
                 'old' => 0,
                 'downloaded' => 1,
+                'order_notes' => $req->post('order_notes'),
             )
         );
 

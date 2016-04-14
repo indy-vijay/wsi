@@ -157,9 +157,9 @@ class Order extends \SlimController\SlimController
             $files = $this->getOrderArtworks($order_id);
 
             $order = $order[0];
+         
             $category_code = $order['category'];
             $order['category'] = Parameters::getParameters('orderCategory')[$order['category']]; //Get the text for order category
-
             $order['delivery_type'] = Parameters::getParameters('deliveryType')[$order['delivery_type']];
             $order_lines = OrderLine::getOrderLines($order_id);
             $thumb_path = ARTWORK_THUMB_PATH;
@@ -238,11 +238,11 @@ class Order extends \SlimController\SlimController
                 $style_id = Styles::getIdByName($order_line_brand[0]['style']);
                 // $styles            = Brands::categoryBrands($category_type)->first()->styles;
                 $colors = Styles::find($style_id[0]['id'])->colors;
-       
                 //$delivery_type_name = Parameters::getParameters('deliveryType')[$order['delivery_type']];
                 $orderCategoryPlacement = Parameters::getOrderCategoryPlacement($category_type);
                 $this->render('order/reorder-create2', array(
                     'token' => Session::setToken(),
+                    'order' => $order,
                     'categoryType' => $order['category'],
                     'categoryName' => Parameters::getParameters('orderCategory')[$order['category']],
                     'order_lines' => OrderLine::getOrderLines($order_id),
@@ -253,6 +253,7 @@ class Order extends \SlimController\SlimController
                     'brands' => Brands::categoryBrands($category_type)->get()->toArray(),
                     'styles' => $styles->toArray(),
                     'colors' => $colors->toArray(),
+                    'notes'  => $order['order_notes'],
                     //'thumbImagePath'               => Artwork::getThumbPathForFile($fileNameWithPath),
                     'placements' => $files['artworks']['placement'],
                     'orderCategoryPlacement' => Parameters::getParameters('orderCategoryPlacement')[$order['category']],
@@ -355,7 +356,7 @@ class Order extends \SlimController\SlimController
 
         $insertRows = array();
         for ($i = 0; $i < $rowCount; $i++) {
-
+            
             $total_pieces = $this->getTotalPieces($i);
 
             $insertRows[] = array(

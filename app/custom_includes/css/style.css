@@ -296,3 +296,6 @@ margin-top: 20px;
 .signUp a{
     color: #e2383f;
 }
+.hidden{
+    display: none;
+}

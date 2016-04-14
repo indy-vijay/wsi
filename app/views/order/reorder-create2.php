@@ -112,7 +112,7 @@
                                     <label for="" class="col-md-4 control-label">In Hands Date:</label>
                                     <div class="col-md-8">
                                         <div class="input-group date" id="datetimepicker1">
-                                            <input type="text" class="form-control" name="in_hands_date" value="{{ order['in_hands_date'] }}" />
+                                            <input type="text" class="form-control" name="in_hands_date" value="{{ inHandsDate }}" />
                                             <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -124,12 +124,42 @@
                                     <label for="" class="col-md-4 control-label">Is this for an event?</label>
                                     <div class="col-md-8">
                                         <select class="form-control" name="for_event">
-                                            <option value="1">Yes</option>
-                                            <option value="0">No</option>
+                                             <option value="1" {% if order['for_event'] == 1 %} selected="selected" {% endif %}>Yes</option>
+                                             <option value="0" {% if order['for_event'] == 0 %} selected="selected" {% endif %} >No</option>
                                         </select>
                                     </div>
                                 </div>
+
+                                {% if order['for_event'] == 1 %}
+                                <div class="form-group">
+                                    <label for="" class="col-md-4 control-label">Event Name</label>
+                                    <div class="col-md-8">
+                                        <input type="text" name="event_name" value="{{ order['event_name'] }}">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="" class="col-md-4 control-label">Event Date</label>
+                                    <div class="col-md-8">
+                                        <div class="input-group date" id="datetimepicker2">
+                                            <input type="text" class="form-control" name="event_date" value="{{ order['event_date']  }}" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+
                             </div>
+                     
+                                <div class="col-md-8">
+                                    <div class="form-group">  
+                                     <label for="" class="col-md-4 control-label">Order Notes</label>                             
+                                        <textarea name="order_notes">{{notes}}</textarea>
+                                    </div>
+                                 </div>
+                          
                         </div>
                     </div>
                 </div>

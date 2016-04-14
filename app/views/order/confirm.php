@@ -32,6 +32,14 @@
                           {{ order['in_hands_date']|date("m/d/Y")}}
                         {% endif %}
                         </dd>
+                        <dt>Order Notes:</dt>
+                        <dd>{{ order['order_notes']}}</dd>
+                        {% if order['for_event'] == 1 %}
+                            <dt>Event Name:</dt>
+                            <dd>{{ order['event_name'] }}</dd>
+                            <dt>Event Date:</dt>
+                            <dd>{{ order['event_date'] }}</dd>
+                        {% endif %}
                     </dl>
                 </div>
                 <div class="col-md-4">
@@ -39,7 +47,7 @@
                         <dt>Type:</dt>
                         <dd>{{ order['category'] }}</dd>
                         <dt>Delivery Type:</dt>
-                        <dd>{{ order['delivery_type'] }}</dd>
+                        <dd>{{ order['delivery_type'] }}</dd>                   
                     </dl>
                 </div>
             </div>
