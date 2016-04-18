@@ -19,7 +19,7 @@
             </div>
             <hr>
 
-            <form class="form-horizontal" method="post" action="{{httpBasePath}}submit-reorder">
+            <form class="form-horizontal" method="post" action="{{httpBasePath}}submit-reorder" id="order-form">
 
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -191,7 +191,7 @@
                                 <th width="5%"></th>
                             </tr>
                         </thead>
-							{% for order_line in order_lines %}
+							{% for key,order_line in order_lines %}
                             <tr>
                                 <td>
                                     <select class="form-control" name="desc[]">
@@ -233,9 +233,15 @@
                                 <td class="deleterow"><i class="fa fa-remove"></i></td>
                             </tr>
 							{% endfor %}  
+                            {% for i in order_lines_count..25 %}
+                            <tr id="line_no_{{i}}"class="hidden">
+                               {% include 'partials/order-line-items.php' %}
+                            </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
+                <input type="hidden" id="current_order_line" value="{{order_lines_count}}">
                 <input type="hidden" name="token" value="{{token}}">
              
                 <button class="btn btn-link addnewrow" type="button"><i class="fa fa-plus"></i> Add New</button>

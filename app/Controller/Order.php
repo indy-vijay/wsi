@@ -239,13 +239,19 @@ class Order extends \SlimController\SlimController
                 // $styles            = Brands::categoryBrands($category_type)->first()->styles;
                 $colors = Styles::find($style_id[0]['id'])->colors;
                 //$delivery_type_name = Parameters::getParameters('deliveryType')[$order['delivery_type']];
+                
+                //Used for hidden fields
+                // $styles = Brands::categoryBrands($category_type)->first()->styles; //get styles for the first brand
+                // $colors = Styles::find($styles->first()->id)->colors;
+                $order_lines = OrderLine::getOrderLines($order_id);
                 $orderCategoryPlacement = Parameters::getOrderCategoryPlacement($category_type);
                 $this->render('order/reorder-create2', array(
                     'token' => Session::setToken(),
                     'order' => $order,
                     'categoryType' => $order['category'],
                     'categoryName' => Parameters::getParameters('orderCategory')[$order['category']],
-                    'order_lines' => OrderLine::getOrderLines($order_id),
+                    'order_lines' => $order_lines,
+                    'order_lines_count' => count($order_lines),
                     'orderDeliveryType' => $order['delivery_type'],
                     'deliveryType' => Parameters::getParameters('deliveryType'),
                     'inHandsDate' => $order['in_hands_date'],

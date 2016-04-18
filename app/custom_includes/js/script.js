@@ -23,6 +23,7 @@ jQuery(document).on("click", ".deleterow", function () {
 
 jQuery(".addnewrow").on("click", function(){
     var current_order_line = jQuery('#current_order_line').val();
+    console.log(current_order_line);
     jQuery('#line_no_'+current_order_line).removeClass('hidden');
     jQuery('#current_order_line').val(parseInt(current_order_line) + 1);
 });
