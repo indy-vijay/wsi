@@ -3,7 +3,7 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 
 class Customers extends Eloquent 
 {
-	protected $fillable    = array('first_name','last_name','company_name');
+	protected $fillable    = array('first_name','last_name','company_name','status');
 	public    $timestamps   = false;
 
 	public static function createCustomer($req)
@@ -26,7 +26,7 @@ class Customers extends Eloquent
 	public static function getCustomerLogin($req)
 	{
 		//change password to md5 hasing later
-	 	return self::select('contact_id')
+	 	return self::select(['contact_id','status'])
 	 						   ->where('username','=',$req->post('username'))
 	 						   ->where('password','=',$req->post('password'))
 	 						   ->get()

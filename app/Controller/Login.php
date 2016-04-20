@@ -28,18 +28,18 @@ class Login extends \SlimController\SlimController
 
     	if(Session::validateSubmission($req)){
     
-    		$contact_id = Customers::getCustomerLogin($req); 
+    		  $contact_id = Customers::getCustomerLogin($req); 
        
-            if(!empty($contact_id) && $contact_id[0]['contact_id'] > 0){
-                $this->loginAction($contact_id[0]['contact_id']);
-                $this->app->redirect(BASE_URL . 'dashboard');
-           
-            }
-            
-            $this->render('customer/login', array(
-                      'message' => $message,
-                      'token'   => Session::setToken()
-             ));
+          if(!empty($contact_id) && $contact_id[0]['contact_id'] > 0){
+              $this->checkUserInactive($contact_id[0]);
+              $this->loginAction($contact_id[0]['contact_id']);
+              $this->app->redirect(BASE_URL . 'dashboard');       
+          }
+          
+          $this->render('customer/login', array(
+                    'message' => $message,
+                    'token'   => Session::setToken()
+           ));
     		
     	}
     	else{
@@ -94,6 +94,14 @@ class Login extends \SlimController\SlimController
     {
         unset( $_SESSION['contact_id']);
         $this->app->redirect(BASE_URL . 'login');
+    }
+
+    public function checkUserInactive($contact)
+    {
+        if( $contact['status'] == 0 ){
+          $this->render('customer/inactive');
+          exit();
+        }
     }
 
 
