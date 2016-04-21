@@ -46,6 +46,8 @@
                             </div>
                         </div>
                     </div>
+                </div>    
+                <div class="row">    
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="" class="col-md-4 control-label">Type:</label>
@@ -84,23 +86,26 @@
                                 </select>
                             </div>
                         </div>
-                        
+                    </div>
+                    <div class="col-md-4">
                         {% if order['for_event'] == 1 %}
                         <div class="form-group">
                             <label for="" class="col-md-4 control-label">Event Name</label>
                             <div class="col-md-8">
-                                <input type="text" value="{{ order['event_name'] }}">
+                                <input type="text" class="form-control" value="{{ order['event_name'] }}">
                             </div>
                         </div>
                         
                         <div class="form-group">
                             <label for="" class="col-md-4 control-label">Event Date</label>
                             <div class="col-md-8">
-                                <input type="text" value="{{ order['event_date'] }}">                            
+                                <input type="text" class="form-control" value="{{ order['event_date'] }}">                            
                             </div>
                         </div>
                         {% endif %}
                     </div>
+                 </div>
+                 <div class="row">   
                      <div class="col-md-4">
                         <div class="form-group">
                             <label for="" class="col-md-4 control-label">Order Notes:</label>

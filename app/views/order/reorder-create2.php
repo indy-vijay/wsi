@@ -79,10 +79,10 @@
 
                 <h4>Order Information</h4>
                 <div class="row voffset3">
-                    <div class="col-md-8">
+                    <div class="col-md-12">
 
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="" class="col-md-4 control-label">Type:</label>
                                     <div class="col-md-8">
@@ -107,7 +107,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="" class="col-md-4 control-label">In Hands Date:</label>
                                     <div class="col-md-8">
@@ -123,22 +123,23 @@
                                 <div class="form-group">
                                     <label for="" class="col-md-4 control-label">Is this for an event?</label>
                                     <div class="col-md-8">
-                                        <select class="form-control" name="for_event">
+                                        <select class="form-control" name="for_event" id="for_event">
                                              <option value="1" {% if order['for_event'] == 1 %} selected="selected" {% endif %}>Yes</option>
                                              <option value="0" {% if order['for_event'] == 0 %} selected="selected" {% endif %} >No</option>
                                         </select>
                                     </div>
                                 </div>
-
+                            </div>
+                            <div class="col-md-4">
                                 {% if order['for_event'] == 1 %}
-                                <div class="form-group">
+                                <div class="form-group event-detail">
                                     <label for="" class="col-md-4 control-label">Event Name</label>
                                     <div class="col-md-8">
-                                        <input type="text" name="event_name" value="{{ order['event_name'] }}">
+                                        <input type="text" class="form-control" name="event_name" value="{{ order['event_name'] }}">
                                     </div>
                                 </div>
                                 
-                                <div class="form-group">
+                                <div class="form-group event-detail">
                                     <label for="" class="col-md-4 control-label">Event Date</label>
                                     <div class="col-md-8">
                                         <div class="input-group date" id="datetimepicker2">
@@ -150,17 +151,18 @@
                                     </div>
                                 </div>
                                 {% endif %}
-
                             </div>
-                     
-                                <div class="col-md-8">
+                        </div>   
+                            <div class="row">
+                                <div class="col-md-4">
                                     <div class="form-group">  
-                                     <label for="" class="col-md-4 control-label">Order Notes</label>                             
-                                        <textarea name="order_notes">{{notes}}</textarea>
+                                     <label for="" class="col-md-4 control-label">Order Notes</label> 
+                                        <div class="col-md-8">                            
+                                            <textarea name="order_notes" class="form-control">{{notes}}</textarea>
+                                        </div>
                                     </div>
                                  </div>
-                          
-                        </div>
+                          </div>
                     </div>
                 </div>
 

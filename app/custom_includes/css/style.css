@@ -206,11 +206,12 @@ label {
 }
 
 .dl-horizontal dd {
-    margin-left: 40%;
+    margin-left: 23%;
+    word-wrap:break-word;
 }
 
 .dl-horizontal dt {
-    width: 40%;
+    width: 50px;
     text-align: left;
     font-weight: normal;
     margin-bottom: 10px;

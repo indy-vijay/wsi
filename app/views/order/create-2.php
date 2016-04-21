@@ -71,10 +71,10 @@
 
                 <h4>Order Information</h4>
                 <div class="row voffset3">
-                    <div class="col-md-8">
+                    <div class="col-md-12">
 
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="" class="col-md-4 control-label">Type:</label>
                                     <div class="col-md-8">
@@ -95,7 +95,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="" class="col-md-4 control-label">In Hands Date:</label>
                                     <div class="col-md-8">
@@ -117,10 +117,12 @@
                                         </select>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-4">
                                 <div class="form-group event-detail">
                                     <label for="" class="col-md-4 control-label">Event Name</label>
                                     <div class="col-md-8">
-                                        <input type="text" name="event_name">
+                                        <input type="text" name="event_name" class="form-control">
                                     </div>                                 
                                 </div>
                                 <div class="form-group event-detail">
@@ -137,10 +139,12 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-8">
+                            <div class="col-md-4">
                                 <div class="form-group">  
-                                 <label for="" class="col-md-4 control-label">Order Notes</label>                             
-                                    <textarea name="order_notes"></textarea>
+                                 <label for="" class="col-md-4 control-label">Order Notes</label>   
+                                    <div class="col-md-8">
+                                        <textarea name="order_notes" class="form-control"></textarea>
+                                    </div>    
                                 </div>
                              </div>
                         </div>
