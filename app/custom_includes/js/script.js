@@ -23,7 +23,6 @@ jQuery(document).on("click", ".deleterow", function () {
 
 jQuery(".addnewrow").on("click", function(){
     var current_order_line = jQuery('#current_order_line').val();
-    console.log(current_order_line);
     jQuery('#line_no_'+current_order_line).removeClass('hidden');
     jQuery('#current_order_line').val(parseInt(current_order_line) + 1);
 });
@@ -95,9 +94,32 @@ jQuery('body').on('change','.upload',function(){
     readURL(this);
 });
 
-function changeBrand(line_no){
+function changeDesc(line_no){
     jQuery.ajax({
-        'url' : ajaxUrl + 'ajax-brand-styles/' +jQuery('#order-brand-'+line_no).val(),
+        'url' : ajaxUrl + 'ajax-desc-brands/' +jQuery('#order-desc-'+line_no).val(),
+        'type' : 'POST',
+        'success' : function(brands){
+                    var order_brand = jQuery('#order-brand-'+line_no);
+                    var brand_id    = 0;
+                    order_brand.empty();
+                    jQuery.each(jQuery.parseJSON(brands), function(key,brands){    
+                        if(key == 0)
+                            changeBrand(line_no,brands.id); //also change the colors dropdown
+                        order_brand.append('<option value="'+brands.id+'">'+brands.brand+'</option>')
+                    });
+        }
+    });
+
+}
+
+function changeBrand(line_no, brand_id=0){
+
+    if( brand_id == 0 ){
+        brand_id = jQuery('#order-brand-'+line_no).val();
+    }
+
+    jQuery.ajax({
+        'url' : ajaxUrl + 'ajax-brand-styles/' + brand_id,
         'type' : 'POST',
         'success' : function(styles){
                     var order_style = jQuery('#order-style-'+line_no);

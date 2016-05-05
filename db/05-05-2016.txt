@@ -1,0 +1,1 @@
+ALTER TABLE `brands` ADD `desc_id` INT NOT NULL AFTER `product_type`;

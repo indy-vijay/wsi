@@ -197,12 +197,14 @@
                             <tr>
                                 <td>
                                     <select class="form-control" name="desc[]">
-                                        <option value="Polo">Polo</option>
+                                        {% for descr in desc %}                         
+                                                <option value="{{ descr['id'] }}" {% if descr['desc'] == order_line['desc'] %} selected  {% endif %} >{{ descr['desc'] }}</option>
+                                        {% endfor %}
                                     </select>
                                 </td>
                                 <td>
                                      <select class="form-control" name="brand[]" id="order-brand" onchange="changeBrand()">                  
-                                        {% for brand in brands %}                         
+                                        {% for brand in brands[key] %}                         
                                                 <option value="{{ brand['id'] }}" {% if brand['brand'] == order_line['brand'] %} selected  {% endif %} >{{ brand['brand'] }}</option>
                                         {% endfor %}
                                     </select>
@@ -210,7 +212,7 @@
                                 <td>
                                     <select class="form-control" name="style[]" id="order-style" onchange="changeStyle()">
                                         
-                                        {% for style in styles %}  
+                                        {% for style in styles[key] %}  
                                                          
                                                 <option value="{{ style['id'] }}" {% if style['styles'] == order_line['style'] %} selected 
                                                  {% endif %}>{{ style['styles'] }}</option>
@@ -221,7 +223,7 @@
                                 <td>
                                      <select class="form-control" name="color[]" id="order-color">
                                      
-                                        {% for color in colors %}                         
+                                        {% for color in colors[key] %}                         
                                                 <option value="{{ color['id'] }}" {% if color['color'] == order_line['color'] %} selected
                                                  {% endif %}>{{ color['color'] }}</option>
                                         {% endfor %}   

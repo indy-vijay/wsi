@@ -4,6 +4,7 @@ namespace Controller;
 use \Address;
 use \Artworks as ArtworksModel;
 use \Artworksplacements as ArtworksplacementsModel;
+use \Desc;
 use \Brands;
 use \Colors;
 use \Communication;
@@ -30,7 +31,6 @@ class Order extends \SlimController\SlimController
     public function createOrderStepTwoAction($category_type = "SP")
     {
         Session::setToken();
-
         $req = $this->app->request();
         $category_type = strtoupper($category_type);
         $fileNameWithPath = '';
@@ -43,7 +43,7 @@ class Order extends \SlimController\SlimController
         }
 
         $files['artworks'] = Artwork::uploadTempArtwork($req); //move artwork file to temp directory
-
+        $desc   = Desc::all();
         $styles = Brands::categoryBrands($category_type)->first()->styles; //get styles for the first brand
         $colors = Styles::find($styles->first()->id)->colors;
 
@@ -57,7 +57,10 @@ class Order extends \SlimController\SlimController
             'placementPosition' => Parameters::getParameters('placementPosition'),
             'orderCategoryPlacement' => $orderCategoryPlacement,
             'deliveryType' => Parameters::getParameters('deliveryType'),
-            'brands' => Brands::categoryBrands($category_type)->get()->toArray(),
+            'desc'   => $desc->toArray(),
+            //Edited on 05-05-2016 By Indy.
+            // 'brands' => Brands::categoryBrands($category_type)->get()->toArray(),
+            'brands' => $desc->first()->brands->toArray(),
             'styles' => $styles->toArray(),
             'colors' => $colors->toArray(),
         ));
@@ -234,10 +237,25 @@ class Order extends \SlimController\SlimController
                 $order = $order[0];
                 $category_type = $order['category'];
                 $order_line_brand = OrderLine::getOrderLines($order_id);
-                $styles = Brands::categoryBrandsSelected($category_type, $order_line_brand[0]['brand'])->first()->styles;
-                $style_id = Styles::getIdByName($order_line_brand[0]['style']);
+              
+                $desc = Desc::all();
+                //Edited on 05-05-2016 By Indy.
+                // $styles = Brands::categoryBrandsSelected($category_type, $order_line_brand[0]['brand'])->first()->styles;
+                foreach($order_line_brand as $order_line){
+                    $desc_id  = Desc::getIdByName($order_line['desc']);
+                    $brand_id = Brands::getIdByName($order_line['brand']);
+                    $style_id = Styles::getIdByName($order_line['style']);
+                    $brands[] = Desc::find($desc_id[0]['id'])->brands;
+                    $styles[] = Brands::find($brand_id[0]['id'])->styles;
+                    $colors[] = Styles::find($style_id[0]['id'])->colors;
+
+                }
+
+             
+                //Edited on 05-05-2016 By Indy.
                 // $styles            = Brands::categoryBrands($category_type)->first()->styles;
-                $colors = Styles::find($style_id[0]['id'])->colors;
+                
+
                 //$delivery_type_name = Parameters::getParameters('deliveryType')[$order['delivery_type']];
                 
                 //Used for hidden fields
@@ -256,9 +274,11 @@ class Order extends \SlimController\SlimController
                     'deliveryType' => Parameters::getParameters('deliveryType'),
                     'inHandsDate' => $order['in_hands_date'],
                     'fileNames' => $files['artworks']['design_name'],
-                    'brands' => Brands::categoryBrands($category_type)->get()->toArray(),
-                    'styles' => $styles->toArray(),
-                    'colors' => $colors->toArray(),
+                    'desc'   => $desc->toArray(),
+                    // 'brands' => Brands::categoryBrands($category_type)->get()->toArray(),
+                    'brands' => $brands,
+                    'styles' => $styles,
+                    'colors' => $colors,
                     'notes'  => $order['order_notes'],
                     //'thumbImagePath'               => Artwork::getThumbPathForFile($fileNameWithPath),
                     'placements' => $files['artworks']['placement'],
@@ -366,7 +386,7 @@ class Order extends \SlimController\SlimController
             $total_pieces = $this->getTotalPieces($i);
 
             $insertRows[] = array(
-                'desc' => $req->post('desc')[$i],
+                'desc'  =>  Desc::name($req->post('desc')[$i]),
                 'brand' => Brands::name($req->post('brand')[$i]),
                 'style' => Styles::name($req->post('style')[$i]),
                 'color' => Colors::name($req->post('color')[$i]),

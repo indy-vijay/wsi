@@ -9,6 +9,7 @@ use \States;
 use \Artworks as ArtworksModel;
 use \Artworksplacements as ArtworksplacementsModel;
 use \OrderArtworks;
+use \Desc;
 use \Brands;
 use \Styles;
 use Carbon\Carbon;
@@ -27,6 +28,11 @@ class Products extends \SlimController\SlimController
 	public function getColorsForStyleAction($style_id)
 	{
 		echo json_encode(Styles::findOrFail($style_id)->colors->toArray());
+	}
+
+	public function getBrandsForDescAction($desc_id)
+	{
+		echo json_encode(Desc::findOrFail($desc_id)->brands->toArray());
 	}
 
 }

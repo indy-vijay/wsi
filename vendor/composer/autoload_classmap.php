@@ -23,6 +23,7 @@ return array(
     'Controller\\Register' => $baseDir . '/app/Controller/Register.php',
     'Controller\\Session' => $baseDir . '/app/Controller/Session.php',
     'Customers' => $baseDir . '/app/models/customers.php',
+    'Desc' => $baseDir . '/app/models/desc.php',
     'EasyPeasyICS' => $vendorDir . '/phpmailer/phpmailer/extras/EasyPeasyICS.php',
     'OrderArtworks' => $baseDir . '/app/models/orderArtworks.php',
     'OrderLine' => $baseDir . '/app/models/orderLine.php',

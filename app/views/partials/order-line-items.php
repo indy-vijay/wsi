@@ -1,6 +1,8 @@
 <td>
-<select class="form-control" name="desc[]">
-    <option value="Polo">Polo</option>
+<select class="form-control" name="desc[]"  id="order-desc-{{i}}"  onchange="changeDesc({{i}})">
+    {% for descr in desc %}                         
+            <option value="{{ descr['id'] }}">{{ descr['desc'] }}</option>
+    {% endfor %}
 </select>
 </td>
 <td>

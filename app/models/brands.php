@@ -33,4 +33,11 @@ class Brands extends Eloquent
                     ->where('brand', $brand);
     }
 
+    public function scopeGetIdByName($query, $brand)
+    {
+        return $query->where('brand', $brand)
+                        ->select('id')
+                        ->get();
+    }
+
 }
