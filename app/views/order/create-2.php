@@ -151,8 +151,8 @@
                     </div>
                 </div>
                 
-                 <p class="option-unavailable hidden alert alert-danger">There is no <span id="unavailable-param"></span> associated with your selection. Please select another option!</p>
-                 
+                 <p class="option-unavailable alert alert-danger {% if optionUnavailable == false %} hidden {% endif %}">There is no <span id="unavailable-param">option</span> associated with your selection. Please select another option!</p>
+
                 <div class="row hidden-sm hidden-xs voffset5">
                 {% if categoryType != 'PI' %}
                     <div class="col-md-3 col-md-offset-3">

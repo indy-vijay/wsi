@@ -47,6 +47,10 @@ class Order extends \SlimController\SlimController
         $styles = Brands::categoryBrands($category_type)->first()->styles; //get styles for the first brand
         $colors = Styles::find($styles->first()->id)->colors;
 
+        $optionUnavailable = false;
+        if( count($desc) == 0 || count($styles) == 0 || count($colors) == 0)
+            $optionUnavailable = true;
+
         $this->render('order/create-2', array(
             'token' => Session::getToken(),
             'categoryType' => $category_type,
@@ -63,6 +67,7 @@ class Order extends \SlimController\SlimController
             'brands' => $desc->first()->brands->toArray(),
             'styles' => $styles->toArray(),
             'colors' => $colors->toArray(),
+            'optionUnavailable' => $optionUnavailable,
         ));
     }
 
