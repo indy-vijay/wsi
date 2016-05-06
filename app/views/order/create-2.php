@@ -151,6 +151,8 @@
                     </div>
                 </div>
                 
+                 <p class="option-unavailable hidden alert alert-danger">There is no <span id="unavailable-param"></span> associated with your selection. Please select another option!</p>
+                 
                 <div class="row hidden-sm hidden-xs voffset5">
                 {% if categoryType != 'PI' %}
                     <div class="col-md-3 col-md-offset-3">
@@ -191,6 +193,7 @@
                 <button class="btn btn-link addnewrow" type="button"><i class="fa fa-plus"></i> Add New</button>
 
                 <p class="text-right">
+                    <a href="{{httpBasePath}}dashboard"  class="btn btn-default">Cancel Order</a>
                     <button type="submit" class="btn btn-default" id="order_place_btn" name="order_placed" value="1">place order</button>
                 </p>
 

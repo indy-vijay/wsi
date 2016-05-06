@@ -19,6 +19,7 @@
             </div>
             <hr>
 
+
             <h4>Order Information</h4>
             <div class="row">
                 <div class="col-md-4">
@@ -195,7 +196,10 @@
                                 <input type="text" class="form-control" name="zip" value="{{ address['zip'] }}" placeholder="">
                             </div>
                         </div> -->
-                        <p class="text-right"><button type="submit" class="btn btn-default">place order</button></p>
+                        <p class="text-right">
+                            <a href="{{httpBasePath}}dashboard"  class="btn btn-default">Cancel Order</a>
+                            <button type="submit" class="btn btn-default">place order</button>
+                        </p>
 
                     <!-- </div> -->
                 </div>

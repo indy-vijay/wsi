@@ -137,7 +137,7 @@ function changeBrand(line_no, brand_id=0){
 }
 
 function changeStyle(line_no,style_id=0){
-
+    removeOptionUnavailable();
     if( style_id == 0 ){
         style_id = jQuery('#order-style-'+line_no).val();
     }
@@ -148,12 +148,30 @@ function changeStyle(line_no,style_id=0){
         'success' : function(colors){
                     var order_color = jQuery('#order-color-'+line_no);
                     order_color.empty();
-                    jQuery.each(jQuery.parseJSON(colors), function(key,color){                       
+                    colors = jQuery.parseJSON(colors);
+                    if(colors == 0)
+                        optionUnavailable("Color");
+                    jQuery.each(colors, function(key,color){                       
                         order_color.append('<option value="'+color.id+'">'+color.color+'</option>')
                     });
         }
     });
 }
+
+function removeOptionUnavailable(){
+    
+    if(!$('.option-unavailable').hasClass("hidden"))
+         $('.option-unavailable').addClass('hidden');
+
+    $('button[name=order_placed]').prop('disabled',false);    
+}
+
+function optionUnavailable(param){
+    $('button[name=order_placed]').attr('disabled','disabled');
+    $('#unavailable-param').text(param);
+    $('.option-unavailable').removeClass('hidden');
+}
+
 jQuery('#for_event').on("change",function(){
     if(jQuery(this).val() == 0 )
         jQuery('.event-detail').hide();

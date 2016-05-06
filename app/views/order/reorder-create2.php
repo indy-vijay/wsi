@@ -165,7 +165,7 @@
                           </div>
                     </div>
                 </div>
-
+                <p class="option-unavailable hidden alert alert-danger">There is no <span id="unavailable-param"></span> associated with your selection. Please select another option!</p>
                 <div class="row hidden-sm hidden-xs voffset5">
                      {% if categoryType != 'PI' %}
                     <div class="col-md-3 col-md-offset-3">
@@ -196,21 +196,21 @@
 							{% for key,order_line in order_lines %}
                             <tr>
                                 <td>
-                                    <select class="form-control" name="desc[]">
+                                    <select class="form-control" name="desc[]" id="order-desc-{{key}}" onchange="changeDesc({{key}})">
                                         {% for descr in desc %}                         
                                                 <option value="{{ descr['id'] }}" {% if descr['desc'] == order_line['desc'] %} selected  {% endif %} >{{ descr['desc'] }}</option>
                                         {% endfor %}
                                     </select>
                                 </td>
                                 <td>
-                                     <select class="form-control" name="brand[]" id="order-brand" onchange="changeBrand()">                  
+                                     <select class="form-control" name="brand[]" id="order-brand-{{key}}" onchange="changeBrand({{key}})">                  
                                         {% for brand in brands[key] %}                         
                                                 <option value="{{ brand['id'] }}" {% if brand['brand'] == order_line['brand'] %} selected  {% endif %} >{{ brand['brand'] }}</option>
                                         {% endfor %}
                                     </select>
                                 </td>
                                 <td>
-                                    <select class="form-control" name="style[]" id="order-style" onchange="changeStyle()">
+                                    <select class="form-control" name="style[]" id="order-style-{{key}}" onchange="changeStyle({{key}})">
                                         
                                         {% for style in styles[key] %}  
                                                          
@@ -221,7 +221,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                     <select class="form-control" name="color[]" id="order-color">
+                                     <select class="form-control" name="color[]" id="order-color-{{key}}">
                                      
                                         {% for color in colors[key] %}                         
                                                 <option value="{{ color['id'] }}" {% if color['color'] == order_line['color'] %} selected
@@ -251,8 +251,10 @@
                 <button class="btn btn-link addnewrow" type="button"><i class="fa fa-plus"></i> Add New</button>
 
                 <p class="text-right">
+                    <a href="{{httpBasePath}}dashboard"  class="btn btn-default">Cancel Order</a>                    
                     <button type="submit" class="btn btn-default" name="order_placed" value="1">place order</button>
                 </p>
+                
 
             </form>
         </div>
