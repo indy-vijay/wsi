@@ -181,6 +181,7 @@
                                 <th width="5%"></th>
                             </tr>
                         </thead>
+                        <tbody>
                         {% for i in 0..25 %}
                             <tr id="line_no_{{i}}" {%if i != 0 %} class="hidden" {%endif%}>
                                {% include 'partials/order-line-items.php' %}
@@ -194,7 +195,7 @@
 
                 <p class="text-right">
                     <a href="{{httpBasePath}}dashboard"  class="btn btn-default">Cancel Order</a>
-                    <button type="submit" class="btn btn-default" id="order_place_btn" name="order_placed" value="1">place order</button>
+                    <button type="submit" class="btn btn-default" {% if optionUnavailable == true %} disabled {% endif %} id="order_place_btn" name="order_placed" value="1">place order</button>
                 </p>
 
             </form>
