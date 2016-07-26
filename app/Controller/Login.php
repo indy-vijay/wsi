@@ -24,7 +24,7 @@ class Login extends \SlimController\SlimController
     public function submitAction()
     {
     	$req = $this->app->request();
-    	$message = 'Failed';
+    	$message = 'Incorrect login details!';
 
     	if(Session::validateSubmission($req)){
     

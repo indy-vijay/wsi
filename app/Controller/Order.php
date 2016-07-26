@@ -43,10 +43,11 @@ class Order extends \SlimController\SlimController
         }
 
         $files['artworks'] = Artwork::uploadTempArtwork($req); //move artwork file to temp directory
-        $desc   = Desc::all();
+        $desc   = Desc::active()->get();
         $styles = Brands::categoryBrands($category_type)->first()->styles; //get styles for the first brand
-        $colors = Styles::find($styles->first()->id)->colors;
-
+        	
+        $colors = count($styles) ? Styles::find($styles->first()->id)->colors : new  \Illuminate\Database\Eloquent\Collection;
+        
         $optionUnavailable = false;
         if( count($desc) == 0 || count($styles) == 0 || count($colors) == 0)
             $optionUnavailable = true;

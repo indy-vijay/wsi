@@ -33,6 +33,7 @@ $view = $app->view();
 $view = $app->view()->getEnvironment();
 $view->addGlobal('httpBasePath', BASE_URL);
 $view->addGlobal('includePath', INC_PATH);
+$view->addGlobal('remoteURL', REMOTE_URL);
 $view->addGlobal('customIncludePath', CUSTOM_INC_PATH);
 $view->addGlobal('artworkThumbPath', ARTWORK_THUMB_REL_PATH);
 

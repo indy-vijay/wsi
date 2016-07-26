@@ -33,14 +33,28 @@ class Parameters extends \SlimController\SlimController
 						   'F'  => 'Front',
 						   'B'  => 'Back',
 						   'L'  => 'Logo',
-						   'LB' => 'Logo BAck',
+						   'LB' => 'Logo Back',
 						   'PF' => 'Promotional Front',
-						   'PB' => 'Promotional Back'
+						   'PB' => 'Promotional Back',
+						   'LC' => 'Left chest',
+						   'RC' => 'Right chest',
+						   'LS' => 'Left sleeve',
+						   'RS' => 'Right sleeve',
+						   'NN' => 'Nape of neck',
+						   'HF' => 'Hat front',
+						   'HB' => 'Hat back',
+						   'LH' => 'Left side of hat',
+						   'RH' => 'Right side of hat',
+						   'RF' => 'Right cuff',
+						   'LF' => 'Left cuff',
+						   'FF' => 'Full front',
+						   'FB' => 'Full back',
+
 						);
 
 	protected static $orderCategoryPlacement = array(
 							'SP' => array('F','B'),
-                			'E' => array('L','LB'),
+                			'E' => array('L','LB','LC','RC','LS','RS','NN','HF','HB','LH','RH','RF','LF','FF','FB'),
                 			'PI' => array('PF','PB')	
                 			);
 
