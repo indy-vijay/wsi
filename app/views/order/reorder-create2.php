@@ -221,13 +221,23 @@
                                     </select>
                                 </td>
                                 <td>
-                                     <select class="form-control" name="color[]" id="order-color-{{key}}">
-                                     
+                                
+                                     <select class="form-control" name="color[]" id="order-color-{{key}}" onchange="changeColor({{key}})">
+                                     {% if order_line['color'] in colors %}
+                                
                                         {% for color in colors[key] %}                         
-                                                <option value="{{ color['id'] }}" {% if color['color'] == order_line['color'] %} selected
+                                                <option value="{{ color['color'] }}" {% if color['color'] == order_line['color'] %} selected
                                                  {% endif %}>{{ color['color'] }}</option>
-                                        {% endfor %}   
+                                        {% endfor %}
+                                        {% if colors|length > 0 %}
+                                            <option value="0">Other</option>   
+                                        {% endif %}
+                                    {%else%}
+                                         <option value="{{ order_line['color'] }}"> {{ order_line['color'] }}</option>
+                                      
+                                    {%endif%}    
                                     </select>
+                                   
                                 </td>
                                 {% if categoryType == 'PI' %}
                                  <td><input type="text" class="form-control" name="total_pieces[]" value="{{order_line['total_pieces']}}"></td>

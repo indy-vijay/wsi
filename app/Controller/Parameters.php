@@ -13,7 +13,8 @@ class Parameters extends \SlimController\SlimController
 						    'P'  =>   'Printed',
 						    'D'  =>   'Delivered',
 						    'QR' =>   'Quote Requested',
-						    'A'  =>   'Abandoned'	
+						    'A'  =>   'Abandoned',
+						    'IP' =>   'In Process'	
 						);
 
 	protected static $orderCategory = array(

@@ -148,14 +148,28 @@ function changeStyle(line_no,style_id=0){
         'success' : function(colors){
                     var order_color = jQuery('#order-color-'+line_no);
                     order_color.empty();
+                    
                     colors = jQuery.parseJSON(colors);
-                    if(colors == 0)
+                    if(colors == 0){
                         optionUnavailable("Color");
+                        order_color.hide();
+                    }
+                    else{
+                    order_color.show();    
                     jQuery.each(colors, function(key,color){                       
                         order_color.append('<option value="'+color.id+'">'+color.color+'</option>')
                     });
+                    order_color.append('<option value="0">Other</option>')  
+                    }
         }
     });
+}
+
+function changeColor(line_no){   
+    if(jQuery('#order-color-'+line_no).val() == '0'){    
+        jQuery('#order-color-'+line_no).after('<input type="text" class="form-control" name="color[]" placeholder="Enter a color" >');
+        jQuery('#order-color-'+line_no).remove();
+    }    
 }
 
 function removeOptionUnavailable(){

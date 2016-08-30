@@ -392,12 +392,12 @@ class Order extends \SlimController\SlimController
             $total_pieces = $this->getTotalPieces($i);
 
             $insertRows[] = array(
-                'desc'  =>  Desc::name($req->post('desc')[$i]),
+                'desc'  => Desc::name($req->post('desc')[$i]),
                 'brand' => Brands::name($req->post('brand')[$i]),
                 'style' => Styles::name($req->post('style')[$i]),
-                'color' => Colors::name($req->post('color')[$i]),
+                //'color' => Colors::name($req->post('color')[$i]),
                 'order_id' => $order_id,
-                // 'color'         => $req->post('color')[$i],
+                'color'         => $req->post('color')[$i],
                 'qty_youth_xs' => $req->post('qty_youth_xs')[$i],
                 'qty_youth_s' => $req->post('qty_youth_s')[$i],
                 'qty_youth_m' => $req->post('qty_youth_m')[$i],
